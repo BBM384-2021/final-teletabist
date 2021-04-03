@@ -1,27 +1,30 @@
 package com.teletabist.clubby.user.models;
 
-public class User {
-    private final int id;
-    private final String username;
-    private final String email;
-    private final String password;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public User(int id, String username, String email, String password){
+public class User {
+    private int id;
+    private String username;
+    private String email;
+    private String password;
+
+    public User(
+            @JsonProperty("id") int id, 
+            @JsonProperty("username") String username, 
+            @JsonProperty("email") String email, 
+            @JsonProperty("password") String password){
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
-    public User(int id, User u){
-        this.id = id;
-        this.username = u.getUsername();
-        this.email = u.getEmail();
-        this.password = u.getEmail();
-    }
-
     public int getId() {
         return id;
+    }
+
+    public void updateId(int id){
+        this.id = id;
     }
 
     public String getUsername() {
