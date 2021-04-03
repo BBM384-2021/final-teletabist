@@ -22,6 +22,16 @@ public class Club {
         this.parentId = parentId;
     }
     
+    public Club(int id, Club club) {
+        this.id = id;
+        this.slug = club.slug;
+        this.name = club.name;
+        this.description = club.description;
+        this.profilePhotoURL = club.profilePhotoURL;
+        this.website = club.website;
+        this.location = club.location;
+        this.parentId = club.parentId;
+    }
 
     public int getId() {
         return id;
