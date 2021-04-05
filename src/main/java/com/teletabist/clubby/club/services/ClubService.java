@@ -4,9 +4,14 @@ package com.teletabist.clubby.club.services;
 import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class ClubService {
     private final ClubRepository clubRepository;
 
+    @Autowired
     public ClubService(ClubRepository clubRepository) {
         this.clubRepository = clubRepository;
     }
