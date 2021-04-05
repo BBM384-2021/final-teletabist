@@ -1,6 +1,11 @@
 # Clubby Development Framework
 Clubby development framework is the combination of frameworks and various package managers to provide a solid, compact and developer friendly environment for Teletabist team.
 
+### v1.1 Update:
+- In addition to FlyWay; Hibernate & JPA dependecies added for better DB access and ease of coding. Please check the Guides topic on [HELP](Help.md) for related readings.
+- Apache Commons Validator dependency for reusable, optimized validation methods.
+- H2 local development embedded db support
+
 ## Techincal details
 - Framework is constructed over Spring Boot with Spring Web (MVC) and Spring Security packages of Spring Framework.
 - Integration of versioned DB migrations via Flyway Migration
@@ -87,6 +92,6 @@ mvn package
 
 ## Additional Notes
 The framework is structured over module based implementation on MVC design pattern. We utilize Vue.js and SCSS for front end development with Webpack compiler. In backend, we use Spring framework with Flyway migrations for versioning and Spring Security for user session control.
-Please refer to HELP.md for further documentation of these technologies
+Please refer to [HELP](Help.md) for further documentation of these technologies
 
 ### This framework is created by Yigit Koc as a part of Teletabist Team.
