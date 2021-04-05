@@ -4,42 +4,52 @@ package com.teletabist.clubby.club.models;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-
+@Entity
+@Table(name="clubs")
 public class Club {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(length = 10)
-    private Integer club_id;
+    private Integer id;
 
     @Column(unique = true, nullable = false, length = 144)
-    private String club_slug;
+    private String slug;
 
     @Column(nullable = false, length = 255)
-    private String club_name;
+    private String name;
     
+    @JsonIgnore
     @Column(columnDefinition = "TEXT")
-    private String club_description = "";
+    private String description;
 
     //DEĞİŞEBİLİR
+    @JsonIgnore
     @Column(length = 1024)
     private String profile_photo_url;
 
+    @JsonIgnore
     @Column(length = 256)
-    private String club_website;
+    private String website;
 
+    @JsonIgnore
     @Column(columnDefinition = "TEXT")
-    private String club_location;
+    private String location;
 
+    @JsonIgnore
     @Column(length = 10)
-    private Integer parent_club_id;
+    private Integer parent_id;
 
     @Column(nullable = false)
     @UpdateTimestamp
@@ -49,36 +59,36 @@ public class Club {
     @CreationTimestamp
     private Timestamp created_at;
 
-    public Integer getClub_id() {
-        return club_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setClub_id(Integer club_id) {
-        this.club_id = club_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getClub_slug() {
-        return club_slug;
+    public String getSlug() {
+        return slug;
     }
 
-    public void setClub_slug(String club_slug) {
-        this.club_slug = club_slug;
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
-    public String getClub_name() {
-        return club_name;
+    public String getName() {
+        return name;
     }
 
-    public void setClub_name(String club_name) {
-        this.club_name = club_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getClub_description() {
-        return club_description;
+    public String getDescription() {
+        return description;
     }
 
-    public void setClub_description(String club_description) {
-        this.club_description = club_description;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getProfile_photo_url() {
@@ -89,28 +99,28 @@ public class Club {
         this.profile_photo_url = profile_photo_url;
     }
 
-    public String getClub_website() {
-        return club_website;
+    public String getWebsite() {
+        return website;
     }
 
-    public void setClub_website(String club_website) {
-        this.club_website = club_website;
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
-    public String getClub_location() {
-        return club_location;
+    public String getLocation() {
+        return location;
     }
 
-    public void setClub_location(String club_location) {
-        this.club_location = club_location;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public Integer getParent_club_id() {
-        return parent_club_id;
+    public Integer getParent_id() {
+        return parent_id;
     }
 
-    public void setParent_club_id(Integer parent_club_id) {
-        this.parent_club_id = parent_club_id;
+    public void setParent_id(Integer parent_id) {
+        this.parent_id = parent_id;
     }
 
     public Timestamp getUpdated_at() {
@@ -128,7 +138,6 @@ public class Club {
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }
-
 
     
     
