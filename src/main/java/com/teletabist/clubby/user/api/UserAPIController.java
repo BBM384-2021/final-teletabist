@@ -1,7 +1,5 @@
 package com.teletabist.clubby.user.api;
 
-import java.util.List;
-
 import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.user.services.UserService;
 
@@ -17,19 +15,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserAPIController {
     private final UserService userService;
 
+    /**
+     * User service bound with user service to provide the service
+     * @param userService
+     */ 
     @Autowired
     public UserAPIController(UserService userService){
         this.userService = userService;
     }
 
     @GetMapping("all")
-    public List<User> createUser(){
+    public Iterable<User> createUser(){
         return this.userService.getAll();
     }
 
     @PostMapping("create")
     public User createUser(@RequestBody User user){
-        user.updateId(-1);
         return this.userService.addPerson(user);
+    }
+
+    @PostMapping("test/password")
+    public boolean testPassword(@RequestBody User user){
+        return this.userService.checkPassword(user);
     }
 }

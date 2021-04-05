@@ -25,4 +25,8 @@ The following guides illustrate how to use some features concretely:
 * [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
 * [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
 * [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
+* [Accessing Data with MYSQL](https://spring.io/guides/gs/accessing-data-mysql/) - Framework V1.1 Release
+* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/) - Framework V1.1 Release
+* [Apache Commons Validator](https://commons.apache.org/proper/commons-validator/) - Framework V1.1 Release
+* [H2 on Spring](https://www.baeldung.com/spring-boot-h2-database) - Framework V1.1 Release
 
