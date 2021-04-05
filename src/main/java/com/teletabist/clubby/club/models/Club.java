@@ -17,118 +17,117 @@ public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(length = 10)
-    private Integer id;
+    private Integer club_id;
 
     @Column(unique = true, nullable = false, length = 144)
-    private String slug;
+    private String club_slug;
 
     @Column(nullable = false, length = 255)
-    private String name;
+    private String club_name;
     
     @Column(columnDefinition = "TEXT")
-    private String description = "";
+    private String club_description = "";
 
     //DEĞİŞEBİLİR
     @Column(length = 1024)
-    private String profilePhotoURL;
+    private String profile_photo_url;
 
     @Column(length = 256)
-    private String website;
+    private String club_website;
 
     @Column(columnDefinition = "TEXT")
-    private String location;
+    private String club_location;
 
     @Column(length = 10)
-    private Integer parentId;
+    private Integer parent_club_id;
 
     @Column(nullable = false)
     @UpdateTimestamp
-    private Timestamp updatedAt;
+    private Timestamp updated_at;
 
     @Column(nullable = false)
     @CreationTimestamp
-    private Timestamp createdAt;
+    private Timestamp created_at;
 
-    public Integer getId() {
-        return id;
+    public Integer getClub_id() {
+        return club_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setClub_id(Integer club_id) {
+        this.club_id = club_id;
     }
 
-    public String getSlug() {
-        return slug;
+    public String getClub_slug() {
+        return club_slug;
     }
 
-    public void setSlug(String slug) {
-        this.slug = slug;
+    public void setClub_slug(String club_slug) {
+        this.club_slug = club_slug;
     }
 
-    public String getName() {
-        return name;
+    public String getClub_name() {
+        return club_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setClub_name(String club_name) {
+        this.club_name = club_name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getClub_description() {
+        return club_description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setClub_description(String club_description) {
+        this.club_description = club_description;
     }
 
-    public String getProfilePhotoURL() {
-        return profilePhotoURL;
+    public String getProfile_photo_url() {
+        return profile_photo_url;
     }
 
-    public void setProfilePhotoURL(String profilePhotoURL) {
-        this.profilePhotoURL = profilePhotoURL;
+    public void setProfile_photo_url(String profile_photo_url) {
+        this.profile_photo_url = profile_photo_url;
     }
 
-    public String getWebsite() {
-        return website;
+    public String getClub_website() {
+        return club_website;
     }
 
-    public void setWebsite(String website) {
-        this.website = website;
+    public void setClub_website(String club_website) {
+        this.club_website = club_website;
     }
 
-    public String getLocation() {
-        return location;
+    public String getClub_location() {
+        return club_location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setClub_location(String club_location) {
+        this.club_location = club_location;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Integer getParent_club_id() {
+        return parent_club_id;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setParent_club_id(Integer parent_club_id) {
+        this.parent_club_id = parent_club_id;
     }
 
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
+    public Timestamp getUpdated_at() {
+        return updated_at;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdated_at(Timestamp updated_at) {
+        this.updated_at = updated_at;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public Timestamp getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
     }
-
 
 
     
