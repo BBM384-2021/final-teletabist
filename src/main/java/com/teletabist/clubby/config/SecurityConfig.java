@@ -18,16 +18,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/").permitAll();
+        // http.csrf().disable().authorizeRequests().antMatchers("/").permitAll();
         if(env.getProperty("deployment", "production").equals("local") || env.getProperty("deployment", "production").equals("development")){
             http.headers().frameOptions().disable(); //disable frame-options for non-ssl tests & disabling CSRF security
         }
-            
-        // http.authorizeRequests()
-        // .antMatchers("/", "/public/js/*", "/public/css/*","/public/img/*")
-        // .permitAll()
-        // .anyRequest()
-        // .permitAll();
+
+        http
+            .csrf()
+                .ignoringAntMatchers("/api/**", "/h2-console/**")
+        .and()
+            .formLogin()
+        .and()
+            .authorizeRequests()
+            .antMatchers("/","/api/**","/public/js/*", "/public/css/*","/public/img/*", "/h2-console/**")
+            .permitAll()
+            .anyRequest()
+            .authenticated();
     }
 
     @Bean

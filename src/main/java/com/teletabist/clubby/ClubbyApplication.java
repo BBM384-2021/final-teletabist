@@ -23,6 +23,7 @@ public class ClubbyApplication {
 
 	@Bean
 	ApplicationRunner applicationRunner(Environment env){
+		
 		return args -> {
 			// Logger.getLogger(ClubbyApplication.class).info("Message: "+env.getProperty("spring.datasource.url"));
 		};

@@ -40,7 +40,7 @@ public class UserService {
     }
 
     public User getUser(String username){
-        return  this.userRepository.findDistinctByUsername(username);
+        return  this.userRepository.findByUsername(username);
     }
 
     public boolean checkPassword(User u){

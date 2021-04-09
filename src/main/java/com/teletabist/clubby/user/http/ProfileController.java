@@ -24,7 +24,7 @@ public class ProfileController {
         profileService.addProfile(profile);
     }
 
-    @GetMapping("user")
+    @GetMapping("profile")
     @ResponseBody
     public String index(){
         return "Hello from profile controller";
