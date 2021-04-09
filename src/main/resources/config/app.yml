@@ -1,3 +1,7 @@
 hash:
   algorithm: BYCRPYT
 deployment: development
+spring.security.user.name: admin
+spring.security.user.password: password
+spring.security.user.email: admin@clubby.com
+spring.security.user.roles: ADMIN
