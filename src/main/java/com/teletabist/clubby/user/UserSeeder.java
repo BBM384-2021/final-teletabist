@@ -47,7 +47,7 @@ public class UserSeeder {
             if(u == null){
                 throw new Exception("Default user cannot be created!");
             }else{
-                LoggerFactory.getLogger(UserSeeder.class).info("\n\nAdmin usermane: "+u.getUsername()+"\n"+"Admin password: "+env.getProperty("spring.security.user.password", "password"));
+                LoggerFactory.getLogger(UserSeeder.class).info("\n\nAdmin usermane: "+u.getUsername()+"\n"+"Admin password: "+env.getProperty("spring.security.user.password", "password")+"\n");
             }
         }else{
             LoggerFactory.getLogger(UserSeeder.class).info("Admin user exists in database already");
