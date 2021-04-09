@@ -3,6 +3,7 @@ package com.teletabist.clubby.user.models;
 import java.util.Date;
 
 public class Profile {
+	private final int id;
     private final String name;
     private final String biography;
     private final Date birthday;
@@ -13,8 +14,9 @@ public class Profile {
     private final Date created_at;
     private final Date updated_at;
 
-    public Profile(String name, String biography, Date birthday, String current_location, int gender, String institution, String job_title, Date created_at, Date updated_at){
-        this.name = name;
+    public Profile(int id, String name, String biography, Date birthday, String current_location, int gender, String institution, String job_title, Date created_at, Date updated_at){
+        this.id = id;
+		this.name = name;
         this.biography = biography;
         this.birthday = birthday;
         this.current_location = current_location;
@@ -24,6 +26,10 @@ public class Profile {
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
+	
+	public int getId() {
+		return id;
+	}
 
 	public String getName() {
 		return name;
