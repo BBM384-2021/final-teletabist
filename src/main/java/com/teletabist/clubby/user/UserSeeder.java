@@ -35,11 +35,11 @@ public class UserSeeder {
     }
     
     private void seedAdmin() throws Exception{
-        User u = this.userRepository.findByUsername(env.getProperty("spring.security.user.name"));
+        User u = this.userRepository.findByUsername(env.getProperty("spring.security.user.name", "admin"));
         if(u == null){
             u = new User();
-            u.setUsername("admin");
-            u.setPassword(this.passwordEncoder.encode(env.getProperty("spring.security.user.password")));
+            u.setUsername(env.getProperty("spring.security.user.name", "admin"));
+            u.setPassword(this.passwordEncoder.encode(env.getProperty("spring.security.user.password", "password")));
             u.setEmail_verification_token(UUID.randomUUID().toString());
             u.setEmail(env.getProperty("spring.security.user.email"));
             u.setVerified_at(new Timestamp(System.currentTimeMillis()));
@@ -47,7 +47,7 @@ public class UserSeeder {
             if(u == null){
                 throw new Exception("Default user cannot be created!");
             }else{
-                LoggerFactory.getLogger(UserSeeder.class).info("\n\nAdmin usermane: "+u.getUsername()+"\n"+"Admin password: "+env.getProperty("spring.security.user.password\n\n"));
+                LoggerFactory.getLogger(UserSeeder.class).info("\n\nAdmin usermane: "+u.getUsername()+"\n"+"Admin password: "+env.getProperty("spring.security.user.password", "password"));
             }
         }else{
             LoggerFactory.getLogger(UserSeeder.class).info("Admin user exists in database already");
