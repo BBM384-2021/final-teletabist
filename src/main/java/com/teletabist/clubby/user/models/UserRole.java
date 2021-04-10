@@ -21,6 +21,11 @@ import org.springframework.security.core.GrantedAuthority;
 @Entity
 @Table(name = "user_roles")
 public class UserRole implements GrantedAuthority{
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8242444042888842023L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(length = 10)
