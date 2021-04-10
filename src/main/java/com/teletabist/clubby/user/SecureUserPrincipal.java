@@ -3,12 +3,16 @@ package com.teletabist.clubby.user;
 import java.util.Collection;
 
 import com.teletabist.clubby.user.models.User;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class SecureUserPrincipal implements UserDetails {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2521436728555064716L;
     private User user;
+
 
     public SecureUserPrincipal(User u) {
         this.user = u;
@@ -16,8 +20,8 @@ public class SecureUserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
-        return null;
+    
+        return this.user.getRoles();
     }
 
     @Override

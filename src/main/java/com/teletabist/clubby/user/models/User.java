@@ -3,16 +3,20 @@ package com.teletabist.clubby.user.models;
 import java.security.InvalidParameterException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.apache.commons.validator.routines.DomainValidator;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -122,6 +126,10 @@ public class User {
     @UpdateTimestamp
     private Timestamp updated_at;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "id", fetch=FetchType.EAGER)
+    private List<UserRole> roles;
+
     /**
      * @return true if the user is validated, false otherwise.
      */
@@ -138,15 +146,6 @@ public class User {
      */
     public Integer getId() {
         return this.id;
-    }
-
-    /**
-     * @deprecated Id is not updatable
-     */
-    @JsonIgnore
-    @Deprecated
-    public void updateId(int id) {
-        return;
     }
 
     /**
@@ -281,5 +280,13 @@ public class User {
             }
         }
         return false;
+    }
+
+    public List<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
     }
 }
