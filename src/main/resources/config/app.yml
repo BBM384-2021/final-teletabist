@@ -5,3 +5,6 @@ spring.security.user.name: admin
 spring.security.user.password: password
 spring.security.user.email: admin@clubby.com
 spring.security.user.roles: ADMIN
+server.servlet.session.persistent: false
+logging.level.org.springframework.web: DEBUG
+spring.mvc.log-request-details: true

@@ -1,5 +1,6 @@
 package com.teletabist.clubby.config;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,30 +11,20 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     Environment env;
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // http.csrf().disable().authorizeRequests().antMatchers("/").permitAll();
-        if(env.getProperty("deployment", "production").equals("local") || env.getProperty("deployment", "production").equals("development")){
-            http.headers().frameOptions().disable(); //disable frame-options for non-ssl tests & disabling CSRF security
-        }
 
-        http
-            .csrf()
-                .ignoringAntMatchers("/api/**", "/h2-console/**")
-        .and()
-            .formLogin()
-        .and()
+        http.formLogin().and()
             .authorizeRequests()
-            .antMatchers("/","/api/**","/public/js/*", "/public/css/*","/public/img/*", "/h2-console/**")
-            .permitAll()
-            .anyRequest()
-            .authenticated();
+            .antMatchers("/", "/login","/public/js/*", "/public/css/*","/public/img/*")
+            .permitAll();
     }
 
     @Bean

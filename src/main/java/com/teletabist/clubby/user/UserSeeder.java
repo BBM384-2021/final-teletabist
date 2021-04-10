@@ -1,7 +1,10 @@
 package com.teletabist.clubby.user;
 
+import com.teletabist.clubby.user.core.ModuleRolesService;
 import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.user.models.UserRepository;
+import com.teletabist.clubby.user.models.UserRole;
+import com.teletabist.clubby.user.models.UserRoleRepository;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +20,20 @@ import java.util.UUID;
 @Component
 public class UserSeeder {
     private UserRepository userRepository;
+    private UserRoleRepository userRoleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ModuleRolesService umodule;
     @Autowired
     private Environment env;
 
     @Autowired
     public UserSeeder(
-        UserRepository urep
+        UserRepository urep,
+        UserRoleRepository rolerep
     ){
+        this.userRoleRepository = rolerep;
         this.userRepository = urep;
     }
 
@@ -44,6 +52,10 @@ public class UserSeeder {
             u.setEmail(env.getProperty("spring.security.user.email"));
             u.setVerified_at(new Timestamp(System.currentTimeMillis()));
             u = this.userRepository.save(u);
+            UserRole r = new UserRole();
+            r.setUser(u);
+            r.setRole(umodule.getModuleRoles("USER_MODULE").get().getRoleByName("USER_ADMIN").getName());;
+            r = this.userRoleRepository.save(r);
             if(u == null){
                 throw new Exception("Default user cannot be created!");
             }else{

@@ -1,0 +1,91 @@
+package com.teletabist.clubby.user.models;
+
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+
+@Entity
+@Table(name = "user_roles")
+public class UserRole implements GrantedAuthority{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(length = 10)
+    private Integer id;
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JsonBackReference
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Column(length = 35, nullable = false)
+    private String role;
+
+    @Column(nullable = false)
+    @CreationTimestamp
+    private Timestamp assigned_at;
+
+    private Timestamp designed_at;
+
+    @Column(length = 10)
+    private Integer club_id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public Timestamp getAssigned_at() {
+        return assigned_at;
+    }
+
+    public Timestamp getDesigned_at() {
+        return designed_at;
+    }
+
+    public void setDesigned_at(Timestamp designed_at) {
+        this.designed_at = designed_at;
+    }
+
+    public Integer getClub_id() {
+        return club_id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setClub_id(Integer club_id) {
+        this.club_id = club_id;
+    }
+
+    @JsonIgnore
+    @Override
+    public String getAuthority() {
+        return "ROLE_"+this.role;
+    }
+}
