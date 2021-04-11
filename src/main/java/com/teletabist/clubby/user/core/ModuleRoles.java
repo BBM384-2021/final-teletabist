@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.plugin.core.Plugin;
 
-public interface ClubModuleRoles extends Plugin<String>{
+public interface ModuleRoles extends Plugin<String>{
     ArrayList<String> getRoleNames();
     Role getRoleByName(String name);
 }

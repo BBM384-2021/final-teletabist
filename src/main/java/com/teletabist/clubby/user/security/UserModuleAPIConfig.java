@@ -1,6 +1,6 @@
 package com.teletabist.clubby.user.security;
 
-import com.teletabist.clubby.user.core.ClubModuleRolesService;
+import com.teletabist.clubby.user.core.ModuleRolesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 @Order(15)
 public class UserModuleAPIConfig extends WebSecurityConfigurerAdapter{
     @Autowired
-    ClubModuleRolesService moduleRolesService;
+    ModuleRolesService moduleRolesService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{

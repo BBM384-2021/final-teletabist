@@ -5,12 +5,12 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-public abstract class Role implements Comparable<Role>{
+public abstract class ClubRole implements Comparable<ClubRole>{
 
     private final String name;
     private final Set<String> permisssons;
 
-    public Role(String name, String... permissions) {
+    public ClubRole(String name, String... permissions) {
         this.name = name;
         this.permisssons = Collections.synchronizedSet(Sets.newHashSet(permissions));;
     }
@@ -24,7 +24,7 @@ public abstract class Role implements Comparable<Role>{
     }
 
     @Override
-    public int compareTo(Role o) {
+    public int compareTo(ClubRole o) {
         return this.name.compareTo(o.getName());
     }
     

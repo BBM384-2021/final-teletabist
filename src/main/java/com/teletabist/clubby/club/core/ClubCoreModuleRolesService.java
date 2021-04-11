@@ -8,15 +8,15 @@ import org.springframework.plugin.core.PluginRegistry;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ModuleRolesService {
-    private final PluginRegistry<ModuleRoles, String> registry;
+public class ClubCoreModuleRolesService {
+    private final PluginRegistry<ClubCoreModuleRoles, String> registry;
 
     @Autowired
-    public ModuleRolesService(List<ModuleRoles> modules){
+    public ClubCoreModuleRolesService(List<ClubCoreModuleRoles> modules){
         this.registry = PluginRegistry.of(modules);
     }
 
-    public Optional<ModuleRoles> getModuleRoles(String name){
+    public Optional<ClubCoreModuleRoles> getModuleRoles(String name){
         return registry.getPluginFor(name);
     }
 }
