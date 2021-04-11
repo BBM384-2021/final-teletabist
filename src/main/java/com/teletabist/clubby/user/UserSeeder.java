@@ -1,6 +1,6 @@
 package com.teletabist.clubby.user;
 
-import com.teletabist.clubby.user.core.ModuleRolesService;
+import com.teletabist.clubby.user.core.ClubModuleRolesService;
 import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.user.models.UserRepository;
 import com.teletabist.clubby.user.models.UserRole;
@@ -24,7 +24,7 @@ public class UserSeeder {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private ModuleRolesService umodule;
+    private ClubModuleRolesService umodule;
     @Autowired
     private Environment env;
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import javax.annotation.Priority;
 
-import com.teletabist.clubby.user.core.ModuleRoles;
+import com.teletabist.clubby.user.core.ClubModuleRoles;
 import com.teletabist.clubby.user.core.Role;
 
 import org.springframework.core.Ordered;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Priority(Ordered.LOWEST_PRECEDENCE)
-public class UserModuleRoles implements ModuleRoles {
+public class UserModuleRoles implements ClubModuleRoles {
 
     private HashSet<Role> roles;
 

@@ -1,4 +1,4 @@
-package com.teletabist.clubby.club.core;
+package com.teletabist.clubby.user.core;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,15 +8,15 @@ import org.springframework.plugin.core.PluginRegistry;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ModuleRolesService {
-    private final PluginRegistry<ModuleRoles, String> registry;
+public class ClubModuleRolesService {
+    private final PluginRegistry<ClubModuleRoles, String> registry;
 
     @Autowired
-    public ModuleRolesService(List<ModuleRoles> modules){
+    public ClubModuleRolesService(List<ClubModuleRoles> modules){
         this.registry = PluginRegistry.of(modules);
     }
 
-    public Optional<ModuleRoles> getModuleRoles(String name){
+    public Optional<ClubModuleRoles> getModuleRoles(String name){
         return registry.getPluginFor(name);
     }
 }
