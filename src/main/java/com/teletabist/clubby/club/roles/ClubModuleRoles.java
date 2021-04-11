@@ -2,10 +2,16 @@ package com.teletabist.clubby.club.roles;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import javax.annotation.Priority;
 
 import com.teletabist.clubby.club.core.ClubCoreModuleRoles;
 import com.teletabist.clubby.club.core.ClubRole;
 
+import org.springframework.core.Ordered;
+import org.springframework.stereotype.Service;
+
+@Service
+@Priority(Ordered.LOWEST_PRECEDENCE)
 public class ClubModuleRoles implements ClubCoreModuleRoles{
 
     private HashSet<ClubRole> roles;
