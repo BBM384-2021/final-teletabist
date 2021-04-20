@@ -1,6 +1,6 @@
 package com.teletabist.clubby.user;
 
-import com.teletabist.clubby.user.core.ModuleRolesService;
+import com.teletabist.clubby.user.core.Roles;
 import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.user.models.UserRepository;
 import com.teletabist.clubby.user.models.UserRole;
@@ -23,8 +23,7 @@ public class UserSeeder {
     private UserRoleRepository userRoleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private ModuleRolesService umodule;
+
     @Autowired
     private Environment env;
 
@@ -54,7 +53,7 @@ public class UserSeeder {
             u = this.userRepository.save(u);
             UserRole r = new UserRole();
             r.setUser(u);
-            r.setRole(umodule.getModuleRoles("USER_MODULE").get().getRoleByName("USER_ADMIN").getName());;
+            r.setRole(Roles.SYS_ADMIN.getName());
             r = this.userRoleRepository.save(r);
             if(u == null){
                 throw new Exception("Default user cannot be created!");
