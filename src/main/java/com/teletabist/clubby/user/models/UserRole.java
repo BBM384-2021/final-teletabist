@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teletabist.clubby.user.core.Roles;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -91,6 +92,6 @@ public class UserRole implements GrantedAuthority{
     @JsonIgnore
     @Override
     public String getAuthority() {
-        return "ROLE_"+this.role;
+        return Roles.getRoleTypeByName(this.role).getRoleName();
     }
 }

@@ -61,8 +61,8 @@ public class Club {
     @CreationTimestamp
     private Timestamp created_at;
 
-    @OneToMany(mappedBy = "club")
-    private Set <UsersClubInterest> interests;
+    /*@OneToMany(mappedBy = "club")
+    private Set <UsersClubInterest> interests;*/
 
     public Integer getId() {
         return id;
@@ -143,15 +143,4 @@ public class Club {
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }
-
-    public Set<UsersClubInterest> getInterests() {
-        return interests;
-    }
-
-    public void setInterests(Set<UsersClubInterest> interests) {
-        this.interests = interests;
-    }
-
-    
-    
 }

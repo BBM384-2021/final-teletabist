@@ -132,9 +132,6 @@ public class User {
     @OneToMany(mappedBy = "id", fetch=FetchType.EAGER)
     private List<UserRole> roles;
 
-    @OneToMany(mappedBy = "user")
-    private Set<UsersClubInterest> interests;
-
     /**
      * @return true if the user is validated, false otherwise.
      */
