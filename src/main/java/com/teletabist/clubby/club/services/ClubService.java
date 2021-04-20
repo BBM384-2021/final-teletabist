@@ -33,6 +33,27 @@ public class ClubService {
     }
 
 
+    public Club updateEntireClub(Club club) {
+        Club updatingClub = clubRepository.findDistinctBySlug(club.getSlug());
+
+        if (updatingClub == null) {
+            try {
+                throw new NotFoundException("There isn't a club with that slug");
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        updatingClub.setName(club.getName());
+        updatingClub.setDescription(club.getDescription());
+        updatingClub.setProfile_photo_url(club.getProfile_photo_url());
+        updatingClub.setWebsite(club.getWebsite());
+        updatingClub.setLocation(club.getLocation());
+
+        clubRepository.save(updatingClub);
+        return updatingClub;
+    }
+
     //TO-DO: add exception messages and things
     public Club updateClubName(String slug, String name) {
         Club updatingClub = clubRepository.findDistinctBySlug(slug);
@@ -116,6 +137,21 @@ public class ClubService {
         updatingClub.setLocation(location);
         clubRepository.save(updatingClub);
         return updatingClub;
+    }
+
+    public Club deleteClub(String slug) {
+        Club deletingClub = clubRepository.findDistinctBySlug(slug);
+
+        if (deletingClub == null) {
+            try {
+                throw new NotFoundException("There isn't a club with that slug");
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        clubRepository.delete(deletingClub);
+        return deletingClub;
     }
     
     

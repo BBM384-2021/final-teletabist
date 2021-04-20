@@ -21,7 +21,7 @@ public class ClubAPIController {
     }
 
     @GetMapping("all")
-    public Iterable<Club> createClub() {
+    public Iterable<Club> getClubs() {
         return clubService.getAll();
     }
 
@@ -30,4 +30,10 @@ public class ClubAPIController {
         return clubService.addClub(club);
     }
 
+    @PostMapping("update")
+    public Club updateClub(@RequestBody Club club) {
+        return clubService.updateEntireClub(club);
+    }
+
+    
 }
