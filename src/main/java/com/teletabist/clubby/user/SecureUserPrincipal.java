@@ -13,14 +13,12 @@ public class SecureUserPrincipal implements UserDetails {
     private static final long serialVersionUID = 2521436728555064716L;
     private User user;
 
-
     public SecureUserPrincipal(User u) {
         this.user = u;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-    
         return this.user.getRoles();
     }
 
