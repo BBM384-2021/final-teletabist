@@ -2,12 +2,14 @@ package com.teletabist.clubby.club.models;
 
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -58,6 +60,9 @@ public class Club {
     @Column(nullable = false)
     @CreationTimestamp
     private Timestamp created_at;
+
+    /*@OneToMany(mappedBy = "club")
+    private Set <UsersClubInterest> interests;*/
 
     public Integer getId() {
         return id;
@@ -138,7 +143,4 @@ public class Club {
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }
-
-    
-    
 }
