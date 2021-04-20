@@ -1,0 +1,52 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Welcome to Clubby Framework</title>
+</head>
+<body>
+    <!-- <div>
+        <h5>Clubs: <span sec:authentication="name"></span></h5>
+    </div>
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Club Name</th>
+                <th scope="col">Club Slug</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="club: ${clubs}">
+                <th scope="row" th:text="${club.id}">id</th>
+                <td th:text="${club.name}">Username</td>
+                <td th:text="${club.slug}">email</td>
+            </tr>
+        </tbody>
+
+    </table> -->
+    <div id="App">
+        <navbar></navbar>
+        <b-container>
+            <b-row >
+                <b-col>
+                    <mainclub th:club-name = "${club.name}" ></mainclub>
+                </b-col>
+            </b-row>
+             <b-row class="mb-3">
+                 <b-col>
+                     <subclubsinclub></subclubsinclub>
+                     <subclubsinclub></subclubsinclub>
+                 </b-col>
+             </b-row>
+        </b-container>    
+        <footerbar></footerbar>    
+    </div>
+    <script src="/public/js/main.js"></script>
+</body>
+</html>
