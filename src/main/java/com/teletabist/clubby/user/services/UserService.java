@@ -2,6 +2,8 @@ package com.teletabist.clubby.user.services;
 
 import java.util.UUID;
 
+import com.teletabist.clubby.user.models.Profile;
+import com.teletabist.clubby.user.models.ProfileRepository;
 import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.user.models.UserRepository;
 
@@ -17,9 +19,12 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private final ProfileRepository profileRepository;
+    
     @Autowired
-    public UserService(UserRepository uRepository){
+    public UserService(UserRepository uRepository,ProfileRepository uProfileRepository){
         this.userRepository = uRepository;
+        this.profileRepository = uProfileRepository;
     }
 
     public User addPerson(User u){
@@ -31,6 +36,10 @@ public class UserService {
             if(_trimmed.length()>7 && _trimmed.length()<65){
                 u.setPassword(passwordEncoder.encode(_trimmed));
                 u = this.userRepository.save(u);
+                Profile p = new Profile();
+                p.setUser(u);
+                p = this.profileRepository.save(p);
+                u.setProfile(p);
                 return u;
             }
         }catch(DataIntegrityViolationException e){
