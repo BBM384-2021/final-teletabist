@@ -34,18 +34,24 @@ public class ClubService {
 
 
     public Club updateEntireClub(Club club) {
+        Club updatingClub = clubRepository.findDistinctBySlug(club.getSlug());
 
-        /*if (club == null) {
+        if (updatingClub == null) {
             try {
                 throw new NotFoundException("There isn't a club with that slug");
             } catch (NotFoundException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
         
+        updatingClub.setName(club.getName());
+        updatingClub.setDescription(club.getDescription());
+        updatingClub.setProfile_photo_url(club.getProfile_photo_url());
+        updatingClub.setWebsite(club.getWebsite());
+        updatingClub.setLocation(club.getLocation());
 
-        clubRepository.save(club);
-        return club;
+        clubRepository.save(updatingClub);
+        return updatingClub;
     }
 
     public Club deleteClub(String slug) {

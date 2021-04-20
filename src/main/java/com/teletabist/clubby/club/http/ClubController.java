@@ -1,6 +1,5 @@
 package com.teletabist.clubby.club.http;
 
-import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.services.ClubService;
 
 import org.springframework.beans.factory.annotation.Autowired;
