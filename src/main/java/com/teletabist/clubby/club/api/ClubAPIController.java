@@ -4,6 +4,8 @@ import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.services.ClubService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -44,8 +46,9 @@ public class ClubAPIController {
     }
 
     @DeleteMapping("delete/{slug}")
-    public Integer deleteClub(@PathVariable String slug) {
-        return clubService.deleteClub(slug);
+    public ResponseEntity<?> deleteClub(@PathVariable String slug) {
+        if (clubService.deleteClub(slug)) return new ResponseEntity<>("Successfull", HttpStatus.OK);
+        return new ResponseEntity<>("Unsuccessfull", HttpStatus.BAD_REQUEST);
     }
 
 }

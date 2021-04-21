@@ -115,8 +115,9 @@ public class ClubService {
     }
 
     @Transactional
-    public Integer deleteClub(String slug) {
-        return clubRepository.deleteBySlug(slug);
+    public Boolean deleteClub(String slug) {
+        if (clubRepository.deleteBySlug(slug) > 0) return true;
+        return false;
     }
     
     /*public Iterable<UserRole> getMembers(Integer club_id) {
