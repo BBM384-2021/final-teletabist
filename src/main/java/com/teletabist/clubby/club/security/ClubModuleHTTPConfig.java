@@ -10,6 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 @Order(20)
 public class ClubModuleHTTPConfig {
     protected void configure(HttpSecurity http) throws Exception{
-        http.authorizeRequests().antMatchers("/club/**").hasRole(Roles.SYS_ADMIN.getName()).and().antMatcher("/club/**").formLogin();
+        http.authorizeRequests().antMatchers("/clubs/**").hasRole(Roles.SYS_ADMIN.getName()).and().antMatcher("/clubs/**").formLogin();
     }
 }
