@@ -58,7 +58,7 @@ public class Club {
     private Timestamp created_at;
 
     @OneToMany(mappedBy = "club")
-    private Set <ClubRoles> club_roles;
+    private Set<ClubRoles> club_roles;
 
     /*@OneToMany(mappedBy = "club")
     private Set <UsersClubInterest> interests;*/

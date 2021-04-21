@@ -31,7 +31,6 @@ public class ClubService {
 
     //TODO: add try/catch block and verification parts
     public Club addClub(Club club) {
-        
         if (club.getSlug() == null) {
 
             club.setSlug(createSlug(club));
@@ -62,7 +61,6 @@ public class ClubService {
             Random random = new Random();
             slugInChange = slugInMaking + random.nextInt(1000000000);
             checkingClub = clubRepository.findDistinctBySlug(slugInChange);
-            System.out.println(i);
         }
 
         return slugInChange;
@@ -119,7 +117,7 @@ public class ClubService {
         if (clubRepository.deleteBySlug(slug) > 0) return true;
         return false;
     }
-    
+
     /*public Iterable<UserRole> getMembers(Integer club_id) {
         Iterable<ClubRoles> cr;
         cr = clubRolesRepository.findByClub_id(club_id);
