@@ -2,12 +2,14 @@ package com.teletabist.clubby.club.models;
 
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,20 +32,16 @@ public class Club {
     @Column(nullable = false, length = 255)
     private String name;
     
-    @JsonIgnore
     @Column(columnDefinition = "TEXT")
     private String description;
 
     //DEĞİŞEBİLİR
-    @JsonIgnore
     @Column(length = 1024)
     private String profile_photo_url;
 
-    @JsonIgnore
     @Column(length = 256)
     private String website;
 
-    @JsonIgnore
     @Column(columnDefinition = "TEXT")
     private String location;
 
@@ -58,6 +56,9 @@ public class Club {
     @Column(nullable = false)
     @CreationTimestamp
     private Timestamp created_at;
+
+    @OneToMany(mappedBy = "club")
+    private Set <ClubRoles> club_roles;
 
     /*@OneToMany(mappedBy = "club")
     private Set <UsersClubInterest> interests;*/
@@ -83,7 +84,9 @@ public class Club {
     }
 
     public void setName(String name) {
-        this.name = name;
+        String _trimmed = name.trim();
+
+        this.name = _trimmed;
     }
 
     public String getDescription() {

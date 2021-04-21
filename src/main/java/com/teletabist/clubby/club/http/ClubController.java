@@ -30,4 +30,11 @@ public class ClubController {
         map.put("club", clubService.getClub(slug));
         return "club/single";
     }
+
+    /*@GetMapping("get/{slug}/manage")
+    public String updateClub(@PathVariable String slug, ModelMap map) {
+        map.put("fields", clubService.getClub(slug));
+        return "club/manage";
+    }*/
+
 }
