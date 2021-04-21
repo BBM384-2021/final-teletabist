@@ -3,9 +3,12 @@ package com.teletabist.clubby.user.services;
 import java.util.Iterator;
 import java.util.UUID;
 
+import javax.xml.bind.ValidationException;
+
 import com.teletabist.clubby.user.models.Profile;
 import com.teletabist.clubby.user.models.ProfileRepository;
 import com.teletabist.clubby.user.models.User;
+import com.teletabist.clubby.user.models.UserDTO;
 import com.teletabist.clubby.user.models.UserRepository;
 
 import org.slf4j.LoggerFactory;
@@ -18,13 +21,15 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
+    private final ProfileService profileService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository uRepository, ProfileRepository pRepository){
+    public UserService(UserRepository uRepository, ProfileRepository pRepository, ProfileService pService){
         this.userRepository = uRepository;
         this.profileRepository = pRepository;
+        this.profileService = pService;
     }
 
     public User createUser(User u){
@@ -37,7 +42,8 @@ public class UserService {
                 u.setPassword(passwordEncoder.encode(_trimmed));
                 u = this.userRepository.save(u);
                 if(u != null){
-                    u.setProfile(this.generateProfile(u));
+                    if(u.getProfile() == null)
+                        u.setProfile(this.generateProfile(u));
                 }
                 return u;
             }
@@ -108,5 +114,20 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public User registerUser(UserDTO userDTO) throws ValidationException{
+        if(!userDTO.getPassword().equals(userDTO.getPassword_validate())){
+            throw new ValidationException("Passwords doesn't match");
+        }
+        User u = new User();
+        u.setEmail(userDTO.getEmail());
+        u.setPassword(userDTO.getPassword());
+        u.setUsername(userDTO.getUsername());
+        u = this.createUser(u);
+        Profile p = u.getProfile();
+        p.setName(userDTO.getName());
+        this.profileRepository.save(p);
+        return u;
     }
 }
