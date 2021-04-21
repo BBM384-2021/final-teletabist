@@ -74,8 +74,6 @@ public class ClubService {
         return clubRepository.findAll();
     }
 
-
-
     public Club updateEntireClub(Club club, String slug) {
         Club updatedClub = clubRepository.findDistinctBySlug(slug);
 
@@ -99,7 +97,6 @@ public class ClubService {
             } else {
                 updatedClub.setSlug(updatedClub.getSlug());
             }
-
         }
 
         updatedClub.setName((club.getName() != null)?club.getName():updatedClub.getName());
