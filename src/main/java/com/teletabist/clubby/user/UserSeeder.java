@@ -1,10 +1,13 @@
 package com.teletabist.clubby.user;
 
 import com.teletabist.clubby.user.core.Roles;
+import com.teletabist.clubby.user.models.Profile;
+import com.teletabist.clubby.user.models.ProfileRepository;
 import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.user.models.UserRepository;
 import com.teletabist.clubby.user.models.UserRole;
 import com.teletabist.clubby.user.models.UserRoleRepository;
+import com.teletabist.clubby.user.services.UserService;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import java.util.UUID;
 public class UserSeeder {
     private UserRepository userRepository;
     private UserRoleRepository userRoleRepository;
+    private ProfileRepository profileRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -30,10 +34,12 @@ public class UserSeeder {
     @Autowired
     public UserSeeder(
         UserRepository urep,
-        UserRoleRepository rolerep
+        UserRoleRepository rolerep,
+        ProfileRepository profileRepository
     ){
         this.userRoleRepository = rolerep;
         this.userRepository = urep;
+        this.profileRepository = profileRepository;
     }
 
     @EventListener
@@ -55,11 +61,10 @@ public class UserSeeder {
             r.setUser(u);
             r.setRole(Roles.SYS_ADMIN.getName());
             r = this.userRoleRepository.save(r);
-            if(u == null){
-                throw new Exception("Default user cannot be created!");
-            }else{
-                LoggerFactory.getLogger(UserSeeder.class).info("\n\nAdmin usermane: "+u.getUsername()+"\n"+"Admin password: "+env.getProperty("spring.security.user.password", "password")+"\n");
-            }
+            Profile p = new Profile();
+            p.setUser(u);
+            p.setName(u.getUsername());
+            LoggerFactory.getLogger(UserSeeder.class).info("\n\nAdmin usermane: "+u.getUsername()+"\n"+"Admin password: "+env.getProperty("spring.security.user.password", "password")+"\n");
         }else{
             LoggerFactory.getLogger(UserSeeder.class).info("Admin user exists in database already");
         }

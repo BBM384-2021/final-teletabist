@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
