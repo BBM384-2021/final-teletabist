@@ -4,14 +4,18 @@ import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.user.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/dev/user")
+@RequestMapping("api/dev/users")
 public class UserAPIController {
     private final UserService userService;
 
@@ -24,14 +28,30 @@ public class UserAPIController {
         this.userService = userService;
     }
 
-    @GetMapping("all")
-    public Iterable<User> createUser(){
+    @GetMapping
+    public Iterable<User> index(){
         return this.userService.getAll();
     }
 
-    @PostMapping("create")
-    public User createUser(@RequestBody User user){
-        return this.userService.addPerson(user);
+    @PostMapping
+    public User store(@RequestBody User user){
+        return this.userService.createUser(user);
+    }
+
+    @GetMapping("{username}")
+    public User get(@PathVariable String username){
+        return this.userService.getUser(username);
+    }
+
+    @PutMapping("{username}")
+    @PatchMapping("{username}")
+    public User update(@PathVariable String username, @RequestBody User user){
+        return this.userService.updateUser(username, user);
+    }
+
+    @DeleteMapping("{username}")
+    public boolean delete(@PathVariable String username){
+        return this.userService.deleteUser(username);
     }
 
     @PostMapping("test/password")

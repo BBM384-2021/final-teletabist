@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -131,6 +132,10 @@ public class User {
     @JsonManagedReference
     @OneToMany(mappedBy = "id", fetch=FetchType.EAGER)
     private List<UserRole> roles;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "user", fetch=FetchType.EAGER)
+    private Profile profile;
 
     /**
      * @return true if the user is validated, false otherwise.
@@ -291,4 +296,13 @@ public class User {
     public void setRoles(List<UserRole> roles) {
         this.roles = roles;
     }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
 }
