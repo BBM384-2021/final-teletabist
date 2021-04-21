@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,7 +33,7 @@ public class ClubController {
         return "club/index";
     }
 
-    @GetMapping("get/{slug}")
+    @GetMapping("{slug}")
     public String getClub(@PathVariable String slug, ModelMap map) {
         map.put("club", clubService.getClub(slug));
         return "club/single";
@@ -44,53 +45,55 @@ public class ClubController {
     }
 
     @PostMapping()
-    public String storeCreatedClub(@Valid @ModelAttribute("club") Club club, BindingResult result, ModelMap model) {
+    public String storeCreatedClub(@ModelAttribute("club") Club club, BindingResult result, ModelMap model) {
         
         if (result.hasErrors()) {
             return "error";
         }
-        model.addAttribute("id", club.getId());
+
+        /*model.addAttribute("id", club.getId());
         model.addAttribute("slug", club.getSlug());
         model.addAttribute("name", club.getName());
         model.addAttribute("description", club.getDescription());
         model.addAttribute("profile_photo_url", club.getProfile_photo_url());
         model.addAttribute("website", club.getWebsite());
         model.addAttribute("location", club.getLocation());
-        model.addAttribute("parent_id", club.getParent_id());
+        model.addAttribute("parent_id", club.getParent_id());*/
 
         Club createdClub = clubService.addClub(club);
-        return "redirect:/get/" + createdClub.getSlug();
+        return "redirect:/clubs/" + createdClub.getSlug();
     }
 
-    @GetMapping("get/{slug}/edit")
+    @GetMapping("{slug}/edit")
     public ModelAndView getEditClubForm(@PathVariable String slug) {
         return new ModelAndView("club/edit", "club", clubService.getClub(slug));
     }
 
-
-    @PatchMapping("get/{slug}")
-    public String storeUpdatedClub(@Valid @ModelAttribute("club") Club club, BindingResult result, ModelMap model, @PathVariable String slug) {
+    @PutMapping("{slug}")
+    @PatchMapping("{slug}")
+    public String storeUpdatedClub(@ModelAttribute("club") Club club, BindingResult result, ModelMap model, @PathVariable String slug) {
         
         if (result.hasErrors()) {
             return "error";
         }
-        model.addAttribute("id", club.getId());
+        
+        /*model.addAttribute("id", club.getId());
         model.addAttribute("slug", club.getSlug());
         model.addAttribute("name", club.getName());
         model.addAttribute("description", club.getDescription());
         model.addAttribute("profile_photo_url", club.getProfile_photo_url());
         model.addAttribute("website", club.getWebsite());
         model.addAttribute("location", club.getLocation());
-        model.addAttribute("parent_id", club.getParent_id());
+        model.addAttribute("parent_id", club.getParent_id());*/
 
         Club updatedClub = clubService.updateEntireClub(club, slug);
-        return "redirect:/get/" + updatedClub.getSlug();
+        return "redirect:/clubs/" + updatedClub.getSlug();
     }
 
-    @DeleteMapping("get/{slug}")
+    @DeleteMapping("{slug}")
     public String deleteClub(@PathVariable String slug) {
         clubService.deleteClub(slug);
-        return "redirect:/";
+        return "redirect:/clubs/";
     }
 
 }
