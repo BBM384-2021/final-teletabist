@@ -14,8 +14,13 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 @Order(10)
 public class UserModuleHttpConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception{
-        http.authorizeRequests().antMatchers("/users/**").hasRole(Roles.SYS_ADMIN.getName()).and().antMatcher("/users/**").formLogin();
-        http.authorizeRequests().antMatchers("/account/**").permitAll().and().antMatcher("/account/**").csrf();
+        http
+        .authorizeRequests()
+        .antMatchers("/users/**")
+        .hasRole(Roles.SYS_ADMIN.getName())
+        .and()
+        .antMatcher("/users/**")
+        .formLogin();
     }
     
     @Bean
