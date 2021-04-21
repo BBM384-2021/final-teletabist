@@ -1,69 +1,168 @@
 package com.teletabist.clubby.user.models;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
-public class Profile {
-	private final int id;
-    private final String name;
-    private final String biography;
-    private final Date birthday;
-    private final String current_location;
-    private final int gender;
-    private final String institution;
-    private final String job_title;
-    private final Date created_at;
-    private final Date updated_at;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-    public Profile(int id, String name, String biography, Date birthday, String current_location, int gender, String institution, String job_title, Date created_at, Date updated_at){
-        this.id = id;
-		this.name = name;
-        this.biography = biography;
-        this.birthday = birthday;
-        this.current_location = current_location;
-        this.gender = gender;
-        this.institution = institution;
-        this.job_title = job_title;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+
+/**
+ * This code is written by Bugra.
+ * For data relationship purposes, edited by Yigit
+ */
+@Entity
+@Table(name="profiles") 
+public class Profile {
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(length = 10)
+    private Integer id;
 	
-	public int getId() {
-		return id;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false) //relation
+	@JsonBackReference 
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
+
+	@Column(nullable = false, length = 255)
+    private String name;
+
+	@Column(length = 1024)
+    private String profile_photo_url;
+
+	@Column(length = 512)
+    private String biography;
+
+	@Column
+    private Date birthday;
+
+    @Column(length = 255)
+    private String current_location;
+
+	@Column(length = 1)
+    private Integer gender;
+
+    @Column(length = 255)
+    private String institution;
+
+    @Column(length = 255)
+    private String  job_title;
+
+	@Column(nullable = false)
+    @CreationTimestamp
+    private Timestamp created_at;
+
+    @Column(nullable = false)
+    @UpdateTimestamp
+    private Timestamp updated_at;
+
+
+	// Getters and Setters
+	
+	public Integer getId() {
+		return this.id;
 	}
 
+	public User getUser() {
+		return user;
+	}
+	
+	
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getBiography() {
-		return biography;
+		return this.biography;
 	}
 
 	public Date getBirthday() {
-		return birthday;
+		return this.birthday;
 	}
 
 	public String getCurrent_location() {
-		return current_location;
+		return this.current_location;
 	}
 
-	public int getGender() {
-		return gender;
+	public Integer getGender() {
+		return this.gender;
 	}
 
 	public String getInstitution() {
-		return institution;
+		return this.institution;
 	}
 
 	public String getJob_title() {
-		return job_title;
+		return this.job_title;
 	}
 
-	public Date getCreated_at() {
+	public Timestamp getCreated_at() {
 		return created_at;
 	}
 
-	public Date getUpdated_at() {
+	public Timestamp getUpdated_at() {
 		return updated_at;
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getProfile_photo_url() {
+		return profile_photo_url;
+	}
+
+	public void setProfile_photo_url(String profile_photo_url) {
+		this.profile_photo_url = profile_photo_url;
+	}
+
+	public void setBiography(String biography) {
+		this.biography = biography;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public void setCurrent_location(String current_location) {
+		this.current_location = current_location;
+	}
+
+	public void setGender(Integer gender) {
+		this.gender = gender;
+	}
+
+	public void setInstitution(String institution) {
+		this.institution = institution;
+	}
+
+	public void setJob_title(String job_title) {
+		this.job_title = job_title;
+	}
+
+	public void setCreated_at(Timestamp created_at) {
+		this.created_at = created_at;
+	}
+
+	public void setUpdated_at(Timestamp updated_at) {
+		this.updated_at = updated_at;
+	}
+
 }

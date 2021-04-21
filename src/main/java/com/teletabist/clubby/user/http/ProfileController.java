@@ -4,11 +4,17 @@ import com.teletabist.clubby.user.models.Profile;
 import com.teletabist.clubby.user.services.ProfileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This code is written by Bugra.
+ * Because of merge issues, fixed by Yigit
+ */
 @RestController
 public class ProfileController {
 
@@ -26,7 +32,14 @@ public class ProfileController {
 
     @GetMapping("profile")
     @ResponseBody
-    public String index(){
-        return "Hello from profile controller";
+    public String index(ModelMap map){
+        map.put("profiles", profileService.getAll());
+        return "profile/index";
+    }
+
+    @GetMapping("get/{slug}")
+    public String getProfile(@PathVariable String slug, ModelMap map) {
+        //map.put("profile", profileService.getProfile(slug));
+        return "profile";
     }
 }
