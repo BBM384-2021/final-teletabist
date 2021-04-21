@@ -4,7 +4,6 @@ import java.security.InvalidParameterException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.persistence.Column;
@@ -14,11 +13,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.teletabist.clubby.club.models.UsersClubInterest;
 
 import org.apache.commons.validator.routines.DomainValidator;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -131,6 +130,10 @@ public class User {
     @JsonManagedReference
     @OneToMany(mappedBy = "id", fetch=FetchType.EAGER)
     private List<UserRole> roles;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "user", fetch=FetchType.EAGER)
+    private Profile profile;
 
     /**
      * @return true if the user is validated, false otherwise.
@@ -291,4 +294,13 @@ public class User {
     public void setRoles(List<UserRole> roles) {
         this.roles = roles;
     }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
 }

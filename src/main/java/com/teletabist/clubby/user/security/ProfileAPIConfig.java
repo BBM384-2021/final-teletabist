@@ -10,31 +10,36 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
+/**
+ * This code is written by Bugra.
+ * Because of merge issues, fixed by Yigit
+ */
 @Configuration
-@Order(15)
-public class UserModuleAPIConfig extends WebSecurityConfigurerAdapter{
+@Order(16)
+public class ProfileAPIConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
-            .antMatcher("/api/dev/users/**")
+            .antMatcher("/api/dev/profile/**")
             .csrf().disable()
             .sessionManagement().disable()
             .headers().frameOptions().disable()
         .and()
             .authorizeRequests()
-            .antMatchers("/api/dev/users/**")
+            .antMatchers("/api/dev/profile/**")
             .hasRole(Roles.SYS_ADMIN.getName())
         .and()
-            .antMatcher("/api/dev/users/**")
+            .antMatcher("/api/dev/profile/**")
             .httpBasic()
-            .authenticationEntryPoint(this.authenticationEntryPoint());
+            .authenticationEntryPoint(this.ProfileeauthenticationEntryPoint());
     
     }
 
     @Bean
-    public AuthenticationEntryPoint authenticationEntryPoint(){
+    public AuthenticationEntryPoint ProfileeauthenticationEntryPoint(){
         BasicAuthenticationEntryPoint ep = new BasicAuthenticationEntryPoint();
         ep.setRealmName("user module realm");
         return ep; 
     }
+    
 }
