@@ -16,8 +16,12 @@ public class UserModuleHttpConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception{
         http
         .authorizeRequests()
-        .antMatchers("/users/**")
-        .hasRole(Roles.SYS_ADMIN.getName())
+        .antMatchers("/users/{username}")
+        .authenticated()
+        .and()
+        .authorizeRequests()
+        .antMatchers("/users/{username}/edit")
+        .access("hasRole(\"SYS_ADMIN\") or hasRole(\"ADMIN\") or @profileSecurity.isUser(#username)")
         .and()
         .antMatcher("/users/**")
         .formLogin();

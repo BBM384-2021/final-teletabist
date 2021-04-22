@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Welcome to Clubby Framework</title>
+</head>
+<body>
+    <div id="App">
+        <b-container>
+            <b-row class="vh-100" align-v="center">
+                <b-col cols="12">
+
+                <b-button th:if="${referer_page} != null" th:href="@{${referer_page}}" variant="info">Go back</b-button>   
+                <form class="mt-2" th:action="@{/users/{username}(username = ${user.username})}" th:method="PATCH" enctype="utf8">
+                    <profileedit 
+                    th:name = "${user.profile.name}"
+                    th:location = "${user.profile.current_location}"
+                    th:birthday = "${#dates.format(user.profile.birthday, 'yyyy-MM-DD')}"
+                    th:biography = "${user.profile.biography}"
+                    th:username = "${user.username}"
+                    th:profile-url = "@{/users/{username}(username = ${user.username})}"
+                    ></profileedit>
+                
+                </form>
+            <!-- <form class="mt-4 text-right" th:action="@{/users/{username}(username = ${user.username})}" th:method="DELETE" enctype="utf8">
+                <b-button type="submit" variant="danger">DELETE ACCOUNT</b-button>
+            </form> -->
+        </b-col>
+    </b-row>
+        </b-container>
+        
+    </div>
+    <script src="/public/js/main.js"></script>
+</body>
+</html>

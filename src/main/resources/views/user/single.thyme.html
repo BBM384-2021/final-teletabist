@@ -17,8 +17,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
                     <profile 
                         th:name = "${user.profile.name}"
                         th:location = "${user.profile.current_location}"
-                        th:birthdate = "${user.profile.birthday}"
+                        th:member-since = "${#dates.format(user.profile.created_at, 'MMMM yyyy')}"
+                        th:birthday = "${#dates.format(user.profile.birthday, 'dd MMMM yyyy')}"
                         th:biography = "${user.profile.biography}"
+                        th:username = "${user.username}"
                     ></profile>
                 </b-col>
             </b-row>

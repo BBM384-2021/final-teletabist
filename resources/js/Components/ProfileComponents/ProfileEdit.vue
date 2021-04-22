@@ -5,23 +5,28 @@
         <b-col cols="8">
         <b-row  class="h-100 mt-4" >
           <b-col cols="12" >
-                <span style="font-size: 28px;">{{NameSurname}}</span>
+                  <a class="text-dark text-decoration-none"  v-if="profileUrl != ''" :href="profileUrl" >
+                    <span style="font-size: 28px;">{{name}}</span>
+                  </a>
+                  <span v-else style="font-size: 28px;">{{name}}</span>
+                
+                
                 <hr class="profileHr">
                 <b-row>
                     <b-col cols="3">
 
                     </b-col>
                         <b-col cols="6">
-                        <b-form-textarea size="sm"  style="height:37px;" id="textarea-default" placeholder="Name"></b-form-textarea>
+                        <b-form-input type="text"  size="sm"  style="height:37px;" placeholder="Name" id="name" name="name" v-bind:value="name"></b-form-input>
                         <br>
-                        <b-form-textarea size="sm" style="height:37px;" id="textarea-default" placeholder="Surname"></b-form-textarea>
+                        <b-form-input type="text" size="sm" style="height:37px;" placeholder="username" id="username" name="username" v-bind:value="username"></b-form-input>
                         <br>
-                        <b-form-textarea size="sm" style="height:37px;" id="textarea-default" placeholder="Location"></b-form-textarea>
+                        <b-form-input type="text" size="sm" style="height:37px;" placeholder="Location" id="location" name="location" v-bind:value="location"></b-form-input>
                         <br>
-                        <b-form-textarea size="sm" style="height:37px;" id="textarea-default" placeholder="Birth Date"></b-form-textarea>
+                        <b-form-input type="date" size="sm" style="height:37px;" placeholder="Birthday" id="birthday" name="birthday" v-bind:value="birthday"></b-form-input>
                         <br>
-                        <b-form-textarea size="sm" style="height:60px;" id="textarea-default" placeholder="Biography" class="mb-2"></b-form-textarea>
-                        <b-link href="#foo" class="float-right" style="color: black;font-size: 16px;">SAVE</b-link>
+                        <b-form-textarea size="sm" style="height:60px;" placeholder="Biography" class="mb-2"  id="biography" name="biography" v-bind:value="biography"></b-form-textarea>
+                        <b-button type="submit" class="float-right" style="color: black;font-size: 16px;">SAVE</b-button>
 
                     </b-col>
                     <b-col cols="3">
@@ -40,9 +45,8 @@
                     <b-avatar class="mt-3 mb-2" src="https://placekitten.com/300/300" size="6rem"></b-avatar>
                     <br>
                     <b-link href="#foo" style="color: black;font-size: 16px;">CHANGE YOUR PHOTO</b-link> 
-                    <br>
-                    <br>
-                    <b-link href="#foo" style="color: black;font-size: 12px;">DELETE MY ACCOUNT</b-link> 
+                    
+                    
                 </div>
             </b-col>
           </b-row>
@@ -60,7 +64,12 @@
 export default {
   name: 'ProfileEdit',
   props : {
-    NameSurname : {type : String , default : "NAME SURNAME"},
+    name : {type : String , default : ""},
+    username: {type: String, default: ""},
+    location : {type : String , default : ""},
+    birthday : {type : String , default : ""},
+    biography : {type : String , default : ""},
+    profileUrl : {type : String , default : ""},
   }
 }
 </script>

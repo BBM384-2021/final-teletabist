@@ -1,8 +1,10 @@
 package com.teletabist.clubby.config;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -56,4 +58,10 @@ public class WebConfig implements WebMvcConfigurer {
     public SpringSecurityDialect securityDialect() {
         return new SpringSecurityDialect();
     }
+
+    @Bean
+    public FilterRegistrationBean<HiddenHttpMethodFilter> hiddenFilterRegistrationBean() {
+        return new FilterRegistrationBean<HiddenHttpMethodFilter>(new HiddenHttpMethodFilter());
+    }
+
 }
