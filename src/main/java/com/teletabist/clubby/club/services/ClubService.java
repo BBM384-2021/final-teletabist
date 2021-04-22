@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.transaction.Transactional;
 
 import com.teletabist.clubby.club.models.Club;
+import com.teletabist.clubby.club.models.ClubFormDTO;
 import com.teletabist.clubby.club.models.ClubRepository;
 import com.teletabist.clubby.club.models.ClubRolesRepository;
 import com.teletabist.clubby.user.models.UserRoleRepository;
@@ -113,6 +114,17 @@ public class ClubService {
     public Boolean deleteClub(String slug) {
         if (clubRepository.deleteBySlug(slug) > 0) return true;
         return false;
+    }
+
+    public Club createClub(ClubFormDTO clubFormDTO) {
+        Club club = new Club();
+        club.setName(clubFormDTO.getName());
+        club.setSlug(clubFormDTO.getSlug());
+        club.setDescription(clubFormDTO.getDescription());
+        club.setLocation(clubFormDTO.getLocation());
+        //club.setParent_id
+        club.setWebsite(clubFormDTO.getWebsite());
+        return addClub(club);
     }
 
     /*public Iterable<UserRole> getMembers(Integer club_id) {
