@@ -13,6 +13,7 @@
                         <b-dropdown id="dropdown-right" right text="Sort alphabetically" class="m-2" style="float: right; margin-right: 10px;margin-top:0.5%;">
                         <b-dropdown-item>Sort by date of joining the club </b-dropdown-item>
                         </b-dropdown>
+                        <br>
                         <span class="ml-3 pt-4" >ALL MEMBERS</span>
                         <b-form-input size="sm" class="mr-sm-2 m-3" id = "findMembers" placeholder="FIND MEMBERS"></b-form-input>
                 </b-col>
@@ -44,20 +45,6 @@ import AllMembersInMembers from './AllMembersInMembers.vue'
 export default {
   components: { MemberInMembers, AllMembersInMembers },
   name: 'MembersInClub',
-  data() {
-      return {
-        text: `
-          Quis magna Lorem anim amet ipsum do mollit sit cillum voluptate ex nulla
-          tempor. Laborum consequat non elit enim exercitation cillum aliqua
-          consequat id aliqua. Esse ex consectetur mollit voluptate est in duis
-          laboris ad sit ipsum anim Lorem. Incididunt veniam velit elit elit veniam
-          Lorem aliqua quis ullamco deserunt sit enim elit aliqua esse irure. Laborum
-          nisi sit est tempor laborum mollit labore officia laborum excepteur
-          commodo non commodo dolor excepteur commodo. Ipsum fugiat ex est consectetur
-          ipsum commodo tempor sunt in proident.
-        `
-      }
-  },
 }
 </script>
 

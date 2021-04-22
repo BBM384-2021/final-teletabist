@@ -7,7 +7,7 @@
         <div class="clubcomments">
           <b-row   style="height:30%;">
              <b-col cols="12" class="align-items-center" >
-                   <b-avatar class="memberAvatarInClub" src="https://placekitten.com/300/300" size="4rem"></b-avatar>
+                   <b-avatar class="memberAvatarInClub" v-bind:src=memberpicurl size="4rem"></b-avatar>
                    <span class="ml-4" style="font-size:18px;">{{Name}}</span>
                    
                    <div class="align-middle d-inline">
@@ -41,22 +41,11 @@
 <script>
 export default {
   name: 'CommnetsInClub',
-   data() {
-      return {
-        text: `
-          Quis magna Lorem anim amet ipsum do mollit sit cillum voluptate ex nulla
-          tempor. Laborum consequat non elit enim exercitation cillum aliqua
-          consequat id aliqua. Esse ex consectetur mollit voluptate est in duis
-          laboris ad sit ipsum anim Lorem. Incididunt veniam velit elit elit veniam
-          Lorem aliqua quis ullamco deserunt sit enim elit aliqua esse irure. Laborum
-          nisi sit est tempor laborum mollit labore officia laborum excepteur
-          commodo non commodo dolor excepteur commodo.
-        `
-      }
-    },
   props : {
     Name : {type : String , default : "Name"},
     DateofSharing : {type : Date , default : "April 1"},
+    memberpicurl : {type : String , default : "#"},
+    text : {type : String , default : " Quis magna Lorem anim amet ipsum do mollit sit cillum voluptate ex nulla tempor.Laborum consequat non elit enim exercitation cillum aliqua consequat id aliqua. Esse ex consectetur mollit voluptate est in duis."},
   }
 }
 </script>

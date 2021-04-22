@@ -13,7 +13,7 @@
                 </b-col> 
             </b-row>
 
-            <b-row class="justify-content-center">   <!--ORTALAMAK İÇİN BUNU KULLAN MAL class="justify-content-center" -->
+            <b-row class="justify-content-center">   <!--ORTALAMAK İÇİN BUNU KULLAN class="justify-content-center" -->
             
                 <b-col cols="8" class="text-center"> <!-- <b-col cols="8" class="text-center" offset="2"> -->
                     <p style="font-size: 20px">Share your comments about the club with us</p>

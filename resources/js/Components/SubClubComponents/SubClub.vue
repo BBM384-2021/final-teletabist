@@ -5,7 +5,7 @@
       <b-col cols="4">
         <b-row  class="h-100 align-items-center">
           <b-col cols="12 mt-" >
-              <b-img center src="http://placehold.it/280x180" alt="Center image"></b-img>
+              <b-img center v-bind:src=clubpicurl alt="Center image"></b-img>
              </b-col> 
         </b-row>
         
@@ -15,7 +15,7 @@
         <b-row class="text-center">
             <b-col cols="12" >
               <div  class="text-center" style="border: 1px inset black; border-radius: 20px; width: 125px; margin-top:42px;">
-                    <b-avatar class="mt-3" src="https://placekitten.com/300/300" size="4rem"></b-avatar>
+                    <b-avatar class="mt-3" v-bind:src=adminpicurl size="4rem"></b-avatar>
                     <p class="mt-3" style="font-size: 14px;">{{NameSurname}}</p>
                     <p style="color: #515151;font-size: 12px;">SubClub Admin</p>                               
               </div>
@@ -36,7 +36,7 @@
           <b-row class="h-100" style="padding-bottom:42px">
             <b-col cols="12" class="text-center"  >
                  <h2 class="mt-3">{{ClubName}}</h2>
-                 <h4>RATE 50%</h4>
+                 <h4>RATE {{rate}}%</h4>
 
                  <h4 style="margin-top:35px;">
                    {{ShortText}}
@@ -52,13 +52,13 @@
     <b-row style="height: 15%;" class="m-0 align-items-end" >
       <b-col cols="7">
         <b-nav  align="left">
-          <b-nav-item active class="club-nav-link">CLUB EVENTS</b-nav-item>
+          <b-nav-item active class="club-nav-link" v-bind:href=clubevents>CLUB EVENTS</b-nav-item>
           <b-nav-item disabled>|</b-nav-item>
-          <b-nav-item class="club-nav-link">MEMBERS</b-nav-item>
+          <b-nav-item class="club-nav-link" v-bind:href=membersurl>MEMBERS</b-nav-item>
           <b-nav-item disabled>|</b-nav-item>
-          <b-nav-item class="club-nav-link">DISCUSSIONS</b-nav-item>
+          <b-nav-item class="club-nav-link" v-bind:href=discussionssurl>DISCUSSIONS</b-nav-item>
            <b-nav-item disabled>|</b-nav-item>
-          <b-nav-item class="club-nav-link">COMMENTS</b-nav-item>
+          <b-nav-item class="club-nav-link" v-bind:href=commentsurl>COMMENTS</b-nav-item>
         </b-nav>
       </b-col>
 
@@ -79,8 +79,15 @@ export default {
   name: 'SubClub',
    props : {
     NameSurname : {type : String , default : "Name Surname"},
+    adminpicurl: {type : String , default : ""},
     ShortText : {type : String , default : "A short text about the club"},
-    ClubName : {type : String , default : "CLUB NAME"}
+    ClubName : {type : String , default : "CLUB NAME"},
+    rate : {type : Number , default : 0},
+    clubpicurl: {type : String , default : "http://placehold.it/280x180"},
+    clubevents : {type : String , default : "#"},
+    membersurl : {type : String , default : "#"},
+    discussionssurl : {type : String , default : "#"},
+    commentsurl : {type : String , default : "#"},
   },
 }
 </script>

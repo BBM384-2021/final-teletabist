@@ -13,13 +13,13 @@
 
             <b-col cols="9">
                 <b-row class="h-100 align-items-center">
-                    <b-col col="8">
+                    <b-col cols="8">
                         <span>{{ClubName}}</span>
                         <br>
                         <span>Date of join: {{DateofSharing}}</span>
                     </b-col>
 
-                    <b-col col="2">
+                    <b-col cols="2">
                         <b-link href="#foo" class="float-right mr-3" style="color: black;">LEAVE GROUP</b-link>
                     </b-col>
                 </b-row>

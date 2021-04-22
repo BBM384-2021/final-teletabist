@@ -33,9 +33,6 @@
         
         </b-col>
 
-     
-
-
       <b-col cols="4" class="pl-2">
           <b-row>
             <b-col cols="12" >

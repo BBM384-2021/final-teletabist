@@ -1,8 +1,8 @@
 <template>
   <div class="overflow-hidden " >
-    <b-row>
-        <b-col class="h-100 align-items-center" >
-            <div style=" border-radius: 10px; border: 1px inset black; height : 65px; " class="text-center">
+    <b-row class="m-0" align-v="center" style=" border-radius: 10px; border: 1px inset black;height:65px;">
+        <b-col class="text-center" >
+            <div  class="text-center">
                 <span align="center">ALL MEMBERS</span>
                 <span style="margin-left:20px">{{Count}}</span>
             </div>
@@ -15,7 +15,7 @@
 export default {
   name: 'AllMembersInMembers',
   props : {
-    Count : {type : Number , default : "0"},
+    Count : {type : Number , default : 0},
   },
 }
 </script>
