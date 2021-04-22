@@ -1,12 +1,17 @@
 package com.teletabist.clubby.club.http;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.teletabist.clubby.club.models.Club;
+import com.teletabist.clubby.club.models.ClubFormDTO;
 import com.teletabist.clubby.club.services.ClubService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping("clubs")
@@ -34,60 +40,90 @@ public class ClubController {
     }
 
     @GetMapping("{slug}")
-    public String getClub(@PathVariable String slug, ModelMap map) {
-        map.put("club", clubService.getClub(slug));
-        return "club/single";
+    public ModelAndView getClub(@PathVariable String slug, ModelMap map) {
+        Club club = clubService.getClub(slug);
+
+        if (club == null) {
+            return new ModelAndView("404");
+        }
+        map.put("club", club);
+        return new ModelAndView("club/single");
     }
 
     @GetMapping("create")
-    public ModelAndView getCreateClubForm() {
-        return new ModelAndView("club/create", "club", new Club());
+    public ModelAndView getCreateClubForm(
+        WebRequest request,
+        ModelMap model) {
+
+        ClubFormDTO clubFormDTO = new ClubFormDTO();
+        model.addAttribute("club", clubFormDTO);
+        return new ModelAndView("club/create", model);
     }
 
     @PostMapping()
-    public String storeCreatedClub(@ModelAttribute("club") Club club, BindingResult result, ModelMap model) {
+    public ModelAndView storeCreatedClub(
+        @ModelAttribute("club") ClubFormDTO clubFormDTO, 
+        HttpServletRequest request,
+        Errors error,
+        BindingResult result) {
         
-        if (result.hasErrors()) {
-            return "error";
-        }
+        Club created = clubService.createClub(clubFormDTO);
 
-        /*model.addAttribute("id", club.getId());
-        model.addAttribute("slug", club.getSlug());
-        model.addAttribute("name", club.getName());
-        model.addAttribute("description", club.getDescription());
-        model.addAttribute("profile_photo_url", club.getProfile_photo_url());
-        model.addAttribute("website", club.getWebsite());
-        model.addAttribute("location", club.getLocation());
-        model.addAttribute("parent_id", club.getParent_id());*/
-
-        Club createdClub = clubService.addClub(club);
-        return "redirect:/clubs/" + createdClub.getSlug();
+        return new ModelAndView("redirect:/clubs/", "club", created);
     }
 
     @GetMapping("{slug}/edit")
-    public ModelAndView getEditClubForm(@PathVariable String slug) {
-        return new ModelAndView("club/edit", "club", clubService.getClub(slug));
+    public ModelAndView getEditClubForm(
+        @PathVariable String slug,
+        ModelMap map, 
+        ClubFormDTO clubFormDTO, 
+        HttpServletRequest request) {
+        Club club = clubService.getClub(slug);
+        
+        if(club == null) return new ModelAndView("404");
+
+        clubFormDTO.setSlug(club.getSlug());
+        clubFormDTO.setName(club.getName());
+        clubFormDTO.setDescription(club.getDescription());
+        clubFormDTO.setLocation(club.getLocation());
+        clubFormDTO.setWebsite(club.getWebsite());
+
+        map.addAttribute("club_form", clubFormDTO);
+        map.put("club", club);
+        map.put("referer_page", request.getHeader("Referer"));
+        return new ModelAndView("club/edit");
     }
 
     @PutMapping("{slug}")
     @PatchMapping("{slug}")
-    public String storeUpdatedClub(@ModelAttribute("club") Club club, BindingResult result, ModelMap model, @PathVariable String slug) {
-        
-        if (result.hasErrors()) {
-            return "error";
+    public ModelAndView storeUpdatedClub(
+        ClubFormDTO clubFormDTO,
+        @PathVariable String slug,
+        HttpServletRequest request,
+        Errors error,
+        BindingResult bindingResult,
+        Model model
+    ) {
+        model.addAttribute("slug", slug);
+        if(bindingResult.hasErrors()){
+            return new ModelAndView("forward:/clubs/{slug}");
         }
         
-        /*model.addAttribute("id", club.getId());
-        model.addAttribute("slug", club.getSlug());
-        model.addAttribute("name", club.getName());
-        model.addAttribute("description", club.getDescription());
-        model.addAttribute("profile_photo_url", club.getProfile_photo_url());
-        model.addAttribute("website", club.getWebsite());
-        model.addAttribute("location", club.getLocation());
-        model.addAttribute("parent_id", club.getParent_id());*/
+        /**
+         * TO-DO Authontacation
+         */
 
-        Club updatedClub = clubService.updateEntireClub(club, slug);
-        return "redirect:/clubs/" + updatedClub.getSlug();
+        Club club = new Club();
+        club.setName(clubFormDTO.getName());
+        club.setSlug(clubFormDTO.getSlug());
+        club.setDescription(clubFormDTO.getDescription());
+        club.setLocation(clubFormDTO.getLocation());
+        //club.setParent_id
+        club.setWebsite(clubFormDTO.getWebsite());
+
+        clubService.updateEntireClub(club, slug);
+        model.addAttribute("success", "Club updated successfully");
+        return new ModelAndView("redirect:/clubs/{slug}");
     }
 
     @DeleteMapping("{slug}")
