@@ -4,7 +4,7 @@
       <b-col cols="3">
         <b-row  class="h-100 align-items-center">
           <b-col cols="12" >
-              <b-img center style="border-radius: 8px;" v-bind:src=subcluburl alt="Center image"></b-img>
+              <b-img center style="border-radius: 8px;" v-bind:src=imageUrl alt="Center image"></b-img>
              </b-col> 
         </b-row>
         
@@ -13,21 +13,27 @@
       <b-col cols="5">
         <b-row  class="h-100 align-items-center">
           <b-col cols="12" >
-              <span style="margin: 0 ;">{{DateofSharing}}</span>
-              <p style="margin : 0; font-size: x-large;">{{SubClubName}}</p>
-             </b-col> 
+              <span v-if="url">
+                <a class="text-dark" :href="url">
+                  <p style="margin : 0; font-size: x-large;">{{name}}</p>
+                </a>
+              </span>
+              <span v-else>
+                  <p style="margin : 0; font-size: x-large;">{{name}}</p>
+              </span>
+          </b-col> 
         </b-row>
         
       </b-col>
 
       <b-col cols="4">
-          <b-row class="h-100 align-items-center">
+          <b-row class="h-100 align-items-center" v-if="adminUrl">
             <b-col cols="5" >
-              <b-avatar class="subClubAdminInClub" v-bind:src=subclubadminurl size="6rem"></b-avatar>
+              <b-avatar class="subClubAdminInClub" v-bind:src=adminUrl size="6rem"></b-avatar>
             </b-col>
              <b-col cols="7" >
               <p style="margin : 0; font-size: medium;">SubClub Admin</p>
-              <b-link style="margin : 0; font-size: larger; color: black;" href="#foo">{{NameSurname}}</b-link>
+              <b-link style="margin : 0; font-size: larger; color: black;" href="#foo">{{adminName}}</b-link>
             </b-col>
           </b-row>
 
@@ -41,11 +47,11 @@
 export default {
   name: 'SubClubsInClub',
   props : {
-    NameSurname : {type : String , default : "Name Surname"},
-    DateofSharing : {type : Date , default : "April 1 2021"},
-    SubClubName : {type : String , default : "SubClub Name"},
-    subcluburl : {type : String , default : "http://placehold.it/240x125"},
-    subclubadminurl : {type : String , default : "#"},
+    name : {type : String , default : ""},
+    url : {type: String, default: ""},
+    adminName: {type : String , default : ""},
+    adminUrl: {type : String , default : ""},
+    imageUrl : {type : String , default : "http://placehold.it/240x125"},
   },
 }
 </script>

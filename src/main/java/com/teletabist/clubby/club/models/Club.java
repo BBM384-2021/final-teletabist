@@ -2,17 +2,26 @@ package com.teletabist.clubby.club.models;
 
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -45,9 +54,15 @@ public class Club {
     @Column(columnDefinition = "TEXT")
     private String location;
 
-    @JsonIgnore
-    @Column(length = 10)
-    private Integer parent_id;
+
+    @JsonIgnoreProperties({"subclubs", "parent"})
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
+    private Collection<Club> subclubs;
+
+    @JsonIgnoreProperties({"subclubs", "parent"})
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Club parent;
 
     @Column(nullable = false)
     @UpdateTimestamp
@@ -121,13 +136,6 @@ public class Club {
         this.location = location;
     }
 
-    public Integer getParent_id() {
-        return parent_id;
-    }
-
-    public void setParent_id(Integer parent_id) {
-        this.parent_id = parent_id;
-    }
 
     public Timestamp getUpdated_at() {
         return updated_at;
@@ -143,5 +151,21 @@ public class Club {
 
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
+    }
+
+    public Collection<Club> getSubclubs() {
+        return subclubs;
+    }
+
+    public void setSubclubs(Collection<Club> subclubs) {
+        this.subclubs = subclubs;
+    }
+
+    public Club getParent() {
+        return parent;
+    }
+
+    public void setParent(Club parent) {
+        this.parent = parent;
     }
 }
