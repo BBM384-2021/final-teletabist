@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -60,7 +61,7 @@ public class Club {
 
 
     @JsonIgnoreProperties({"subclubs", "parent",  "clubRating"})
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Collection<Club> subclubs;
 
     @JsonIgnoreProperties({"subclubs", "parent", "clubRating"})
@@ -79,7 +80,7 @@ public class Club {
     // @OneToMany(mappedBy = "club")
     // private Set<ClubRoles> club_roles;
 
-    @OneToOne(mappedBy = "club")
+    @OneToOne(mappedBy = "club", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"club"})
     private ClubRating clubRating;
 

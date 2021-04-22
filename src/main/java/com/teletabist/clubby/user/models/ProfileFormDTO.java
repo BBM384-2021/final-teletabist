@@ -87,7 +87,7 @@ public class ProfileFormDTO {
         if(this.birthday == null) return null;
         Date d = null;
         try{
-            d = new SimpleDateFormat("yyyy-mm-dd").parse(this.birthday);
+            d = new SimpleDateFormat("yyyy-MM-dd").parse(this.birthday);
         }catch(ParseException e){
             d = null;
         }
