@@ -1,8 +1,40 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Welcome to Clubby Framework</title>
+</head>
 <body>
-<h1>Something went wrong! </h1>
-<h2>Our Engineers are on it</h2>
-<a href="/">Go Home</a>
+    <div id="App">
+        <b-container fluid>
+            <b-row class="vh-100 justify-content-md-center" align-v="center">
+                <b-col cols="4" class="text-center">
+                    <b-row>
+                        <b-col cols="12">
+                            <img src="https://source.unsplash.com/500x500?confused" alt="Confused">
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col cols="12">
+                            <h1><span class="display-2">500</span><br><span class="display-4">Something went wrong :-(</span></h1>
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col cols="12">
+                            <b-button th:href="@{/clubs}">Return back to clubby</b-button>
+                        </b-col>
+                    </b-row>
+                </b-col>
+            </b-row>
+        </b-container>
+    </div>
+    <script src="/public/js/main.js"></script>
 </body>
 </html>

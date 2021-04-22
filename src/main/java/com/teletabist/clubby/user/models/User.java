@@ -18,7 +18,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import org.apache.commons.validator.routines.DomainValidator;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -135,6 +138,18 @@ public class User {
     @JsonManagedReference
     @OneToOne(mappedBy = "user", fetch=FetchType.EAGER)
     private Profile profile;
+
+    /**
+     * For demo purposes
+     * @return
+     */
+    @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+    public String getVerificationUrl(){
+        if(!this.isVerified()){
+            return "http://localhost:8080/account/verify/"+username+"/"+email_verification_token;
+        }
+        return null;
+    }
 
     /**
      * @return true if the user is validated, false otherwise.

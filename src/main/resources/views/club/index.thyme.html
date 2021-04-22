@@ -11,7 +11,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 </head>
 <body>
     <div id="App">
-        <navbar></navbar>
+        <navbar sec:authorize="isAuthenticated()" th:username="${#authentication.getPrincipal().getUser().getUsername()}"></navbar>
+        <navbar sec:authorize="!isAuthenticated()" ></navbar>
         <b-container>
              <b-row class="mb-3">
                     <subclubsinclub th:each="club : ${clubs}" th:name="${club.name}" th:url="@{/clubs/{slug}(slug = ${club.slug})}"></subclubsinclub>

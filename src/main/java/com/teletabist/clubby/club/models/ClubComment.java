@@ -1,6 +1,7 @@
 package com.teletabist.clubby.club.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.user.models.UserRole;
 import org.hibernate.annotations.CreationTimestamp;
@@ -57,6 +58,7 @@ public class ClubComment {
      * TODO:add (length = 10)
      */
     //@JsonIgnore <--- use if needed
+    @JsonIgnoreProperties({"subclubs", "parent",  "clubRating"})
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "club_id", nullable = false)
     private Club club;
@@ -99,9 +101,9 @@ public class ClubComment {
      * Creation time of the comment
      * {Getter}
      */
-    @Column(nullable = false)
+    @Column(nullable = false, name = "created_at")
     @CreationTimestamp
-    private Timestamp created_at;
+    private Timestamp createdAt;
 
     /**
      * Last time the comment is updated
@@ -183,7 +185,7 @@ public class ClubComment {
      * No setter for created_at since it should not be changed!
      */
     public Timestamp getCreated_at() {
-        return created_at;
+        return createdAt;
     }
 
     public Timestamp getUpdated_at() {

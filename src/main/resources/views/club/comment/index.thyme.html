@@ -1,0 +1,54 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Welcome to Clubby Framework</title>
+</head>
+<body>
+    <div id="App">
+        <navbar sec:authorize="isAuthenticated()" th:username="${#authentication.getPrincipal().getUser().getUsername()}"></navbar>
+        <navbar sec:authorize="!isAuthenticated()" ></navbar>
+        <b-container>
+            <b-row>
+                <b-col>
+                    <mainclub
+                    th:clubname = "${club.name}"
+                    th:v-bind:rate = "${club.clubRating} != null ? ${club.clubRating.getRatio()} : 0.0"
+                    th:club-url = "@{/clubs/{slug}(slug = ${club.slug})}"
+                    th:parent-club="${club.parent} != null ? ${club.parent.name} : ''"
+                    th:parent-club-url="${club.parent} != null ? @{/clubs/{slug}(slug = ${club.parent.slug})}  : ''" 
+                    ></mainclub>
+                </b-col>
+            </b-row>
+            
+             <b-row class="mb-3 mt-3">
+                 <b-col cols="9">
+                     <b-row>
+                        <b-col>
+                            <div class="bg-light rounded p-3" >
+                                <form class="mt-2" th:action="@{/clubs/{slug}/comments(slug = ${club.slug})}" th:method="POST" enctype="utf8">
+                                    <comment-form></comment-form>
+                                </form>
+                            </div>
+                        </b-col>
+                     </b-row>
+                        <commentsinclub
+                        th:each="comment : ${comments}"
+                        th:usersname="${comment.user.profile.name}"
+                        th:date="${#dates.format(comment.created_at, 'dd MMMM yyyy')}"
+                        th:comment = "${comment.comment}"
+                        th:v-bind:liked = "${comment.liked}"
+                        ></commentsinclub>
+                 </b-col>
+             </b-row>
+        </b-container>    
+        <footerbar></footerbar>    
+    </div>
+    <script src="/public/js/main.js"></script>
+</body>
+</html>
