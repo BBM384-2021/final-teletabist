@@ -10,9 +10,7 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-4">
-        <b-nav-item href="#" class="item">Home</b-nav-item>
-        <b-nav-item href="#" class="item">Example</b-nav-item>
-        <b-nav-item href="#" class="item">Example</b-nav-item>
+        <b-nav-item href="/clubs" class="item">Home</b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
@@ -23,14 +21,14 @@
         </div>
         <b-badge style="height:18px; margin-top:20px">5</b-badge>
 
-        <b-nav-item-dropdown right>
+        <b-nav-item-dropdown right v-if="username">
           <!-- Using 'button-content' slot -->
           <template #button-content>  
             
             <b-avatar class="userNavBar" src="https://placekitten.com/300/300" size="4rem"></b-avatar>
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          <b-dropdown-item :href="'/users/'+username">Profile</b-dropdown-item>
+          <b-dropdown-item href="/logout">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       
@@ -44,7 +42,9 @@
 
 export default {
   name: 'NavBar',
-  props: {}
+  props: {
+    username: {type: String, default: ""}
+  }
 }
 </script>
 

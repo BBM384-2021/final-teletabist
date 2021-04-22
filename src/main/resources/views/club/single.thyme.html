@@ -11,11 +11,18 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 </head>
 <body>
     <div id="App">
-        <navbar></navbar>
+        <navbar sec:authorize="isAuthenticated()" th:username="${#authentication.getPrincipal().getUser().getUsername()}"></navbar>
+        <navbar sec:authorize="!isAuthenticated()" ></navbar>
         <b-container>
             <b-row >
                 <b-col>
-                    <mainclub th:clubname = "${club.name}" th:parent-club="${club.parent} != null ? ${club.parent.name} : ''" th:parent-club-url="${club.parent} != null ? @{/clubs/{slug}(slug = ${club.parent.slug})}  : ''" ></mainclub>
+                    <mainclub
+                    th:clubname = "${club.name}"
+                    th:v-bind:rate = "${club.clubRating} != null ? ${club.clubRating.getRatio()} : 0.0"
+                    th:club-url = "@{/clubs/{slug}(slug = ${club.slug})}"
+                    th:parent-club="${club.parent} != null ? ${club.parent.name} : ''"
+                    th:parent-club-url="${club.parent} != null ? @{/clubs/{slug}(slug = ${club.parent.slug})}  : ''" 
+                    ></mainclub>
                 </b-col>
             </b-row>
              <b-row class="mb-3">

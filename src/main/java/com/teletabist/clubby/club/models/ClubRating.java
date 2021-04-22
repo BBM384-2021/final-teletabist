@@ -118,7 +118,9 @@ public class ClubRating {
     }
 
     public Double getRatio() {
-        return this.total_likes / (double) (this.total_likes + this.total_dislikes) * 100.0;
+        if(this.total_likes + this.total_dislikes != 0) 
+            return Math.round(this.total_likes / (double) (this.total_likes + this.total_dislikes)* 1000.0)/10.0;
+        return 0.0;
     }
 
 }

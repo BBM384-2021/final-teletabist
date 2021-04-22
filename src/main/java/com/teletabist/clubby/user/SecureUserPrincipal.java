@@ -55,7 +55,7 @@ public class SecureUserPrincipal implements UserDetails {
     @Override
     public boolean isEnabled() {
         // TODO Auto-generated method stub
-        return true;
+        return this.user.isVerified();
     }
 
     public User getUser() {

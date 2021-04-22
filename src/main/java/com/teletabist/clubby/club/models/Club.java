@@ -15,6 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PostPersist;
+import javax.persistence.PostRemove;
+import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -55,11 +59,11 @@ public class Club {
     private String location;
 
 
-    @JsonIgnoreProperties({"subclubs", "parent"})
+    @JsonIgnoreProperties({"subclubs", "parent",  "clubRating"})
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private Collection<Club> subclubs;
 
-    @JsonIgnoreProperties({"subclubs", "parent"})
+    @JsonIgnoreProperties({"subclubs", "parent", "clubRating"})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Club parent;
@@ -72,8 +76,12 @@ public class Club {
     @CreationTimestamp
     private Timestamp created_at;
 
-    @OneToMany(mappedBy = "club")
-    private Set<ClubRoles> club_roles;
+    // @OneToMany(mappedBy = "club")
+    // private Set<ClubRoles> club_roles;
+
+    @OneToOne(mappedBy = "club")
+    @JsonIgnoreProperties({"club"})
+    private ClubRating clubRating;
 
     /*@OneToMany(mappedBy = "club")
     private Set <UsersClubInterest> interests;*/
@@ -168,4 +176,21 @@ public class Club {
     public void setParent(Club parent) {
         this.parent = parent;
     }
+
+    // public Set<ClubRoles> getClub_roles() {
+    //     return club_roles;
+    // }
+
+    // public void setClub_roles(Set<ClubRoles> club_roles) {
+    //     this.club_roles = club_roles;
+    // }
+
+    public ClubRating getClubRating() {
+        return clubRating;
+    }
+
+    public void setClubRating(ClubRating clubRating) {
+        this.clubRating = clubRating;
+    }
+
 }

@@ -19,6 +19,19 @@ public class ClubRatingService {
         this.clubService = clubService;
     }
 
+    public ClubRating getClubRating(Club club){
+        ClubRating cr = null;
+        if(club != null){
+            cr = this.clubRatingRepository.findByClub_id(club.getId());
+            if (cr == null) {
+                cr = new ClubRating();
+                cr.setClub(club);
+                cr = this.clubRatingRepository.save(cr);
+            }
+        }
+        return cr;
+    }
+
     public ClubRating incrementRating(Club club, Boolean rating) {
         ClubRating clubRating = this.clubRatingRepository.findByClub_id(club.getId());
 

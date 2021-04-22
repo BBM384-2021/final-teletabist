@@ -16,7 +16,23 @@
         </div>
     </div> -->
     <div id="App">
-        <navbar></navbar>
+         
+        <navbar sec:authorize="isAuthenticated()" th:username="${#authentication.getPrincipal().getUser().getUsername()}"></navbar>
+        <navbar sec:authorize="!isAuthenticated()" ></navbar>
+        <b-container style="min-height: 75vh;">
+            <b-row class="justify-content-center mt-4">
+                <b-col cols="6">
+                    <h1>Welcome to Clubby!</h1>
+                    <div sec:authorize="!isAuthenticated()" >
+                        <b-button th:href="@{/login}">Login</b-button> 
+                        <b-button th:href="@{/account/register}">Register</b-button> 
+                    </div>
+                    
+                </b-col>
+            </b-row>
+        </b-container>
+
+        <footerbar></footerbar>
     </div>
     <script src="/public/js/main.js"></script>
 </body>

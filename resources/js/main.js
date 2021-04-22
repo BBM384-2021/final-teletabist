@@ -34,4 +34,6 @@ Vue.component('profile', require('./Components/ProfileComponents/Profile.vue').d
 Vue.component('profileedit', require('./Components/ProfileComponents/ProfileEdit.vue').default)
 Vue.component('profileshow', require('./Components/ProfileComponents/ProfileShow.vue').default)
 
+Vue.component('comment-form', require('./Components/GeneralComponents/CommentForm.vue').default)
+
 const App = new Vue({el:'#App'})

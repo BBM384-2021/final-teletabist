@@ -3,26 +3,27 @@
 
     <b-row class="m-0">
 
-      <b-col cols="9">
+      <b-col cols="12">
         <div class="clubcomments">
           <b-row   style="height:30%;">
              <b-col cols="12" class="align-items-center" >
                    <b-avatar class="memberAvatarInClub" v-bind:src=memberpicurl size="4rem"></b-avatar>
-                   <span class="ml-4" style="font-size:18px;">{{Name}}</span>
+                   <span class="ml-4" style="font-size:18px;">{{usersname}}</span>
                    
                    <div class="align-middle d-inline">
                        <b-icon icon="record-fill" font-scale="0.5"></b-icon>
                    </div>
 
-                   <span class="ml-2" style="font-size:12px;">{{DateofSharing}}</span>
+                   <span class="ml-2" style="font-size:12px;">{{date}}</span>
                 
-                   <img class="ml-4" src="http://placehold.it/25x25" alt="">
+                   <b-icon variant="success" icon="hand-thumbs-up" v-if="liked"></b-icon>
+                   <b-icon variant="danger" icon="hand-thumbs-down" v-if="!liked"></b-icon>
              </b-col> 
            </b-row>
 
          <b-row  class="mr-2 ml-2 mt-1 align-items-center" style="height:70%;">
             <b-col cols="12" >
-               <p style="font-size: 12px;">{{ text }}</p>
+               <p style="font-size: 12px;">{{ comment }}</p>
             </b-col> 
          </b-row>
          </div>
@@ -42,10 +43,11 @@
 export default {
   name: 'CommnetsInClub',
   props : {
-    Name : {type : String , default : "Name"},
-    DateofSharing : {type : Date , default : "April 1"},
+    usersname : {type : String , default : "Name"},
+    date : {type : String , default : ""},
     memberpicurl : {type : String , default : "#"},
-    text : {type : String , default : " Quis magna Lorem anim amet ipsum do mollit sit cillum voluptate ex nulla tempor.Laborum consequat non elit enim exercitation cillum aliqua consequat id aliqua. Esse ex consectetur mollit voluptate est in duis."},
+    comment : {type : String , default : ""},
+    liked : {type : Boolean , default : null},
   }
 }
 </script>
