@@ -24,6 +24,10 @@
             <b-col cols="12" class="text-center"  >
                  <h2>{{clubname}}</h2>
                  <h4>RATE: {{rate}}%</h4>
+                 <div v-if="parentClubUrl">
+                   <h5>Sub-club of</h5>
+                   <a :href="parentClubUrl">{{parentClub}}</a>
+                 </div>
             </b-col>
           </b-row>
       </b-col>
@@ -33,8 +37,8 @@
     <b-row class="m-0 h-25 align-items-end">
       <b-col cols="12">
         <b-nav  align="left">
-          <b-nav-item active class="club-nav-link" v-bind:href=subcluburl>SUBCLUBS</b-nav-item>
-          <b-nav-item disabled>|</b-nav-item>
+          <b-nav-item v-if="!parentClubUrl" active class="club-nav-link" v-bind:href=subcluburl>SUBCLUBS</b-nav-item>
+          <b-nav-item v-if="!parentClubUrl"  disabled>|</b-nav-item>
           <b-nav-item class="club-nav-link" v-bind:href=membersurl >MEMBERS</b-nav-item>
            <b-nav-item disabled>|</b-nav-item>
           <b-nav-item class="club-nav-link" v-bind:href=commentsurl >COMMENTS</b-nav-item>
@@ -56,6 +60,8 @@ export default {
     subcluburl : {type : String , default : "#"},
     membersurl : {type : String , default : "#"},
     commentsurl : {type : String , default : "#"},
+    parentClub: {type: String, default: null},
+    parentClubUrl: {type: String, default: null}
   },
 }
 </script>

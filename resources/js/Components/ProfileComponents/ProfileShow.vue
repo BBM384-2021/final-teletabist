@@ -5,31 +5,29 @@
         <b-col cols="8">
         <b-row  class="h-100 mt-4" >
           <b-col cols="12" >
-                <span style="font-size: 28px;">{{NameSurname}}</span>
-                <p>Member/Subclub Manager</p>
+                <span style="font-size: 28px;">{{name}}</span>
                 <hr class="profileHr">
-                <span style="font-size: 18px;">CLUBBY MEMBER SINCE: {{DateofSharing}} </span>
+                <span style="font-size: 18px;">Clubby Member Since: {{ memberSince }} </span>
                 <br>
-                <span class="h4"><b-icon icon="geo-alt"></b-icon></span><span style="font-size: 18px;" class="ml-2">{{Location}}</span>
+                <span class="h4"><b-icon icon="geo-alt"></b-icon></span><span style="font-size: 18px;" class="ml-2">{{location}}</span>
                 <br>
-                <span class="h4"><b-icon icon="gift"></b-icon></span><span style="font-size: 18px;" class="ml-2">{{BirthDate}}</span>
+                <span class="h4"><b-icon icon="gift"></b-icon></span><span style="font-size: 18px;" class="ml-2">{{birthday}}</span>
                 <br>
                 <br>
                 <div class="Biography">
                     <p class="pl-4 pt-2 mb-2" style="font-size=12px;">BIOGRAPHY</p>
-                    <p class="pl-4 mt-0 pt-0 pr-2" style="font-size=12px;">Lorem ipsum, or lipsum as it is 
-                       sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
+                    <p class="pl-4 mt-0 pt-0 pr-2" style="font-size=12px;">{{biography}}</p>
                 </div>
                 <br>
-                <p style="font-size: 18px;">REGISTERED CLUBS: </p>
+                <p style="font-size: 18px;">GROUPS JOINED: </p>
                 <b-container fluid class="ml-0 pl-0 mb-1">
                     <b-row>
                         <b-col cols="11">
                             <div id="listgroup-ex" style="position:relative; overflow-y:auto; height:200px">
-                                <profile-groups2></profile-groups2>
-                                <profile-groups2></profile-groups2>
-                                <profile-groups2></profile-groups2>
-                                <profile-groups2></profile-groups2>
+                                <profile-groups-2></profile-groups-2>
+                                <profile-groups-2></profile-groups-2>
+                                <profile-groups-2></profile-groups-2>
+                                <profile-groups-2></profile-groups-2>
                             </div>
                         </b-col>
                     </b-row>

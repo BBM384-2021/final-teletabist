@@ -18,6 +18,7 @@ import com.teletabist.clubby.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -58,8 +59,11 @@ public class UserController {
         User u = this.userService.getUser(username);
         if(u == null)
             return new ModelAndView("404");
-        
-        map.put("user", u);        
+        map.put("user", u);    
+        if(this.canEdit(username)){
+            return new ModelAndView("user/editable");
+        }
+            
         return new ModelAndView("user/single");
     }
 
@@ -71,19 +75,23 @@ public class UserController {
         HttpServletRequest request
         ){
         User u = this.userService.getUser(username);
-        
         if(u == null)
             return new ModelAndView("404");
-        Profile p = u.getProfile();
-        profileFormDTO.setBiography(p.getBiography());
-        profileFormDTO.setGender(p.getGender());
-        profileFormDTO.setInstitution(p.getInstitution());
-        profileFormDTO.setLocation(p.getCurrent_location());
-        profileFormDTO.setName(p.getName());
-        map.addAttribute("profile", profileFormDTO);
-        map.put("user", u);        
-        map.put("referer_page", request.getHeader("Referer"));
-        return new ModelAndView("user/edit");
+        boolean _canedit = this.canEdit(username);
+        if(_canedit){
+            Profile p = u.getProfile();
+            profileFormDTO.setBiography(p.getBiography());
+            profileFormDTO.setGender(p.getGender());
+            profileFormDTO.setInstitution(p.getInstitution());
+            profileFormDTO.setLocation(p.getCurrent_location());
+            profileFormDTO.setName(p.getName());
+            map.addAttribute("profile", profileFormDTO);
+            map.put("user", u);        
+            map.put("referer_page", request.getHeader("Referer"));
+            return new ModelAndView("user/edit");
+        }
+        map.addAttribute("error", "An error occured.");
+        return new ModelAndView("redirect:/users/{username}");
     }
 
     @PatchMapping("{username}")
@@ -99,27 +107,9 @@ public class UserController {
         if(br.hasErrors()){
             return new ModelAndView("forward:/users/{username}");
         }
-        Object principal = auth.getPrincipal();
-        if(principal instanceof String){
-            return new ModelAndView("redirect:/users/{username}");
-        }
-        boolean _canedit = false;
-        if(principal instanceof SecureUserPrincipal){
-            SecureUserPrincipal securePrincipal = (SecureUserPrincipal) principal;
-            if(securePrincipal.getUsername().equals(username)){
-                _canedit = true;
-            }else{
-                Collection<? extends GrantedAuthority> roles = securePrincipal.getAuthorities();
-                for(GrantedAuthority g : roles){
-                    String grantedAuth = g.getAuthority();
-                    if(grantedAuth.equals(Roles.SYS_ADMIN.getRoleName())
-                    || grantedAuth.equals(Roles.ADMIN.getRoleName())){
-                        _canedit = true;
-                        break;
-                    }
-                }
-            }
-        }
+
+        boolean _canedit = this.canEdit(username);
+        
         if(_canedit){
             Profile p = new Profile();
             p.setBiography(profileFormDTO.getBiography());
@@ -138,5 +128,28 @@ public class UserController {
         return new ModelAndView("redirect:/users/{username}");
     }
 
-    
+    private boolean canEdit( String username){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof String){
+            return false;
+        }
+        boolean _canedit = false;
+        if(principal instanceof SecureUserPrincipal){
+            SecureUserPrincipal securePrincipal = (SecureUserPrincipal) principal;
+            if(securePrincipal.getUsername().equals(username)){
+                _canedit = true;
+            }else{
+                Collection<? extends GrantedAuthority> roles = securePrincipal.getAuthorities();
+                for(GrantedAuthority g : roles){
+                    String grantedAuth = g.getAuthority();
+                    if(grantedAuth.equals(Roles.SYS_ADMIN.getRoleName())
+                    || grantedAuth.equals(Roles.ADMIN.getRoleName())){
+                        _canedit = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return _canedit;
+    }
 }
