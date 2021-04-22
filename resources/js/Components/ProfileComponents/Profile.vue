@@ -1,23 +1,22 @@
 <template>
-  <div class="showProfile overflow-hidden mt-4" >
+  <div class="showProfile overflow-hidden mt-4 mb-4" >
     <b-row class="m-0 h-100" >
 
         <b-col cols="8">
         <b-row  class="h-100 mt-4" >
           <b-col cols="12" >
-                <span style="font-size: 28px;">NAME SURNAME</span>
+                <span style="font-size: 28px;">{{name}}</span>
                 <hr class="profileHr">
                 <span style="font-size: 18px;">CLUBBY MEMBER SINCE: APRIL 1 2021 </span>
                 <br>
-                <span class="h4"><b-icon icon="geo-alt"></b-icon></span><span style="font-size: 18px;" class="ml-2">LOCATION</span>
+                <span class="h4"><b-icon icon="geo-alt"></b-icon></span><span style="font-size: 18px;" class="ml-2">{{location}}</span>
                 <br>
-                <span class="h4"><b-icon icon="gift"></b-icon></span><span style="font-size: 18px;" class="ml-2">BIRTH DATE</span>
+                <span class="h4"><b-icon icon="gift"></b-icon></span><span style="font-size: 18px;" class="ml-2">{{birthdate}}</span>
                 <br>
                 <br>
                 <div class="Biography">
                     <p class="pl-4 pt-2 mb-2" style="font-size=12px;">BIOGRAPHY</p>
-                    <p class="pl-4 mt-0 pt-0 pr-2" style="font-size=12px;">Lorem ipsum, or lipsum as it is 
-                       sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
+                    <p class="pl-4 mt-0 pt-0 pr-2" style="font-size=12px;">{{biography}}</p>
                 </div>
                 <br>
                 <p style="font-size: 18px;">GROUPS JOINED: </p>
@@ -38,9 +37,6 @@
         
         </b-col>
 
-     
-
-
       <b-col cols="4" class="pl-2">
           <b-row>
             <b-col cols="12" >
@@ -57,8 +53,6 @@
           </b-row>
           
       </b-col>
-
-
     </b-row>
 
   </div>
@@ -70,6 +64,13 @@ export default {
   name: 'Profile',
     components:{
     ProfileGroups,
+  },
+   props : {
+    name : {type : String , default : "NAME SURNAMEEEE"},
+    location : {type : String , default : "LOCATION"},
+    birthdate : {type : Date , default : "April 1 1999"},
+    biography : {type : String , default : "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs."},
+
   },
 
 }

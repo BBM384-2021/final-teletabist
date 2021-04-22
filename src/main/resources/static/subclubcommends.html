@@ -12,12 +12,28 @@
         <b-container>
             <b-row >
                 <b-col>
-                    <subclub></subclub>
+                    <subclub
+                    th:name-surname = "${}"
+                    th:adminpicurl = "@{}"
+                    th:short-text = "${}"
+                    th:club-name = "@{}"
+                    th:rate = "@{}"
+                    th:clubpicurl = "@{}"
+                    th:clubevents = "@{}"
+                    th:membersurl = "@{}"
+                    th:discussionssurl = "@{}"
+                    th:commentsurl = "@{}"
+                    ></subclub>
                 </b-col>
             </b-row>
              <b-row class="mb-3">
                  <b-col>
-                    <commentsinclub></commentsinclub>
+                    <commentsinclub
+                    th:name = "${}"
+                    th:dateof-sharing = "${}"
+                    th:text = "${}"
+                    th:memberpicurl = "@{}"
+                   ></commentsinclub>
                  </b-col>
              </b-row>
         </b-container>    

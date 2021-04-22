@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Main Club Comments</title>
 </head>
 <body>
     <div id="App">
@@ -12,12 +14,24 @@
         <b-container>
             <b-row >
                 <b-col>
-                    <mainclub club-name = "YGTMUSIC"></mainclub>
+                    <mainclub
+                    th:clubname = "${}"
+                    th:rate = "${}"
+                    th:picurl = "@{}"
+                    th:subcluburl = "@{}"
+                    th:membersurl = "@{}"
+                    th:commentsurl = "@{}"
+                    ></mainclub>
                 </b-col>
             </b-row>
              <b-row class="mb-3">
                  <b-col>
-                     <commentsinclub></commentsinclub>
+                     <commentsinclub
+                     th:name = "${}"
+                     th:dateof-sharing = "${}"
+                     th:text = "${}"
+                     th:memberpicurl = "@{}"
+                    ></commentsinclub>
                  </b-col>
              </b-row>
         </b-container>    

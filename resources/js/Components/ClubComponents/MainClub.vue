@@ -5,7 +5,7 @@
       <b-col cols="5">
         <b-row  class="h-100 align-items-center">
           <b-col cols="12" >
-              <b-img center src="http://placehold.it/280x170" alt="Center image"></b-img>
+              <b-img center v-bind:src=picurl alt="Center image"></b-img>
              </b-col> 
         </b-row>
         
@@ -22,8 +22,8 @@
 
           <b-row class="h-50 align-items-center">
             <b-col cols="12" class="text-center"  >
-                 <h2>{{ClubName}}</h2>
-                 <h4>RATE: 100%</h4>
+                 <h2>{{clubname}}</h2>
+                 <h4>RATE: {{rate}}%</h4>
             </b-col>
           </b-row>
       </b-col>
@@ -33,11 +33,11 @@
     <b-row class="m-0 h-25 align-items-end">
       <b-col cols="12">
         <b-nav  align="left">
-          <b-nav-item active class="club-nav-link">SUBCLUBS</b-nav-item>
+          <b-nav-item active class="club-nav-link" v-bind:href=subcluburl>SUBCLUBS</b-nav-item>
           <b-nav-item disabled>|</b-nav-item>
-          <b-nav-item class="club-nav-link">MEMBERS</b-nav-item>
+          <b-nav-item class="club-nav-link" v-bind:href=membersurl >MEMBERS</b-nav-item>
            <b-nav-item disabled>|</b-nav-item>
-          <b-nav-item class="club-nav-link">COMMENTS</b-nav-item>
+          <b-nav-item class="club-nav-link" v-bind:href=commentsurl >COMMENTS</b-nav-item>
         </b-nav>
       </b-col>
       
@@ -50,7 +50,12 @@
 export default {
   name: 'MainClub',
   props : {
-    ClubName : {type : String , default : "CLUB NAME"}
+    clubname : {type : String , default : "CLUB NAME"},
+    rate : {type : Number , default : 0},
+    picurl: {type : String , default : "http://placehold.it/280x170"},
+    subcluburl : {type : String , default : "#"},
+    membersurl : {type : String , default : "#"},
+    commentsurl : {type : String , default : "#"},
   },
 }
 </script>

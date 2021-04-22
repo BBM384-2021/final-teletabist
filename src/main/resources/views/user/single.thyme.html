@@ -6,16 +6,24 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Welcome to Clubby Framework</title>
+    <title>Profile</title>
 </head>
 <body>
-    <div>
-        <h1>username: <span th:text="${user.username}">username</span></h1>
-        <h1>Name: <span th:text="${user.profile.name}">name</span></h1>
-    </div>
-    <div id="app">
-        <nav-bar></nav-bar>
+    <div id="App">
+        <navbar></navbar>
+        <b-container>
+            <b-row class="vh-100" align-v="center">
+                <b-col cols=12>
+                    <profile 
+                        th:name = "${user.profile.name}"
+                        th:location = "${user.profile.current_location}"
+                        th:birthdate = "${user.profile.birthday}"
+                        th:biography = "${user.profile.biography}"
+                    ></profile>
+                </b-col>
+            </b-row>
+        </b-container>
+        <footerbar></footerbar>
     </div>
     <script src="/public/js/main.js"></script>
 </body>

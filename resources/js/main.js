@@ -19,7 +19,8 @@ Vue.component('navbar', require('./Components/GeneralComponents/NavBar.vue').def
 Vue.component('footerbar', require('./Components/GeneralComponents/FooterBar.vue').default)
 Vue.component('commendpage', require('./Components/GeneralComponents/CommendPage.vue').default)
 Vue.component('commentsinclub', require('./Components/GeneralComponents/CommentsInClub.vue').default)
-
+Vue.component('register', require('./Components/GeneralComponents/Register.vue').default)
+Vue.component('login', require('./Components/GeneralComponents/Login.vue').default)
 
 Vue.component('mainclub', require('./Components/ClubComponents/MainClub.vue').default)
 Vue.component('membersinclub', require('./Components/ClubComponents/MembersInClub.vue').default)
@@ -29,6 +30,8 @@ Vue.component('subclub', require('./Components/SubClubComponents/SubClub.vue').d
 
 Vue.component('admin', require('./Components/AdminComponents/Admin.vue').default)
 
-
+Vue.component('profile', require('./Components/ProfileComponents/Profile.vue').default)
+Vue.component('profileedit', require('./Components/ProfileComponents/ProfileEdit.vue').default)
+Vue.component('profileshow', require('./Components/ProfileComponents/ProfileShow.vue').default)
 
 const App = new Vue({el:'#App'})

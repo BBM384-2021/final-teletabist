@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sub Club Members</title>
 </head>
 <body>
     <div id="App">
@@ -12,7 +14,18 @@
         <b-container>
             <b-row >
                 <b-col>
-                    <subclub></subclub>
+                    <subclub
+                    th:name-surname = "${}"
+                    th:adminpicurl = "@{}"
+                    th:short-text = "${}"
+                    th:club-name = "@{}"
+                    th:rate = "@{}"
+                    th:clubpicurl = "@{}"
+                    th:clubevents = "@{}"
+                    th:membersurl = "@{}"
+                    th:discussionssurl = "@{}"
+                    th:commentsurl = "@{}"
+                    ></subclub>
                 </b-col>
             </b-row>
              <b-row>

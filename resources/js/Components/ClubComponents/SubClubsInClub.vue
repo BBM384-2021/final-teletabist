@@ -4,16 +4,11 @@
       <b-col cols="3">
         <b-row  class="h-100 align-items-center">
           <b-col cols="12" >
-              <b-img center style="border-radius: 8px;" src="http://placehold.it/240x125" alt="Center image"></b-img>
+              <b-img center style="border-radius: 8px;" v-bind:src=subcluburl alt="Center image"></b-img>
              </b-col> 
         </b-row>
         
       </b-col>
-
-      <!-- YİĞİDE NOT
-      TARİH VE CLUB NAME ARASINA DÜZGÜN BİR ARALIK EKLEYEMEDİM 
-      SUBCLUB ADMIN VE NAME SURNAME İ SOLA KAYDIRAMADIM-->
-
 
       <b-col cols="5">
         <b-row  class="h-100 align-items-center">
@@ -28,7 +23,7 @@
       <b-col cols="4">
           <b-row class="h-100 align-items-center">
             <b-col cols="5" >
-              <b-avatar class="subClubAdminInClub" src="https://placekitten.com/300/300" size="6rem"></b-avatar>
+              <b-avatar class="subClubAdminInClub" v-bind:src=subclubadminurl size="6rem"></b-avatar>
             </b-col>
              <b-col cols="7" >
               <p style="margin : 0; font-size: medium;">SubClub Admin</p>
@@ -48,7 +43,9 @@ export default {
   props : {
     NameSurname : {type : String , default : "Name Surname"},
     DateofSharing : {type : Date , default : "April 1 2021"},
-    SubClubName : {type : String , default : "SubClub Name"}
+    SubClubName : {type : String , default : "SubClub Name"},
+    subcluburl : {type : String , default : "http://placehold.it/240x125"},
+    subclubadminurl : {type : String , default : "#"},
   },
 }
 </script>
