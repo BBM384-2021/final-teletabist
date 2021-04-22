@@ -70,12 +70,12 @@ export default {
     ProfileGroups2,
   },
   props : {
-    NameSurname : {type : String , default : "NAME SURNAME"},
-    DateofSharing : {type : Date , default : "April 1 2021"},
-    Location : {type : String , default : "LOCATION"},
-    BirthDate : {type : Date , default : "April 1 1999"},
-    Biography : {type : String , default : "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs."},
-    
+    name : {type : String , default : ""},
+    username: {type: String, default: ""},
+    location : {type : String , default : ""},
+    birthday : {type : String , default : ""},
+    biography : {type : String , default : ""},
+    memberSince: {type : String , default : ""},  
   }
 }
 </script>

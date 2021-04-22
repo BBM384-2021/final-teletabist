@@ -7,11 +7,11 @@
           <b-col cols="12" >
                 <span style="font-size: 28px;">{{name}}</span>
                 <hr class="profileHr">
-                <span style="font-size: 18px;">CLUBBY MEMBER SINCE: APRIL 1 2021 </span>
+                <span style="font-size: 18px;">Clubby Member Since: {{ memberSince }} </span>
                 <br>
                 <span class="h4"><b-icon icon="geo-alt"></b-icon></span><span style="font-size: 18px;" class="ml-2">{{location}}</span>
                 <br>
-                <span class="h4"><b-icon icon="gift"></b-icon></span><span style="font-size: 18px;" class="ml-2">{{birthdate}}</span>
+                <span class="h4"><b-icon icon="gift"></b-icon></span><span style="font-size: 18px;" class="ml-2">{{birthday}}</span>
                 <br>
                 <br>
                 <div class="Biography">
@@ -43,7 +43,7 @@
                  <div  class="text-center">
                     <b-avatar class="mt-3 mb-2" src="https://placekitten.com/300/300" size="6rem"></b-avatar>
                     <br>
-                    <b-link href="#foo" style="color: black;font-size: 16px;">EDIT YOUR PROFILE</b-link> 
+                    <b-link :href="'/users/'+username+'/edit'" style="color: black;font-size: 16px;">EDIT PROFILE</b-link> 
                     <br>
                     <br>
                     <!-- GRAFİK EKLENECEK -->
@@ -66,10 +66,12 @@ export default {
     ProfileGroups,
   },
    props : {
-    name : {type : String , default : "NAME SURNAMEEEE"},
-    location : {type : String , default : "LOCATION"},
-    birthdate : {type : Date , default : "April 1 1999"},
-    biography : {type : String , default : "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs."},
+    name : {type : String , default : ""},
+    username: {type: String, default: ""},
+    location : {type : String , default : ""},
+    birthday : {type : String , default : ""},
+    biography : {type : String , default : ""},
+    memberSince: {type : String , default : ""},
 
   },
 
