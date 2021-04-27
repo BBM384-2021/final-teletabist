@@ -54,7 +54,6 @@ public class ClubController {
     public ModelAndView getCreateClubForm(
         WebRequest request,
         ModelMap model) {
-
         ClubFormDTO clubFormDTO = new ClubFormDTO();
         model.addAttribute("club", clubFormDTO);
         return new ModelAndView("club/create", model);
