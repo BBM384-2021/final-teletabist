@@ -4,6 +4,7 @@ import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubComment;
 import com.teletabist.clubby.club.models.ClubCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -23,7 +24,7 @@ public class ClubCommentService {
     //APIController getAllClubComments()
     public Iterable<ClubComment> getAllComments(String slug) {
         Club club = this.clubService.getClub(slug);
-        return clubCommentRepository.findAllByClub_id(club.getId());
+        return clubCommentRepository.findAllByClub_id(club.getId(), Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public ClubComment getComment(String slug, Integer id) {

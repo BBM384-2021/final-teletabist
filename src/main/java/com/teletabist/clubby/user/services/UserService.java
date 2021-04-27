@@ -1,5 +1,6 @@
 package com.teletabist.clubby.user.services;
 
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -129,5 +130,16 @@ public class UserService {
         p.setName(userDTO.getName());
         this.profileRepository.save(p);
         return u;
+    }
+
+    public boolean verifyUser(User u, String token){
+        if(u != null){
+            if(u.getEmail_verification_token().equals(token)){
+                u.setVerified_at(new Timestamp(System.currentTimeMillis()));
+                this.userRepository.save(u);
+                return true;
+            }
+        }
+        return false;
     }
 }

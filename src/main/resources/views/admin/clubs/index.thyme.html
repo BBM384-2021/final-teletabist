@@ -12,7 +12,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 </head>
 <body>
     <div id="App">
-        <navbar></navbar>
+        <navbar sec:authorize="isAuthenticated()" th:username="${#authentication.getPrincipal().getUser().getUsername()}"></navbar>
+        <navbar sec:authorize="!isAuthenticated()" ></navbar>
         <admin></admin>  
         <footerbar></footerbar>    
     </div>
