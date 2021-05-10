@@ -11,7 +11,6 @@ import com.teletabist.clubby.user.core.Roles;
 import com.teletabist.clubby.user.models.Profile;
 import com.teletabist.clubby.user.models.ProfileFormDTO;
 import com.teletabist.clubby.user.models.User;
-import com.teletabist.clubby.user.models.UserRole;
 import com.teletabist.clubby.user.services.ProfileService;
 import com.teletabist.clubby.user.services.UserService;
 
@@ -22,18 +21,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping("users")
