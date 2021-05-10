@@ -22,15 +22,13 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
-    private final ProfileService profileService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository uRepository, ProfileRepository pRepository, ProfileService pService){
+    public UserService(UserRepository uRepository, ProfileRepository pRepository){
         this.userRepository = uRepository;
         this.profileRepository = pRepository;
-        this.profileService = pService;
     }
 
     public User createUser(User u){
