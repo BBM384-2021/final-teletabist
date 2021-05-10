@@ -1,12 +1,21 @@
 package com.teletabist.clubby.club.http;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubFormDTO;
+import com.teletabist.clubby.club.models.ClubRole;
+import com.teletabist.clubby.club.services.ClubRoleService;
 import com.teletabist.clubby.club.services.ClubService;
+import com.teletabist.clubby.user.SecureUserPrincipal;
+import com.teletabist.clubby.user.core.Roles;
+import com.teletabist.clubby.user.models.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -27,10 +36,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ClubController {
     private final ClubService clubService;
+    private final ClubRoleService clubRoleService;
 
     @Autowired
-    public ClubController(ClubService clubService) {
+    public ClubController(ClubService clubService, ClubRoleService clubRoleService) {
         this.clubService = clubService;
+        this.clubRoleService = clubRoleService;
     }
 
     @GetMapping
@@ -131,4 +142,39 @@ public class ClubController {
         return "redirect:/clubs/";
     }
 
+    @PostMapping("{slug}")
+    public ModelAndView join(
+        @PathVariable String slug,
+        HttpServletRequest request,
+        Errors error,
+        Authentication auth, Model model) {
+        
+        model.addAttribute("slug", slug);
+
+        User user = getCurrentUser();
+        Club club = clubService.getClub(slug);
+        
+        ClubRole clubRole = clubRoleService.assignClubRole(user, club, Roles.MEMBER);
+        
+        if (clubRole != null) {
+            model.addAttribute("success", "User successfully became a member");
+            return new ModelAndView("redirect:/{slug}");
+        }
+        model.addAttribute("error", "An error occured.");
+        return new ModelAndView("redirect:/{slug}");
+    }
+
+    /**
+     * TO-DO: Move this method to an appropriate place
+     */
+    public User getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(principal instanceof SecureUserPrincipal){
+            SecureUserPrincipal securePrincipal = (SecureUserPrincipal) principal;
+            return securePrincipal.getUser();
+        }
+
+        return null;
+    }
 }

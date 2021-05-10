@@ -1,7 +1,6 @@
 package com.teletabist.clubby.club.models;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
@@ -15,11 +14,12 @@ import com.teletabist.clubby.user.models.UserRole;
 
 @Entity
 @Table(name="club_roles")
-public class ClubRoles {
+public class ClubRole {
     @Id
     private Integer id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
+    @JoinColumn(name = "id")
     @MapsId
     private UserRole user_role;
 

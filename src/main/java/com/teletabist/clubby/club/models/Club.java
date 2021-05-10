@@ -3,7 +3,7 @@ package com.teletabist.clubby.club.models;
 
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.Set;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,17 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PostLoad;
-import javax.persistence.PostPersist;
-import javax.persistence.PostRemove;
-import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -178,13 +172,13 @@ public class Club {
         this.parent = parent;
     }
 
-    // public Set<ClubRoles> getClub_roles() {
+    /* // public Set<ClubRoles> getClub_roles() {
     //     return club_roles;
     // }
 
     // public void setClub_roles(Set<ClubRoles> club_roles) {
     //     this.club_roles = club_roles;
-    // }
+    // } */
 
     public ClubRating getClubRating() {
         return clubRating;
