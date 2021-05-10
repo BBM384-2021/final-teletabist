@@ -7,7 +7,6 @@ import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.user.models.UserRepository;
 import com.teletabist.clubby.user.models.UserRole;
 import com.teletabist.clubby.user.models.UserRoleRepository;
-import com.teletabist.clubby.user.services.UserService;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ import java.util.UUID;
 public class UserSeeder {
     private UserRepository userRepository;
     private UserRoleRepository userRoleRepository;
-    private ProfileRepository profileRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -39,7 +37,6 @@ public class UserSeeder {
     ){
         this.userRoleRepository = rolerep;
         this.userRepository = urep;
-        this.profileRepository = profileRepository;
     }
 
     @EventListener
