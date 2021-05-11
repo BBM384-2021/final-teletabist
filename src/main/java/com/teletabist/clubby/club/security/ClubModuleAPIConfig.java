@@ -16,16 +16,16 @@ public class ClubModuleAPIConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
-            .antMatcher("/api/dev/club/**")
+            .antMatcher("/api/dev/clubs/**")
             .csrf().disable()
             .sessionManagement().disable()
             .headers().frameOptions().disable()
         .and()
             .authorizeRequests()
-            .antMatchers("/api/dev/club/**")
+            .antMatchers("/api/dev/clubs/**")
             .hasRole(Roles.SYS_ADMIN.getName())
         .and()
-            .antMatcher("/api/dev/club/**")
+            .antMatcher("/api/dev/clubs/**")
             .httpBasic()
             .authenticationEntryPoint(this.clubAuthenticationEntryPoint());
     }

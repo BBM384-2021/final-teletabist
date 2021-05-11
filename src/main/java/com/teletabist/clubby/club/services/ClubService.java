@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubFormDTO;
 import com.teletabist.clubby.club.models.ClubRepository;
-import com.teletabist.clubby.club.models.ClubRolesRepository;
+import com.teletabist.clubby.club.models.ClubRoleRepository;
 import com.teletabist.clubby.user.models.UserRoleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class ClubService {
     //private final UserRoleRepository userRoleRepository;
 
     @Autowired
-    public ClubService(ClubRepository clubRepository, ClubRolesRepository clubRolesRepository, UserRoleRepository userRoleRepository) {
+    public ClubService(ClubRepository clubRepository, ClubRoleRepository clubRolesRepository, UserRoleRepository userRoleRepository) {
         this.clubRepository = clubRepository;
         //this.clubRolesRepository = clubRolesRepository;
         //this.userRoleRepository = userRoleRepository;

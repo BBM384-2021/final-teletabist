@@ -1,7 +1,14 @@
 package com.teletabist.clubby.club.api;
 
+import java.util.Collection;
+
 import com.teletabist.clubby.club.models.Club;
+import com.teletabist.clubby.club.models.ClubRole;
+import com.teletabist.clubby.club.services.ClubRoleService;
 import com.teletabist.clubby.club.services.ClubService;
+import com.teletabist.clubby.user.core.Roles;
+import com.teletabist.clubby.user.models.User;
+import com.teletabist.clubby.user.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,44 +18,74 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/dev/club")
+@RequestMapping("api/dev/clubs")
 public class ClubAPIController {
     private final ClubService clubService;
+    private final UserService userService;
+    private final ClubRoleService clubRoleService;
 
     @Autowired
-    public ClubAPIController(ClubService clubService) {
+    public ClubAPIController(ClubService clubService, UserService userService, ClubRoleService clubRoleService) {
         this.clubService = clubService;
+        this.userService = userService;
+        this.clubRoleService = clubRoleService;
     }
 
-    @GetMapping("all")
-    public Iterable<Club> getClubs() {
+    @GetMapping
+    public Iterable<Club> index() {
         return clubService.getAll();
     }
 
-    @PostMapping("create")
-    public Club createClub(@RequestBody Club club) {
+    @PostMapping
+    public Club store(@RequestBody Club club) {
         return clubService.addClub(club);
     }
 
-    @PatchMapping("update/{slug}")
-    public Club updateClub(@RequestBody Club club, @PathVariable String slug) {
+    @PatchMapping("{slug}")
+    @PutMapping("{slug}")
+    public Club update(@RequestBody Club club, @PathVariable String slug) {
         return clubService.updateEntireClub(club, slug);
     }
 
-    @GetMapping("get/{slug}")
-    public Club getClub(@PathVariable String slug) {
+    @GetMapping("{slug}")
+    public Club get(@PathVariable String slug) {
         return clubService.getClub(slug);
     }
 
-    @DeleteMapping("delete/{slug}")
-    public ResponseEntity<?> deleteClub(@PathVariable String slug) {
+    @DeleteMapping("{slug}")
+    public ResponseEntity<?> delete(@PathVariable String slug) {
         if (clubService.deleteClub(slug)) return new ResponseEntity<>("Successfull", HttpStatus.OK);
         return new ResponseEntity<>("Unsuccessfull", HttpStatus.BAD_REQUEST);
     }
+    
+    @GetMapping("{slug}/join/{username}")
+    public ResponseEntity<?> join(@PathVariable String slug, @PathVariable String username) {
+        Club club = clubService.getClub(slug);
+        User user = userService.getUser(username);
+        
+        ClubRole clubRole = clubRoleService.assignClubRole(user, club, Roles.MEMBER);
+        
+        if (clubRole != null) {
+            return new ResponseEntity<ClubRole>(clubRole, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Unsuccessfull", HttpStatus.BAD_REQUEST);
+    }
 
+    @GetMapping("{slug}/roles")
+    public ResponseEntity<?> join(@PathVariable String slug) {
+        Club club = clubService.getClub(slug);
+        
+        Collection<ClubRole> roles = clubRoleService.getClubRoles(club);
+        
+        if (roles != null) {
+            return new ResponseEntity<Iterable<ClubRole>>(roles, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Unsuccessfull", HttpStatus.BAD_REQUEST);
+    }
 }
