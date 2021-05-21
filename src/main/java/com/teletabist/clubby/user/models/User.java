@@ -273,9 +273,9 @@ public class User {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
-
-    //Statics
     
+    //Statics
+
     /**
      * Static username regex pattern used in username validations.
      */

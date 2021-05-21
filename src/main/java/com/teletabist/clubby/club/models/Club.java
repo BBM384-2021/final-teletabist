@@ -4,7 +4,6 @@ package com.teletabist.clubby.club.models;
 import java.sql.Timestamp;
 import java.util.Collection;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +19,6 @@ import javax.persistence.Table;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -55,7 +53,7 @@ public class Club {
 
 
     @JsonIgnoreProperties({"subclubs", "parent",  "clubRating"})
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Club> subclubs;
 
     @JsonIgnoreProperties({"subclubs", "parent", "clubRating"})
@@ -71,10 +69,10 @@ public class Club {
     @CreationTimestamp
     private Timestamp created_at;
 
-    // @OneToMany(mappedBy = "club")
-    // private Set<ClubRoles> club_roles;
+    /*@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<ClubRole> club_roles;*/
 
-    @OneToOne(mappedBy = "club", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"club"})
     private ClubRating clubRating;
 
@@ -187,5 +185,4 @@ public class Club {
     public void setClubRating(ClubRating clubRating) {
         this.clubRating = clubRating;
     }
-
 }

@@ -1,7 +1,5 @@
 package com.teletabist.clubby.club.http;
 
-import java.util.Collection;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.teletabist.clubby.club.models.Club;

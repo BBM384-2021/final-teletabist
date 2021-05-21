@@ -127,6 +127,10 @@ public class ClubService {
         return addClub(club);
     }
 
+    public Club saveClub(Club club) {
+        return clubRepository.save(club);
+    }
+
     /*public Iterable<UserRole> getMembers(Integer club_id) {
         Iterable<ClubRoles> cr;
         cr = clubRolesRepository.findByClub_id(club_id);
