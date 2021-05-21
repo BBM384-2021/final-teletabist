@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.xml.bind.ValidationException;
 
+import com.teletabist.clubby.user.SecureUserPrincipal;
 import com.teletabist.clubby.user.models.Profile;
 import com.teletabist.clubby.user.models.ProfileRepository;
 import com.teletabist.clubby.user.models.User;
@@ -15,6 +16,7 @@ import com.teletabist.clubby.user.models.UserRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -139,5 +141,22 @@ public class UserService {
             }
         }
         return false;
+    }
+
+    public User authUser(){
+        SecureUserPrincipal pr = this.authUserPrincipal();
+        if(pr != null){
+            return pr.getUser();
+        }
+        return null;
+    }
+
+    public SecureUserPrincipal authUserPrincipal(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof SecureUserPrincipal){
+            SecureUserPrincipal securePrincipal = (SecureUserPrincipal) principal;
+            return securePrincipal;
+        }
+        return null;
     }
 }
