@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/dev/profile")
 public class ProfileAPIController {
     private final ProfileService profileService;
-    
+
 
     @Autowired
     public ProfileAPIController(ProfileService profileService){   

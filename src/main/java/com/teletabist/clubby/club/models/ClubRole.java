@@ -1,5 +1,6 @@
 package com.teletabist.clubby.club.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -18,7 +19,7 @@ public class ClubRole {
     @Id
     private Integer id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id")
     @MapsId
     private UserRole user_role;

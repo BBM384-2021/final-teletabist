@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClubRatingService {
     private final ClubRatingRepository clubRatingRepository;
-    private final ClubService clubService;
+    //private final ClubService clubService;
 
     @Autowired
     public ClubRatingService(ClubRatingRepository clubRatingRepository, ClubService clubService) {
         this.clubRatingRepository = clubRatingRepository;
-        this.clubService = clubService;
+        //this.clubService = clubService;
     }
 
     public ClubRating getClubRating(Club club){

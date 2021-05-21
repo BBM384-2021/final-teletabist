@@ -1,9 +1,7 @@
 package com.teletabist.clubby.club.services;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubRole;

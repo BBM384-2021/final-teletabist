@@ -1,9 +1,7 @@
 package com.teletabist.clubby.club.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.teletabist.clubby.user.models.User;
-import com.teletabist.clubby.user.models.UserRole;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 

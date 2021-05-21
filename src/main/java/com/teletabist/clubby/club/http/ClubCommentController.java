@@ -1,8 +1,6 @@
 package com.teletabist.clubby.club.http;
 
 
-import java.util.Collection;
-
 import javax.validation.Valid;
 
 import com.teletabist.clubby.club.models.Club;
@@ -21,8 +19,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/clubs/{slug}/comments")
