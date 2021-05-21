@@ -55,9 +55,7 @@ public class ClubComment {
      * (Important to use the exact name!!!!)
      *
      * {Getter, Setter}
-     * TODO:add (length = 10)
      */
-    //@JsonIgnore <--- use if needed
     @JsonIgnoreProperties({"subclubs", "parent",  "clubRating"})
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "club_id", nullable = false)
@@ -76,9 +74,7 @@ public class ClubComment {
      * (Important to use the exact name!!!!)
      *
      * {Getter, Setter}
-     * TODO: add (length = 10)
      */
-    //@JsonIgnore <--- use if needed
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -136,7 +132,7 @@ public class ClubComment {
      * The authorized person that last updated the comment
      * Will state to role of the person as "Updated by xxxx"
      * {Getter, Setter}
-     * TODO:Open when the implementations are done! and add (length = 10)
+     * TODO: Yiğit Koç düzenleyecek! Open when the implementations are done! and add (length = 10)
      */
     //@ManyToOne(fetch = FetchType.LAZY)
     //@JoinColumn(name = "updated_by", nullable = false)
@@ -152,7 +148,6 @@ public class ClubComment {
         return id;
     }
 
-    //TODO:Open when the implementations are done! Don't forget to update ClubCommentService
     public Club getClub() {
         return club;
     }
@@ -202,7 +197,7 @@ public class ClubComment {
         this.visible = visible;
     }
 
-    /*TODO:Open when the implementations are done!
+    /*TODO: Yiğit Koç düzenleyecek! Open when the implementations are done!
     public UserRole getUserRole() {
         return userRole;
     }

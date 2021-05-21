@@ -42,23 +42,28 @@ public class ClubCommentService {
     }
 
     //APIController updateClubComment()
-    //TODO: Add userRole after implementation / liking process will be revised
-    public ClubComment updateComment(Integer id, ClubComment clubCommentRequest) {
+    //TODO: Yiğit Koç düzenleyecek! Add userRole after implementation /
+    public ClubComment updateComment(Integer id, ClubComment clubCommentRequest, String slug) {
         return clubCommentRepository.findById(id).map(clubComment -> {
-            clubComment.setComment(clubCommentRequest.getComment());
-            //clubComment.setLiked(clubCommentRequest.isLiked());
-            clubComment.setUpdated_at(clubCommentRequest.getUpdated_at());
-            clubComment.setVisible(clubCommentRequest.isVisible());
-            return clubCommentRepository.save(clubComment);
+            if (clubComment.getClub().getSlug().equals(slug)) {
+                clubComment.setComment(clubCommentRequest.getComment());
+                //clubComment.setUpdated_at(clubCommentRequest.getUpdated_at());
+                clubComment.setVisible(clubCommentRequest.isVisible());
+                return clubCommentRepository.save(clubComment);
+            }
+            return null;
         }).orElse(null);
     }
 
     //APIController deleteClubComment()
-    public Boolean deleteComment(Integer id) {
+    public Boolean deleteComment(Integer id, String slug) {
         return clubCommentRepository.findById(id).map(clubComment -> {
-            clubCommentRepository.delete(clubComment);
-            this.clubRatingService.decrementRating(clubComment.getClub(), clubComment.isLiked());
-            return true;
+            if (clubComment.getClub().getSlug().equals(slug)) {
+                clubCommentRepository.delete(clubComment);
+                this.clubRatingService.decrementRating(clubComment.getClub(), clubComment.isLiked());
+                return true;
+            }
+            return false;
         }).orElse(false);
     }
 }
