@@ -1,0 +1,10 @@
+ALTER TABLE survey_questions DROP FOREIGN KEY FKsurvey_que725756;
+ALTER TABLE surveys DROP FOREIGN KEY FKsurveys421057;
+ALTER TABLE user_surveys_taken DROP FOREIGN KEY FKuser_surve722924;
+ALTER TABLE user_surveys_taken DROP FOREIGN KEY FKuser_surve736056;
+ALTER TABLE user_surveys_taken DROP FOREIGN KEY FKuser_surve826212;
+ALTER TABLE user_surveys DROP FOREIGN KEY `has surveys`;
+DROP TABLE IF EXISTS survey_questions;
+DROP TABLE IF EXISTS surveys;
+DROP TABLE IF EXISTS user_surveys;
+DROP TABLE IF EXISTS user_surveys_taken;

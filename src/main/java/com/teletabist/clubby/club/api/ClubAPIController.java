@@ -78,7 +78,7 @@ public class ClubAPIController {
     }
 
     @GetMapping("{slug}/roles")
-    public ResponseEntity<?> join(@PathVariable String slug) {
+    public ResponseEntity<?> getRoles(@PathVariable String slug) {
         Club club = clubService.getClub(slug);
         
         Collection<ClubRole> roles = clubRoleService.getClubRoles(club);

@@ -1,5 +1,9 @@
 package com.teletabist.clubby.survey.models;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +12,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Entity
 @Table(name = "survey_questions")
@@ -19,6 +33,7 @@ public class SurveyQuestion {
     private Integer id;
 
     @ManyToOne(fetch=FetchType.EAGER)
+    @JsonBackReference
     @JoinColumn(name = "survey_id")
     private Survey survey;
 
@@ -28,11 +43,18 @@ public class SurveyQuestion {
     @Column(columnDefinition="TEXT")
     private String question_message;
 
-    @Column(columnDefinition="TEXT")
-    private String answer;
+    @Basic
+    @JsonIgnore
+    @Column(name = "answers", columnDefinition="TEXT")
+    private String answers;
+
+    @Transient
+    @JsonProperty(value = "answers")
+    private Collection<Answer> answersCollection;
 
     @Column(length = 10)
-    private Integer weight;
+    private Double weight;
+
 
     public Integer getId() {
         return id;
@@ -66,19 +88,43 @@ public class SurveyQuestion {
         this.question_message = question_message;
     }
 
-    public String getAnswer() {
-        return answer;
+    @PostLoad
+    public void fillTransient() {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            Collection<Answer> answerFill = objectMapper.readValue(answers, new TypeReference<Collection<Answer>>() { });
+            answersCollection = answerFill;
+        } catch (JsonProcessingException e) {
+            answersCollection = new ArrayList<Answer>();
+        }
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    @PrePersist
+    public void fillPersist() {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            answers = objectMapper.writeValueAsString(answersCollection);
+        } catch (JsonProcessingException e) {
+            answers = "[]";
+        }
     }
 
-    public Integer getWeight() {
+    public Collection<Answer> getAnswersCollection() {
+        return answersCollection;
+    }
+
+    public void setAnswersCollection(Collection<Answer> answersCollection) {
+        this.answersCollection = answersCollection;
+        fillPersist();
+    }
+
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 

@@ -16,6 +16,9 @@ import javax.persistence.Table;
 
 import com.teletabist.clubby.club.models.Club;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "surveys")
 public class Survey {
@@ -29,11 +32,10 @@ public class Survey {
     @JoinColumn(name = "club_id", referencedColumnName = "id")
     private Club club;
 
-    @OneToMany(mappedBy = "survey", fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+    @OneToMany(mappedBy = "survey", cascade=CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<SurveyQuestion> questions;
 
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
-    private List<UserSurveyTaken> user_survey_taken;
 
     public Integer getSurvey_id() {
         return survey_id;
@@ -58,14 +60,5 @@ public class Survey {
     public void setQuestions(List<SurveyQuestion> questions) {
         this.questions = questions;
     }
-
-    public List<UserSurveyTaken> getUser_survey_taken() {
-        return user_survey_taken;
-    }
-
-    public void setUser_survey_taken(List<UserSurveyTaken> user_survey_taken) {
-        this.user_survey_taken = user_survey_taken;
-    }
-
     
 }

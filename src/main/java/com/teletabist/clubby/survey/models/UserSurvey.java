@@ -15,6 +15,9 @@ import javax.persistence.Table;
 
 import com.teletabist.clubby.user.models.User;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "user_surveys")
 public class UserSurvey {
@@ -24,7 +27,8 @@ public class UserSurvey {
     @Column(length = 10)
     private Integer id;
 
-    @OneToMany(fetch=FetchType.EAGER)
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "user_surveys_takenid")
     private List<UserSurveyTaken> user_surveys;
 
