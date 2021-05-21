@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.teletabist.clubby.survey.models.UserSurvey;
+import com.teletabist.clubby.survey.models.UserSurveyTaken;
 
 import org.apache.commons.validator.routines.DomainValidator;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -136,6 +138,14 @@ public class User {
     @JsonManagedReference
     @OneToOne(mappedBy = "user", fetch=FetchType.EAGER)
     private Profile profile;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+    private List<UserSurvey> userSurveys;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+    private List<UserSurveyTaken> userSurveyTakens;
 
     /**
      * For demo purposes
@@ -273,9 +283,26 @@ public class User {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
-
-    //Statics
     
+    public List<UserSurvey> getUserSurveys() {
+        return userSurveys;
+    }
+
+    public void setUserSurveys(List<UserSurvey> userSurveys) {
+        this.userSurveys = userSurveys;
+    }
+
+    public List<UserSurveyTaken> getUserSurveyTakens() {
+        return userSurveyTakens;
+    }
+
+    public void setUserSurveyTakens(List<UserSurveyTaken> userSurveyTakens) {
+        this.userSurveyTakens = userSurveyTakens;
+    }
+
+    
+    //Statics
+
     /**
      * Static username regex pattern used in username validations.
      */

@@ -1,3 +1,4 @@
+
 package com.teletabist.clubby.user.models;
 
 import java.sql.Timestamp;

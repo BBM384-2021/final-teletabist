@@ -3,7 +3,6 @@ package com.teletabist.clubby.club.models;
 
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +19,7 @@ import javax.persistence.Table;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.teletabist.clubby.survey.models.Survey;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -71,12 +70,16 @@ public class Club {
     @CreationTimestamp
     private Timestamp created_at;
 
-    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ClubRole> club_roles;
+    /*@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<ClubRole> club_roles;*/
 
     @OneToOne(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"club"})
     private ClubRating clubRating;
+
+    @OneToOne(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"club"})
+    private Survey survey;
 
     /*@OneToMany(mappedBy = "club")
     private Set <UsersClubInterest> interests;*/
@@ -188,4 +191,11 @@ public class Club {
         this.clubRating = clubRating;
     }
 
+    public Survey getSurvey() {
+        return survey;
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
+    }
 }
