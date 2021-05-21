@@ -42,16 +42,15 @@ public class ClubCommentAPIController {
 
     @PutMapping("{id}")
     @PatchMapping("{id}")
-    public ResponseEntity<?> updateClubComment(@PathVariable Integer id,
-            /*@Valid*/ @RequestBody ClubComment clubCommentRequest) {
-        ClubComment clubComment = clubCommentService.updateComment(id, clubCommentRequest);
+    public ResponseEntity<?> updateClubComment(@PathVariable Integer id, /*@Valid*/ @RequestBody ClubComment clubCommentRequest, @PathVariable String slug) {
+        ClubComment clubComment = clubCommentService.updateComment(id, clubCommentRequest, slug);
         if (clubComment != null) return new ResponseEntity<ClubComment>(clubComment, HttpStatus.OK);
         return new ResponseEntity<>("Unsuccessful", HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteClubComment(@PathVariable Integer id) {
-        if (clubCommentService.deleteComment(id)) return new ResponseEntity<>("Successful", HttpStatus.OK);
+    public ResponseEntity<?> deleteClubComment(@PathVariable Integer id, @PathVariable String slug) {
+        if (clubCommentService.deleteComment(id, slug)) return new ResponseEntity<>("Successful", HttpStatus.OK);
         return new ResponseEntity<>("Unsuccessful", HttpStatus.BAD_REQUEST);
     }
 
