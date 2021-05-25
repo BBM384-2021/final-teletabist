@@ -1,5 +1,7 @@
 package com.teletabist.clubby.survey.services;
 
+import java.util.Collection;
+
 import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.survey.models.Survey;
 import com.teletabist.clubby.survey.models.SurveyQuestion;
@@ -10,11 +12,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SurveyService {
+    private final SurveyQuestionService surveyQuestionService;
     private final SurveyRepository surveyRepository;
 
     @Autowired
-    public SurveyService(SurveyRepository surveyRepository) {
+    public SurveyService(SurveyRepository surveyRepository, SurveyQuestionService surveyQuestionService) {
         this.surveyRepository = surveyRepository;
+        this.surveyQuestionService = surveyQuestionService;
     }
 
     public Iterable<Survey> getAllSurveys() {
@@ -39,5 +43,20 @@ public class SurveyService {
         }
         survey = surveyRepository.save(survey);
         return survey;
+    }
+
+    public void deleteSurvey(Club club) {
+        Survey survey = surveyRepository.findByClub(club);
+
+        if (survey == null) {
+            return;
+        }
+
+        Collection<SurveyQuestion> deletingQuestions = survey.getQuestions();
+        for (SurveyQuestion question : deletingQuestions) {
+            surveyQuestionService.deleteQuestion(question.getId(), survey);
+        }
+        
+        surveyRepository.delete(survey);
     }
 }

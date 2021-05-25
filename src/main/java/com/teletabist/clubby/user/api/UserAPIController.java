@@ -1,5 +1,6 @@
 package com.teletabist.clubby.user.api;
 
+import com.teletabist.clubby.club.services.ClubRoleService;
 import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.user.services.UserService;
 
@@ -18,14 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/dev/users")
 public class UserAPIController {
     private final UserService userService;
+    private final ClubRoleService clubRoleService;
 
     /**
      * User service bound with user service to provide the service
      * @param userService
      */ 
     @Autowired
-    public UserAPIController(UserService userService){
+    public UserAPIController(UserService userService, ClubRoleService clubRoleService){
         this.userService = userService;
+        this.clubRoleService = clubRoleService;
     }
 
     @GetMapping
@@ -51,6 +54,7 @@ public class UserAPIController {
 
     @DeleteMapping("{username}")
     public boolean delete(@PathVariable String username){
+        clubRoleService.deassignClubRole(userService.getUser(username));
         return this.userService.deleteUser(username);
     }
 

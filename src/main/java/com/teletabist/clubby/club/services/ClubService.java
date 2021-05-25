@@ -9,8 +9,6 @@ import javax.transaction.Transactional;
 import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubFormDTO;
 import com.teletabist.clubby.club.models.ClubRepository;
-import com.teletabist.clubby.club.models.ClubRoleRepository;
-import com.teletabist.clubby.user.models.UserRoleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +18,10 @@ import javassist.NotFoundException;
 @Service
 public class ClubService {
     private final ClubRepository clubRepository;
-    //private final ClubRolesRepository clubRolesRepository;
-    //private final UserRoleRepository userRoleRepository;
 
     @Autowired
-    public ClubService(ClubRepository clubRepository, ClubRoleRepository clubRolesRepository, UserRoleRepository userRoleRepository) {
+    public ClubService(ClubRepository clubRepository) {
         this.clubRepository = clubRepository;
-        //this.clubRolesRepository = clubRolesRepository;
-        //this.userRoleRepository = userRoleRepository;
     }
 
     //TODO: add try/catch block and verification parts
@@ -131,13 +125,5 @@ public class ClubService {
         return clubRepository.save(club);
     }
 
-    /*public Iterable<UserRole> getMembers(Integer club_id) {
-        Iterable<ClubRoles> cr;
-        cr = clubRolesRepository.findByClub_id(club_id);
-        for (ClubRoles clubRoles : cr) {
-            userRoleRepository.findById(clubRoles)
-        }
-        return ;
-    }*/
 }
 
