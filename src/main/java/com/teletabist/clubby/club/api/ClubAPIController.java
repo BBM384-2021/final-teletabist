@@ -73,6 +73,10 @@ public class ClubAPIController {
 
         surveyService.deleteSurvey(club);
 
+        for (Club subClub : club.getSubclubs()) {
+            delete(subClub.getSlug());
+        }
+
         if (clubService.deleteClub(slug)) return new ResponseEntity<>("Successful", HttpStatus.OK);
         return new ResponseEntity<>("Unsuccessful", HttpStatus.BAD_REQUEST);
     }
