@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+    <div th:fragment="header">
+        <admin-bar sec:authorize="hasRole('SYS_ADMIN')"></admin-bar>
+        <navbar sec:authorize="isAuthenticated()" th:username="${#authentication.getPrincipal().getUser().getUsername()}"></navbar>
+        <navbar sec:authorize="!isAuthenticated()" ></navbar>
+    </div>
+
+</body>
+</html>
