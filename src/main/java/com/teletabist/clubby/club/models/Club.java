@@ -52,11 +52,11 @@ public class Club {
     private String location;
 
 
-    @JsonIgnoreProperties({"subclubs", "parent",  "clubRating"})
+    @JsonIgnoreProperties({"subclubs", "parent",  "clubRating", "hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Club> subclubs;
 
-    @JsonIgnoreProperties({"subclubs", "parent", "clubRating"})
+    @JsonIgnoreProperties({"subclubs", "parent", "clubRating", "hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Club parent;
