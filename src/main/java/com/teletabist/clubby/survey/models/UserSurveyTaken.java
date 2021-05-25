@@ -10,27 +10,33 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.teletabist.clubby.user.models.User;
 
 @Entity
 @Table(name="user_surveys_taken")
 public class UserSurveyTaken {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(length = 10)
     private Integer id;
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "surveyssurveyid")
+    @JoinColumn(name = "surveyid", nullable = false)
+    @JsonIgnoreProperties({"questions"})
     private Survey survey;
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "usersid")
+    @JoinColumn(name = "usersid", nullable = false)
+    @JsonIgnoreProperties({"roles", "profile", "created_at", "updated_at"})
     private User user;
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "usersurveysid")
-    private UserSurvey user_survey;
+    @JoinColumn(name = "usersurveysid",  nullable = false)
+    @JsonBackReference
+    private UserSurvey usersurvey;
 
     public Integer getId() {
         return id;
@@ -56,12 +62,12 @@ public class UserSurveyTaken {
         this.user = user;
     }
 
-    public UserSurvey getUser_survey() {
-        return user_survey;
+    public UserSurvey getUsersurvey() {
+        return usersurvey;
     }
 
-    public void setUser_survey(UserSurvey user_survey) {
-        this.user_survey = user_survey;
+    public void setUsersurvey(UserSurvey user_survey) {
+        this.usersurvey = user_survey;
     }
 
     

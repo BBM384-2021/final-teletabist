@@ -52,13 +52,18 @@ public class Club {
     private String location;
 
 
+<<<<<<< HEAD
     @JsonIgnoreProperties({"subclubs", "parent",  "clubRating", "hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+=======
+    @JsonIgnoreProperties({"subclubs", "parent",  "clubRating"})
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+>>>>>>> ed7ae0c... - Added auto survey generation via filtering
     private Collection<Club> subclubs;
 
     @JsonIgnoreProperties({"subclubs", "parent", "clubRating", "hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Club parent;
 
     @Column(nullable = false)
