@@ -52,18 +52,8 @@ public class Club {
     private String location;
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     @JsonIgnoreProperties({"subclubs", "parent",  "clubRating", "hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-=======
-    @JsonIgnoreProperties({"subclubs", "parent",  "clubRating"})
-    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
->>>>>>> ed7ae0c... - Added auto survey generation via filtering
-=======
-    @JsonIgnoreProperties({"subclubs", "parent",  "clubRating", "hibernateLazyInitializer", "handler"})
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
->>>>>>> 8d2685e... 	modified:   src/main/java/com/teletabist/clubby/club/models/Club.java
     private Collection<Club> subclubs;
 
     @JsonIgnoreProperties({"subclubs", "parent", "clubRating", "hibernateLazyInitializer", "handler"})
