@@ -11,8 +11,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 </head>
 <body>
     <div id="App">
-        <navbar sec:authorize="isAuthenticated()" th:username="${#authentication.getPrincipal().getUser().getUsername()}"></navbar>
-        <navbar sec:authorize="!isAuthenticated()" ></navbar>
+        <div th:replace="fragments/header::header"></div>
         <b-container>
             <b-row >
                 <b-col>
@@ -31,7 +30,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
                  </b-col>
              </b-row>
         </b-container>    
-        <footerbar></footerbar>    
+        <div th:replace="fragments/footer::footer"></div>    
     </div>
     <script src="/public/js/main.js"></script>
 </body>

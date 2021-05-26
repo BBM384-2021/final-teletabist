@@ -22,9 +22,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @use "sass:color";
-    $bar-color: #010326;
-    $text-color: #F2F2F2;
     .admin-bar{
         width: 100%;
         height: 32px;
