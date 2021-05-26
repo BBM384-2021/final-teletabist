@@ -132,7 +132,7 @@ public class User {
     
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "user", fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     private List<UserRole> roles;
 
     @JsonManagedReference

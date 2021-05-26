@@ -6,6 +6,7 @@ import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubRole;
 import com.teletabist.clubby.club.services.ClubRoleService;
 import com.teletabist.clubby.club.services.ClubService;
+import com.teletabist.clubby.survey.services.SurveyService;
 import com.teletabist.clubby.user.core.Roles;
 import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.user.services.UserService;
@@ -29,12 +30,14 @@ public class ClubAPIController {
     private final ClubService clubService;
     private final UserService userService;
     private final ClubRoleService clubRoleService;
+    private final SurveyService surveyService;
 
     @Autowired
-    public ClubAPIController(ClubService clubService, UserService userService, ClubRoleService clubRoleService) {
+    public ClubAPIController(ClubService clubService, UserService userService, ClubRoleService clubRoleService, SurveyService surveyService) {
         this.clubService = clubService;
         this.userService = userService;
         this.clubRoleService = clubRoleService;
+        this.surveyService = surveyService;
     }
 
     @GetMapping
@@ -60,21 +63,44 @@ public class ClubAPIController {
 
     @DeleteMapping("{slug}")
     public ResponseEntity<?> delete(@PathVariable String slug) {
-        if (clubService.deleteClub(slug)) return new ResponseEntity<>("Successfull", HttpStatus.OK);
-        return new ResponseEntity<>("Unsuccessfull", HttpStatus.BAD_REQUEST);
+        Club club = clubService.getClub(slug);
+
+        if (club == null) {
+            return new ResponseEntity<>("Club Does Not Exist", HttpStatus.BAD_REQUEST);
+        }
+
+        clubRoleService.deassignClubRole(club);
+
+        surveyService.deleteSurvey(club);
+
+        for (Club subClub : club.getSubclubs()) {
+            delete(subClub.getSlug());
+        }
+
+        if (clubService.deleteClub(slug)) return new ResponseEntity<>("Successful", HttpStatus.OK);
+        return new ResponseEntity<>("Unsuccessful", HttpStatus.BAD_REQUEST);
     }
     
     @GetMapping("{slug}/join/{username}")
     public ResponseEntity<?> join(@PathVariable String slug, @PathVariable String username) {
         Club club = clubService.getClub(slug);
+
+        if (club == null) {
+            return new ResponseEntity<>("Club Does Not Exist", HttpStatus.BAD_REQUEST);
+        }
+
         User user = userService.getUser(username);
+
+        if (user == null) {
+            return new ResponseEntity<>("User Does Not Exist", HttpStatus.BAD_REQUEST);
+        }
         
         ClubRole clubRole = clubRoleService.assignClubRole(user, club, Roles.MEMBER);
         
         if (clubRole != null) {
             return new ResponseEntity<ClubRole>(clubRole, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Unsuccessfull", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Unsuccessful", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("{slug}/roles")
@@ -87,5 +113,37 @@ public class ClubAPIController {
             return new ResponseEntity<Iterable<ClubRole>>(roles, HttpStatus.OK);
         }
         return new ResponseEntity<>("Unsuccessfull", HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("{slug}/join/{username}")
+    public ResponseEntity<?> leave(@PathVariable String slug, @PathVariable String username) {
+        Club club = clubService.getClub(slug);
+
+        if (club == null) {
+            return new ResponseEntity<>("Club Does Not Exist", HttpStatus.BAD_REQUEST);
+        }
+
+        User user = userService.getUser(username);
+
+        if (user == null) {
+            return new ResponseEntity<>("User Does Not Exist", HttpStatus.BAD_REQUEST);
+        }
+        
+        Integer amount = clubRoleService.deassignClubRole(user, club);
+        
+        return new ResponseEntity<>(amount, HttpStatus.OK);
+    }
+
+    @GetMapping("{slug}/ban")
+    public ResponseEntity<?> findBanned(@PathVariable String slug) {
+        Club club = clubService.getClub(slug);
+
+        if (club == null) {
+            return new ResponseEntity<>("Club Does Not Exist", HttpStatus.BAD_REQUEST);
+        }
+
+        
+
+        return new ResponseEntity<>("Unsuccessful", HttpStatus.BAD_REQUEST);
     }
 }

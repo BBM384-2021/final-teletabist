@@ -47,8 +47,8 @@ public class UserRole implements GrantedAuthority{
 
     private Timestamp designed_at;
 
-    @Column(length = 10)
-    private Integer club_id;
+    @Column(length = 10, name = "club_id")
+    private Integer club;
 
     public Integer getId() {
         return id;
@@ -71,7 +71,7 @@ public class UserRole implements GrantedAuthority{
     }
 
     public Integer getClub_id() {
-        return club_id;
+        return club;
     }
 
     public User getUser() {
@@ -87,7 +87,7 @@ public class UserRole implements GrantedAuthority{
     }
 
     public void setClub_id(Integer club_id) {
-        this.club_id = club_id;
+        this.club = club_id;
     }
 
     @JsonIgnore
