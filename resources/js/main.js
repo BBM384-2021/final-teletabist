@@ -15,6 +15,7 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.directive('b-scrollspy', VBScrollspy)
 
+
 Vue.component('navbar', require('./Components/GeneralComponents/NavBar.vue').default)
 Vue.component('footerbar', require('./Components/GeneralComponents/FooterBar.vue').default)
 Vue.component('commendpage', require('./Components/GeneralComponents/CommendPage.vue').default)
