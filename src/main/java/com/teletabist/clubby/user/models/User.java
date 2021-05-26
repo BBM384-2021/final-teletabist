@@ -76,6 +76,7 @@ public class User {
      * @see https://www.baeldung.com/spring-security-registration-password-encoding-bcrypt
      * {Getter, Validate, Setter}
      */
+    @JsonIgnore
     @Column(nullable = false, length = 255)
     private String password;
 
@@ -128,6 +129,7 @@ public class User {
     @Column(nullable = false)
     @UpdateTimestamp
     private Timestamp updated_at;
+    
 
     @JsonManagedReference
     @OneToMany(mappedBy = "user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
@@ -316,5 +318,6 @@ public class User {
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
+
 
 }

@@ -17,7 +17,6 @@ import com.teletabist.clubby.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -122,17 +121,13 @@ public class UserController {
     }
 
     private boolean canEdit( String username){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof String){
-            return false;
-        }
         boolean _canedit = false;
-        if(principal instanceof SecureUserPrincipal){
-            SecureUserPrincipal securePrincipal = (SecureUserPrincipal) principal;
-            if(securePrincipal.getUsername().equals(username)){
+        SecureUserPrincipal u = this.userService.authUserPrincipal();
+        if(u != null){
+            if(u.getUsername().equals(username)){
                 _canedit = true;
             }else{
-                Collection<? extends GrantedAuthority> roles = securePrincipal.getAuthorities();
+                Collection<? extends GrantedAuthority> roles = u.getAuthorities();
                 for(GrantedAuthority g : roles){
                     String grantedAuth = g.getAuthority();
                     if(grantedAuth.equals(Roles.SYS_ADMIN.getRoleName())
