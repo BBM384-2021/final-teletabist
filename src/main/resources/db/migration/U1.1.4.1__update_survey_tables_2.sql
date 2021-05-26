@@ -1,0 +1,1 @@
+ALTER TABLE user_surveys ALTER COLUMN answers varchar(255);

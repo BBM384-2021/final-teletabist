@@ -27,7 +27,7 @@
                      <b-form-textarea
                       id="textarea"
                       v-model="text"
-                      placeholder="GICIK HERİF..."
+                      placeholder="Placeholder..."
                       rows="3"
                       max-rows="6"
                     ></b-form-textarea>

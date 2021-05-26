@@ -2,15 +2,23 @@ package com.teletabist.clubby.club.services;
 
 
 import java.security.InvalidParameterException;
+import java.util.Collection;
 import java.util.Random;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubFormDTO;
 import com.teletabist.clubby.club.models.ClubRepository;
 
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javassist.NotFoundException;
@@ -125,5 +133,48 @@ public class ClubService {
         return clubRepository.save(club);
     }
 
+    private static int paginationLimit = 10;
+
+    public Collection<Club> listClubs(int page){
+        int pageCount = this.pageCount();
+        if(page<0){
+            page = 0;
+        }else if(page>=pageCount){
+            page=pageCount-1;
+        }
+      
+        return clubRepository.findAll(this.excludeSubclubs(),PageRequest.of(page, paginationLimit)).toList();
+    }
+
+    public Collection<Club> listClubs(){
+        return clubRepository.findAll(this.excludeSubclubs());
+    }
+
+    private Specification<Club> excludeSubclubs(){
+        return new Specification<Club>(){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+            public Predicate toPredicate(Root<Club> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                return root.get("parent").isNull();
+            }
+        };
+
+    }
+
+    public int pageCount(){
+        long count = clubRepository.count(this.excludeSubclubs());
+        int pageCount = (int) Math.round(Math.ceil(count/(double) paginationLimit));
+        return pageCount;
+    }
+
+    /*public Iterable<UserRole> getMembers(Integer club_id) {
+        Iterable<ClubRoles> cr;
+        cr = clubRolesRepository.findByClub_id(club_id);
+        for (ClubRoles clubRoles : cr) {
+            userRoleRepository.findById(clubRoles)
+        }
+        return ;
+    }*/
 }
 

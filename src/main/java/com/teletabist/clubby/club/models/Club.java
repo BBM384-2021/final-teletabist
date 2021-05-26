@@ -58,7 +58,7 @@ public class Club {
 
     @JsonIgnoreProperties({"subclubs", "parent", "clubRating", "hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Club parent;
 
     @Column(nullable = false)

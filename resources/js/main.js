@@ -29,6 +29,9 @@ Vue.component('subclubsinclub', require('./Components/ClubComponents/SubClubsInC
 Vue.component('subclub', require('./Components/SubClubComponents/SubClub.vue').default)
 
 Vue.component('admin', require('./Components/AdminComponents/Admin.vue').default)
+Vue.component('admin-bar', require('./Components/AdminComponents/AdminBar.vue').default)
+Vue.component('admin-club', require('./Components/AdminComponents/AdminClub.vue').default)
+Vue.component('admin-clubpg', require('./Components/AdminComponents/AdminClubPagination.vue').default)
 
 Vue.component('profile', require('./Components/ProfileComponents/Profile.vue').default)
 Vue.component('profileedit', require('./Components/ProfileComponents/ProfileEdit.vue').default)

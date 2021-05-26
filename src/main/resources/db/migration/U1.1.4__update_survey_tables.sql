@@ -1,0 +1,1 @@
+ALTER TABLE survey_questions MODIFY survey_id NOT NULL;

@@ -1,0 +1,88 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Clubby - Admin Panel | Create A New Club</title>
+</head>
+<body>
+    <div id="App">
+        <div th:replace="fragments/header::header"></div>
+       
+        <b-container class="mt-3 mb-4">
+            <form method="POST" action="#" th:action="@{'/admin/clubs/create'}" th:object="${club}">
+                <b-row>
+                    <b-col cols=12>
+                        <h1>Create A New Club</h1>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col cols=4>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="clubname" ><span class="text-danger">*</span>Name</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Name" aria-label="ClubName" aria-describedby="clubname" th:field="*{name}" required>
+                        </div>
+                    </b-col>
+                    <b-col cols=4>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="clubslug">clubs/</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="slug" aria-label="ClubSlug" aria-describedby="clubslug" th:field="*{slug}">
+                        </div>
+                    </b-col>
+                    <b-col cols=4>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="parent_id">Parent club</label>
+                            </div>
+                            <select class="custom-select" th:field="*{parent_id}">
+                                <option value="-1" selected>No parent</option>
+                                <option th:value="${club.id}" th:each="club: ${allclubs}" th:text="${club.name}"></option>
+                            </select>
+                        </div>
+                    </b-col>
+
+                </b-row>
+                <b-row >
+                    <b-col cols="8">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" style="resize: none;" rows="3" th:field="*{description}"></textarea>
+                    </b-col>
+                    <b-col cols="4">
+                        <label >Other Details</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="website" ><i class="fas fa-globe"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Website" aria-label="Website" aria-describedby="website" th:field="*{website}" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="location" ><i class="fas fa-map-marker-alt"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Location" aria-label="Location" aria-describedby="location" th:field="*{location}" required>
+                        </div>
+                    </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                    <b-col cols="4">
+                        <a th:href="${referer}" th:if="${referer != null}">Back</a>
+                        <input type="submit" class="btn btn-primary" href="/admin/clubs/create" value="Create Club">
+                    </b-col>
+                </b-row>
+            </form>
+        </b-container>
+        
+        <div th:replace="fragments/footer::footer"></div>
+    </div>
+    <script src="/public/js/main.js"></script>
+</body>
+</html>

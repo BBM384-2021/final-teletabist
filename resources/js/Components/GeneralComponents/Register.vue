@@ -4,16 +4,18 @@
 <div class="container register">
             <div class="row">
                 <b-col cols="6" class="p-0 m-0">
-                    <img src="http://placehold.it/550x500" alt=""/>
+                    <div class="image_class_register">
+                    </div>
+                    <!-- <img src="https://assets.dragoart.com/images/22924_501/draw-teletubbies-chibi-teletubbies_5e4ce6fc4bf845.80754483_117091_5_3.png" alt=""/> -->
                 </b-col>
 
                 <b-col cols="6">
                     <ul class="nav nav-tabs nav-pills nav-fill">
                         <li class="nav-item">
-                            <a class="nav-link " aria-current="page" href="#" >LogIn</a>
+                            <a class="nav-link " aria-current="page" href="/login" >LogIn</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn selectedButton" href="#">Register</a>
+                            <a class="nav-link btn selectedButton disabled">Register</a>
                         </li>
                     </ul>
                     <b-row>
@@ -112,6 +114,14 @@ export default {
 .selectedButton:hover{
     background-position: center center;
 }
-
+.image_class_register{
+    background: url('https://media3.giphy.com/media/U1oKFZmnqtobu/200.gif') no-repeat; 
+    /* background: url('https://media1.tenor.com/images/367cdcf4d45f8a1aad6ee5e8e92d0411/tenor.gif?itemid=15186749') no-repeat; */
+    background-size: 100%;
+    width : 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: center center;
+}
 
 </style>
