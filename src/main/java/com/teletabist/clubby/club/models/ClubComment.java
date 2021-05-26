@@ -22,7 +22,7 @@ public class ClubComment {
     /**
      * PRIMARY KEY
      *
-     * Identifaction number is unique to comment and
+     * Identification number is unique to comment and
      * defined by database solution.
      * {Getter}
      */
