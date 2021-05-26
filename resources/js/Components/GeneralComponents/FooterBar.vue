@@ -32,7 +32,7 @@ export default {
 .footer {
   height: 120px;
   width: 100%;
-  background-color: #C4C4C4;
+  background-color:#f8f9fa;
   text-align: center; 
   position: relative;
 }
