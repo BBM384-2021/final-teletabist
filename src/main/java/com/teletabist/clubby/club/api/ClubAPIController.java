@@ -2,8 +2,10 @@ package com.teletabist.clubby.club.api;
 
 import java.util.Collection;
 
+import com.teletabist.clubby.club.models.Ban;
 import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubRole;
+import com.teletabist.clubby.club.services.BanService;
 import com.teletabist.clubby.club.services.ClubRoleService;
 import com.teletabist.clubby.club.services.ClubService;
 import com.teletabist.clubby.survey.services.SurveyService;
@@ -31,13 +33,15 @@ public class ClubAPIController {
     private final UserService userService;
     private final ClubRoleService clubRoleService;
     private final SurveyService surveyService;
+    private final BanService banService;
 
     @Autowired
-    public ClubAPIController(ClubService clubService, UserService userService, ClubRoleService clubRoleService, SurveyService surveyService) {
+    public ClubAPIController(ClubService clubService, UserService userService, ClubRoleService clubRoleService, SurveyService surveyService, BanService banService) {
         this.clubService = clubService;
         this.userService = userService;
         this.clubRoleService = clubRoleService;
         this.surveyService = surveyService;
+        this.banService = banService;
     }
 
     @GetMapping
@@ -94,6 +98,10 @@ public class ClubAPIController {
         if (user == null) {
             return new ResponseEntity<>("User Does Not Exist", HttpStatus.BAD_REQUEST);
         }
+
+        if (banService.isBlacklisted(user, club) != null) {
+            return new ResponseEntity<>("You Are Blacklisted From This Club", HttpStatus.BAD_REQUEST);
+        }
         
         ClubRole clubRole = clubRoleService.assignClubRole(user, club, Roles.MEMBER);
         
@@ -134,6 +142,32 @@ public class ClubAPIController {
         return new ResponseEntity<>(amount, HttpStatus.OK);
     }
 
+    @PostMapping("{slug}/join/{username}/subclub-admin")
+    public ResponseEntity<?> assignSubClubAdmin(@PathVariable String slug, @PathVariable String username) {
+        Club club = clubService.getClub(slug);
+
+        if (club == null) {
+            return new ResponseEntity<>("Club Does Not Exist", HttpStatus.BAD_REQUEST);
+        }
+
+        User user = userService.getUser(username);
+
+        if (user == null) {
+            return new ResponseEntity<>("User Does Not Exist", HttpStatus.BAD_REQUEST);
+        }
+
+        if (banService.isAdminBlacklisted(user) != null) {
+            return new ResponseEntity<>("This User Cannot Become A SubClub Admin", HttpStatus.BAD_REQUEST);
+        }
+        
+        ClubRole clubRole = clubRoleService.assignClubRole(user, club, Roles.SUB_CLUB_ADMIN);
+        
+        if (clubRole != null) {
+            return new ResponseEntity<ClubRole>(clubRole, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Unsuccessful", HttpStatus.BAD_REQUEST);
+    }
+
     @GetMapping("{slug}/ban")
     public ResponseEntity<?> findBanned(@PathVariable String slug) {
         Club club = clubService.getClub(slug);
@@ -142,8 +176,64 @@ public class ClubAPIController {
             return new ResponseEntity<>("Club Does Not Exist", HttpStatus.BAD_REQUEST);
         }
 
-        
+        /*Collection<ClubRole> clubRoles = clubRoleService.getClubRoles(club);
+
+        for (ClubRole clubRole : clubRoles) {
+            
+        }*/
 
         return new ResponseEntity<>("Unsuccessful", HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("{slug}/ban/{username}")
+    public ResponseEntity<?> banUser(@PathVariable String slug, @PathVariable String username) {
+        Club club = clubService.getClub(slug);
+
+        if (club == null) {
+            return new ResponseEntity<>("Club Does Not Exist", HttpStatus.BAD_REQUEST);
+        }
+
+        User bannedUser = userService.getUser(username);
+
+        if (bannedUser == null) {
+            return new ResponseEntity<>("User Does Not Exist", HttpStatus.BAD_REQUEST);
+        }
+
+        User banningUser = userService.authUser();
+
+        Ban ban = banService.createBan(bannedUser, banningUser, club);
+
+        if (ban != null) {
+            if (banService.isBlacklisted(bannedUser, club) != null) {
+                Collection<ClubRole> clubRoles = clubRoleService.getClubRoles(club);
+                
+                for (ClubRole clubRole : clubRoles) {
+                    if (clubRoleService.getUserRole(clubRole.getId()).getUser() == bannedUser) {
+                        banService.deleteAllBans(clubRoleService.getUserRole(clubRole.getId()));
+                        break;
+                    }
+                }
+                
+                clubRoleService.deassignClubRole(bannedUser, club);
+                return new ResponseEntity<>("Ban Commenced And Blacklisted", HttpStatus.OK);
+            }
+
+            if (banService.isAdminBlacklisted(bannedUser) != null) {
+                Collection<ClubRole> clubRoles = clubRoleService.getClubRoles(club);
+
+                for (ClubRole clubRole : clubRoles) {
+                    if (clubRoleService.getUserRole(clubRole.getId()).getUser() == bannedUser
+                        && clubRoleService.getUserRole(clubRole.getId()).getRole().equals(Roles.SUB_CLUB_ADMIN.getName())) {
+                        
+                        banService.deleteAllBans(clubRoleService.getUserRole(clubRole.getId()));
+                        break;
+                    }
+                }
+                clubRoleService.deassignSubClubAdmin(bannedUser, club);
+            }
+            return new ResponseEntity<>("Ban Commenced", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("Couldn't Ban", HttpStatus.BAD_REQUEST);
     }
 }

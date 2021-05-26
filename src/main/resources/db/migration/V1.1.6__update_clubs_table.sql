@@ -1,0 +1,1 @@
+ALTER TABLE clubs ADD CONSTRAINT `has parent` FOREIGN KEY (parent_id) REFERENCES clubs (id);

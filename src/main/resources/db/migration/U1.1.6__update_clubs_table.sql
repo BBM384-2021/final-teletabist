@@ -1,0 +1,1 @@
+ALTER TABLE clubs DROP FOREIGN KEY `has parent`;

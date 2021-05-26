@@ -25,9 +25,14 @@ public class ClubModuleAPIConfig extends WebSecurityConfigurerAdapter{
             .antMatchers("/api/dev/clubs/**")
             .hasRole(Roles.SYS_ADMIN.getName())
         .and()
+            .authorizeRequests()
+            .antMatchers("/api/dev/clubs/*/ban/**")
+            .hasAnyRole(Roles.SYS_ADMIN.getName(), Roles.ADMIN.getName(), Roles.SUB_CLUB_ADMIN.getName())
+        .and()
             .antMatcher("/api/dev/clubs/**")
             .httpBasic()
             .authenticationEntryPoint(this.clubAuthenticationEntryPoint());
+
     }
 
     @Bean

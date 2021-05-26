@@ -12,3 +12,4 @@ CREATE TABLE clubs(
     parent_id int(10),
     PRIMARY KEY(id)
 );
+

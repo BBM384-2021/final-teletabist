@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import org.apache.commons.validator.routines.DomainValidator;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -76,7 +78,8 @@ public class User {
      * @see https://www.baeldung.com/spring-security-registration-password-encoding-bcrypt
      * {Getter, Validate, Setter}
      */
-    @JsonIgnore
+    //@JsonIgnore
+    @JsonProperty(access = Access.WRITE_ONLY)
     @Column(nullable = false, length = 255)
     private String password;
 

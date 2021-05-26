@@ -47,7 +47,7 @@ public class ClubRoleService {
 
         boolean foundUser = false;
         for (ClubRole clubRole : clubRoles) {
-            if (clubRole.getUser_role().getUser().equals(user)) {
+            if (clubRole.getUser_role().getUser().equals(user) && clubRole.getUser_role().getRole().equals(role.getName())) {
                 foundUser = true;
                 break;
             }
@@ -73,6 +73,30 @@ public class ClubRoleService {
 
 
         return clubRole;
+    }
+
+    @Transactional
+    public Integer deassignSubClubAdmin(User user, Club club) {
+
+        UserRole DeletingRole = null;
+
+        for (UserRole userRole : user.getRoles()) {
+            if (userRole.getClub_id() == club.getId() && userRole.getRole().equals(Roles.SUB_CLUB_ADMIN.getName())) {
+                DeletingRole = userRole;
+                break;
+            }
+        }
+
+        if (DeletingRole == null) {
+            return 0;
+        }
+
+        user.getRoles().remove(DeletingRole);
+        userRepository.save(user);
+        clubRolesRepository.deleteById(DeletingRole.getId());
+        userRoleRepository.delete(DeletingRole);
+
+        return 1;
     }
 
     @Transactional
@@ -138,4 +162,17 @@ public class ClubRoleService {
     public Collection<ClubRole> getClubRoles(Club club) {
         return clubRolesRepository.findAllByClub_id(club.getId());
     }
+
+    public UserRole getUserRole(Integer id) {
+        return userRoleRepository.getOne(id);
+    }
+
+    /*public Collection<UserRole> getUserRoles(User user, List<String> roles) {
+        Collection<UserRole> userRoles = new ArrayList<UserRole>();
+        for (String role : roles) {
+            userRoles.addAll(userRoleRepository.findAllByUserAndRole(user, role));
+        }
+        
+        return userRoles;
+    }*/
 }
