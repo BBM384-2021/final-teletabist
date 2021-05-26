@@ -53,7 +53,7 @@ public class SurveyQuestion {
     private Collection<Answer> answersCollection;
 
     @Column(length = 10)
-    private Double weight;
+    private Integer weight;
 
 
     public Integer getId() {
@@ -120,11 +120,11 @@ public class SurveyQuestion {
         fillPersist();
     }
 
-    public Double getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 

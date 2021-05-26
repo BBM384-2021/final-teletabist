@@ -17,8 +17,7 @@
     </div> -->
     <div id="App">
          
-        <navbar sec:authorize="isAuthenticated()" th:username="${#authentication.getPrincipal().getUser().getUsername()}"></navbar>
-        <navbar sec:authorize="!isAuthenticated()" ></navbar>
+        <div th:replace="fragments/header::header"></div>
         <b-container style="min-height: 75vh;">
             <b-row class="justify-content-center mt-4">
                 <b-col cols="6">
@@ -32,7 +31,7 @@
             </b-row>
         </b-container>
 
-        <footerbar></footerbar>
+        <div th:replace="fragments/footer::footer"></div>
     </div>
     <script src="/public/js/main.js"></script>
 </body>

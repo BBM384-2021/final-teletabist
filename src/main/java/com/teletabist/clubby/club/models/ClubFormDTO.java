@@ -4,6 +4,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ClubFormDTO {
     @Size(max = 144)
     private String slug;
@@ -13,9 +15,9 @@ public class ClubFormDTO {
     @Size(max = 255, message = "Name can have at most 255 characters.")
     private String name;
     
-    /**
-     * TO-DO change the max size of descirption
-     */
+
+    private Integer parent_id;
+
     @Size(max = 512)
     private String description;
 
@@ -64,5 +66,25 @@ public class ClubFormDTO {
 
     @Size(max = 512)
     private String location;
+
+    private MultipartFile image;
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
+    public Integer getParent_id() {
+        return parent_id;
+    }
+
+    public void setParent_id(Integer parent_id) {
+        this.parent_id = parent_id;
+    }
+
+
 
 }
