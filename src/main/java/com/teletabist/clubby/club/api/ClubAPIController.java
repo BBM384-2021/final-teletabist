@@ -133,4 +133,17 @@ public class ClubAPIController {
         
         return new ResponseEntity<>(amount, HttpStatus.OK);
     }
+
+    @GetMapping("{slug}/ban")
+    public ResponseEntity<?> findBanned(@PathVariable String slug) {
+        Club club = clubService.getClub(slug);
+
+        if (club == null) {
+            return new ResponseEntity<>("Club Does Not Exist", HttpStatus.BAD_REQUEST);
+        }
+
+        
+
+        return new ResponseEntity<>("Unsuccessful", HttpStatus.BAD_REQUEST);
+    }
 }
