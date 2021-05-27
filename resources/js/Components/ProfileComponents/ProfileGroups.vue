@@ -1,7 +1,7 @@
 <template>
   <div class="overflow-hidden" >
   
-    <div style="height: 80px; width: 590px; border-bottom: 1px inset grey; position: relative;background-color: #EEEEEE; margin-left:10px; margin-right:10px;">     
+    <div class="profileGroup" style="height: 80px; width: 590px; border-bottom: 1px inset grey; position: relative; margin-left:10px; margin-right:10px;">     
         <b-row class="h-100">
             <b-col cols="3" class="h-100">
                 <b-row class="h-100 align-items-center">
@@ -14,13 +14,14 @@
             <b-col cols="9">
                 <b-row class="h-100 align-items-center">
                     <b-col cols="8">
-                        <span>{{ClubName}}</span>
+                        <span class="profileGroupItem">{{ClubName}}</span>
                         <br>
-                        <span>Date of join: {{DateofSharing}}</span>
+                        <span>Date of join: </span>
+                        <span class="profileGroupItem">{{DateofSharing}}</span>
                     </b-col>
 
                     <b-col cols="2">
-                        <b-link href="#foo" class="float-right mr-3" style="color: black;">LEAVE GROUP</b-link>
+                        <b-link href="#foo" class="float-right mr-3" style="color: black;">Leave Group</b-link>
                     </b-col>
                 </b-row>
                 
@@ -42,5 +43,15 @@ export default {
 </script>
 
 <style>
-
+.profileGroup{
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,179,186,1) 100%);
+    border-radius: 7px;
+}
+.profileGroupItem{
+  text-transform: lowercase;
+}
+.profileGroupItem::first-letter{
+  text-transform: uppercase !important;
+}
 </style>

@@ -2,7 +2,7 @@
   <div class="showInfo overflow-hidden " >
     <b-row class="m-0 h-75">
 
-      <b-col cols="5">
+      <b-col :cols="parentClubUrl ? 4 : 5">
         <b-row  class="h-100 align-items-center">
           <b-col cols="12" >
               <b-img center v-bind:src=picurl alt="Center image"></b-img>
@@ -11,7 +11,22 @@
         
       </b-col>
 
-      <b-col cols="7">
+      <b-col cols="2" v-if="parentClubUrl">
+        <b-row class="text-center" v-if="admin">
+            <b-col cols="12" >
+              <div  class="text-center" style="border: 1px inset black; border-radius: 20px; width: 125px; margin-top:42px;">
+                <a :href="adminprofile">
+                    <b-avatar class="mt-3" v-bind:src=adminpp size="4rem"></b-avatar>
+                    <p class="mt-3" style="font-size: 14px;">{{admin}}</p>
+                    <p style="color: #515151;font-size: 12px;">SubClub Admin</p>  
+                </a>
+                                                 
+              </div>
+            </b-col>
+        </b-row>
+      </b-col>
+
+      <b-col :cols="parentClubUrl ? 6 : 7">
           <b-row class="h-25">
             <!-- <b-col cols="12" >
               <img style="float: right; margin-right: 1% border;border: 1px outset black; margin-top:0.5%;" src="http://placehold.it/25x25" class="d-inline-block align-top">
@@ -22,10 +37,11 @@
 
           <b-row class="h-50 align-items-center">
             <b-col cols="12" class="text-center"  >
-                 <h2>{{clubname}}</h2>
+                 <h2 style="color: darkred;">{{clubname}}</h2>
                  <h4>RATE: {{rate}}%</h4>
                  <div v-if="parentClubUrl">
-                   <h5>Sub-club of</h5>
+                   <span style="font-size:16px;">Sub-club of</span>
+                   <br>
                    <a :href="parentClubUrl">{{parentClub}}</a>
                  </div>
             </b-col>
@@ -62,7 +78,10 @@ export default {
     membersurl : {type : String , default : "#"},
     commentsurl : {type : String , default : "#"},
     parentClub: {type: String, default: null},
-    parentClubUrl: {type: String, default: null}
+    parentClubUrl: {type: String, default: null},
+    admin: {type: String, default: null},
+    adminprofile: {type: String, default: null},
+    adminpp: {type: String, default: null}
   }
 }
 </script>
@@ -71,8 +90,10 @@ export default {
 .showInfo{
     height: 300px;
     width: 100%;
-    border: 1px inset black;
+    /* border: 1px inset black; */
     position: relative;
+    background: rgb(255,179,186);
+    background: linear-gradient(0deg, rgba(255,179,186,1) 0%, rgba(255,223,186,1) 50%, rgba(166,198,193,1) 100%);
 }
 .club-nav-link .nav-link{
   color: black;

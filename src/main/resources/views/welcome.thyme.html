@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Welcome to Clubby Framework</title>
+    <th:block th:replace="fragments/scripts::styles"></th:block>
 </head>
 <body>
     <!-- <div class="container">
@@ -15,6 +16,7 @@
             </div>
         </div>
     </div> -->
+    <div th:replace="fragments/scripts::splash"></div>
     <div id="App">
          
         <div th:replace="fragments/header::header"></div>
@@ -33,6 +35,7 @@
 
         <div th:replace="fragments/footer::footer"></div>
     </div>
+    <div th:replace="fragments/scripts::scripts"></div>
     <script src="/public/js/main.js"></script>
 </body>
 </html>

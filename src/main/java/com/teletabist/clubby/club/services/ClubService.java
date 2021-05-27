@@ -3,6 +3,7 @@ package com.teletabist.clubby.club.services;
 
 import java.security.InvalidParameterException;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -42,7 +43,7 @@ public class ClubService {
             Club checkClub = clubRepository.findDistinctBySlug(club.getSlug());
             
             if (checkClub != null) {
-                throw new InvalidParameterException("This slug already exists");
+               club.setSlug(this.createSlug(club));
             }
         }
         club = clubRepository.save(club);
@@ -124,7 +125,14 @@ public class ClubService {
         club.setSlug(clubFormDTO.getSlug());
         club.setDescription(clubFormDTO.getDescription());
         club.setLocation(clubFormDTO.getLocation());
-        //club.setParent_id
+        Club parent = null;
+        if(clubFormDTO.getParent_id() > -1){
+            Optional<Club> pdb = this.clubRepository.findById(clubFormDTO.getParent_id());
+            if(pdb.isPresent()){
+                parent = pdb.get();
+            }
+        }
+        club.setParent(parent);
         club.setWebsite(clubFormDTO.getWebsite());
         return addClub(club);
     }
