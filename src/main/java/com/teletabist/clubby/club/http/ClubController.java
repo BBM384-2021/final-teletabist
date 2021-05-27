@@ -1,19 +1,23 @@
 package com.teletabist.clubby.club.http;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 
+import com.teletabist.clubby.club.models.Ban;
 import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubFormDTO;
 import com.teletabist.clubby.club.models.ClubRole;
+import com.teletabist.clubby.club.services.BanService;
 import com.teletabist.clubby.club.services.ClubRoleService;
 import com.teletabist.clubby.club.services.ClubService;
-import com.teletabist.clubby.user.SecureUserPrincipal;
+import com.teletabist.clubby.survey.services.SurveyService;
 import com.teletabist.clubby.user.core.Roles;
 import com.teletabist.clubby.user.models.User;
+import com.teletabist.clubby.user.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -34,12 +38,18 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ClubController {
     private final ClubService clubService;
+    private final UserService userService;
     private final ClubRoleService clubRoleService;
+    private final SurveyService surveyService;
+    private final BanService banService;
 
     @Autowired
-    public ClubController(ClubService clubService, ClubRoleService clubRoleService) {
+    public ClubController(ClubService clubService, ClubRoleService clubRoleService, UserService userService, BanService banService, SurveyService surveyService) {
         this.clubService = clubService;
         this.clubRoleService = clubRoleService;
+        this.userService = userService;
+        this.banService = banService;
+        this.surveyService = surveyService;
     }
 
     @GetMapping
@@ -51,6 +61,12 @@ public class ClubController {
     @GetMapping("{slug}")
     public ModelAndView getClub(@PathVariable String slug, ModelMap map) {
         Club club = clubService.getClub(slug);
+        User currentUser = userService.authUser();
+        
+        //TO-DO : Ban Error must be shown
+        /*if (banService.isBanned(currentUser, club) || banService.isBlacklisted(currentUser, club) != null) {
+            return new ModelAndView("404");
+        }*/
 
         if (club == null) {
             return new ModelAndView("404");
@@ -136,8 +152,22 @@ public class ClubController {
 
     @DeleteMapping("{slug}")
     public String deleteClub(@PathVariable String slug) {
-        clubService.deleteClub(slug);
-        return "redirect:/clubs/";
+        Club club = clubService.getClub(slug);
+
+        if (club == null) {
+            return "redirect:/clubs/";
+        }
+
+        clubRoleService.deassignClubRole(club);
+
+        surveyService.deleteSurvey(club);
+
+        for (Club subClub : club.getSubclubs()) {
+            deleteClub(subClub.getSlug());
+        }
+
+        if (clubService.deleteClub(slug)) return "redirect:/clubs/";
+        return "forward:/clubs/{slug}";
     }
 
     @PostMapping("{slug}")
@@ -149,7 +179,7 @@ public class ClubController {
         
         model.addAttribute("slug", slug);
 
-        User user = getCurrentUser();
+        User user = userService.authUser();
         Club club = clubService.getClub(slug);
         
         ClubRole clubRole = clubRoleService.assignClubRole(user, club, Roles.MEMBER);
@@ -162,17 +192,62 @@ public class ClubController {
         return new ModelAndView("redirect:/{slug}");
     }
 
-    /**
-     * TO-DO: Move this method to an appropriate place
-     */
-    public User getCurrentUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @PostMapping("{slug}")
+    public ModelAndView banUser(
+        @PathVariable String slug,
+        HttpServletRequest request,
+        Authentication auth,
+        ModelMap map
+        ) {
+        
+        //TO-DO Change the redirecting model and views to be correct
+        Club club = clubService.getClub(slug); 
 
-        if(principal instanceof SecureUserPrincipal){
-            SecureUserPrincipal securePrincipal = (SecureUserPrincipal) principal;
-            return securePrincipal.getUser();
+        if (club == null) {
+            return new ModelAndView("redirect:/clubs");
         }
 
-        return null;
+        User bannedUser = userService.authUser();
+
+        if (bannedUser == null) {
+            return new ModelAndView("redirect:/clubs");
+        }
+
+        User banningUser = userService.authUser();
+
+        Ban ban = banService.createBan(bannedUser, banningUser, club);
+
+        if (ban != null) {
+            if (banService.isBlacklisted(bannedUser, club) != null) {
+                Collection<ClubRole> clubRoles = clubRoleService.getClubRoles(club);
+                
+                for (ClubRole clubRole : clubRoles) {
+                    if (clubRoleService.getUserRole(clubRole.getId()).getUser() == bannedUser) {
+                        banService.deleteAllBans(clubRoleService.getUserRole(clubRole.getId()));
+                        break;
+                    }
+                }
+                
+                clubRoleService.deassignClubRole(bannedUser, club);
+                return new ModelAndView("redirect:/clubs");
+            }
+
+            if (banService.isAdminBlacklisted(bannedUser) != null) {
+                Collection<ClubRole> clubRoles = clubRoleService.getClubRoles(club);
+
+                for (ClubRole clubRole : clubRoles) {
+                    if (clubRoleService.getUserRole(clubRole.getId()).getUser() == bannedUser
+                        && clubRoleService.getUserRole(clubRole.getId()).getRole().equals(Roles.SUB_CLUB_ADMIN.getName())) {
+                        
+                        banService.deleteAllBans(clubRoleService.getUserRole(clubRole.getId()));
+                        break;
+                    }
+                }
+                clubRoleService.deassignSubClubAdmin(bannedUser, club);
+            }
+            return new ModelAndView("redirect:/clubs");
+        }
+
+        return new ModelAndView("redirect:/clubs");
     }
 }
