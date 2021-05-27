@@ -10,6 +10,7 @@ import com.teletabist.clubby.club.services.ClubService;
 import com.teletabist.clubby.user.SecureUserPrincipal;
 import com.teletabist.clubby.user.core.Roles;
 import com.teletabist.clubby.user.models.User;
+import com.teletabist.clubby.user.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -35,11 +36,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class ClubController {
     private final ClubService clubService;
     private final ClubRoleService clubRoleService;
+    private final UserService userService;
 
     @Autowired
-    public ClubController(ClubService clubService, ClubRoleService clubRoleService) {
+    public ClubController(ClubService clubService, ClubRoleService clubRoleService, UserService userService) {
         this.clubService = clubService;
         this.clubRoleService = clubRoleService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -51,10 +54,14 @@ public class ClubController {
     @GetMapping("{slug}")
     public ModelAndView getClub(@PathVariable String slug, ModelMap map) {
         Club club = clubService.getClub(slug);
-
+        User u = this.userService.authUser();
         if (club == null) {
             return new ModelAndView("404");
+        }else if(u != null){
+            map.put("user", u);
+            map.put("usermember", this.clubRoleService.hasRole(u, club));
         }
+        
         map.put("club", club);
         return new ModelAndView("club/single");
     }
@@ -68,7 +75,7 @@ public class ClubController {
         return new ModelAndView("club/create", model);
     }
 
-    @PostMapping()
+    @PostMapping
     public ModelAndView storeCreatedClub(
         @ModelAttribute("club") ClubFormDTO clubFormDTO, 
         HttpServletRequest request,
@@ -140,26 +147,26 @@ public class ClubController {
         return "redirect:/clubs/";
     }
 
-    @PostMapping("{slug}")
+    @GetMapping("{slug}/join")
     public ModelAndView join(
         @PathVariable String slug,
         HttpServletRequest request,
-        Errors error,
         Authentication auth, Model model) {
         
         model.addAttribute("slug", slug);
 
-        User user = getCurrentUser();
+        User user = this.userService.authUser();
+        if(user == null) return new ModelAndView("500");
         Club club = clubService.getClub(slug);
         
         ClubRole clubRole = clubRoleService.assignClubRole(user, club, Roles.MEMBER);
-        
+        System.out.println(clubRole);
         if (clubRole != null) {
             model.addAttribute("success", "User successfully became a member");
-            return new ModelAndView("redirect:/{slug}");
+            return new ModelAndView("redirect:/clubs/{slug}");
         }
         model.addAttribute("error", "An error occured.");
-        return new ModelAndView("redirect:/{slug}");
+        return new ModelAndView("500");
     }
 
     /**

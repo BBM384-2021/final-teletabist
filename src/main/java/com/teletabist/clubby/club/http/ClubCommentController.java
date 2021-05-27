@@ -44,8 +44,17 @@ public class ClubCommentController {
     public ModelAndView index(
         @PathVariable String slug,
         ModelMap map
+        
     ){
         Club c = this.clubService.getClub(slug);
+        User u = this.userService.authUser();
+        if (c == null) {
+            return new ModelAndView("404");
+        }else if(u != null){
+            map.put("user", u);
+            map.put("usermember", this.clubRoleService.hasRole(u, club));
+        }
+        
         if(c != null){
             map.addAttribute("club", c);
             if(c.getClubRating() == null){

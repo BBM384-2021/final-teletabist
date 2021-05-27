@@ -31,6 +31,28 @@ public class ClubRoleService {
     }
 
 
+    public boolean hasRole(User user, Club club){
+        if (user == null || club == null) {
+            return false;
+        } 
+
+         
+        // if (role != Roles.SUB_CLUB_ADMIN && role != Roles.MEMBER) {
+        //     return null;
+        // }
+        
+
+        Collection<ClubRole> clubRoles = getClubRoles(club);
+
+        for (ClubRole clubRole : clubRoles) {
+            if (clubRole.getUser_role().getUser().equals(user)) {
+                return true;
+
+            }
+        }  
+        return false;
+    }
+
     public ClubRole assignClubRole(User user, Club club, Roles role) {
 
         if (user == null || club == null) {
@@ -38,9 +60,9 @@ public class ClubRoleService {
         } 
 
          
-        if (role != Roles.SUB_CLUB_ADMIN && role != Roles.MEMBER) {
-            return null;
-        }
+        // if (role != Roles.SUB_CLUB_ADMIN && role != Roles.MEMBER) {
+        //     return null;
+        // }
         
 
         Collection<ClubRole> clubRoles = getClubRoles(club);

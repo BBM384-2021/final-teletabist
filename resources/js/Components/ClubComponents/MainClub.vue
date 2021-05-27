@@ -45,6 +45,7 @@
                    <span style="font-size:16px;">Sub-club of</span>
                    <br>
                    <a :href="parentClubUrl">{{parentClub}}</a>
+                   <a class="btn btn-outline-primary" :href="clubUrl+'/join/'">Join Club</a>
                  </div>
             </b-col>
           </b-row>
