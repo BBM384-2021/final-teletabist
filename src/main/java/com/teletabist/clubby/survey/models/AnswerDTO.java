@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AnswerDTO {
     private Integer value;
     private String text;
-    private boolean markDelete = false;
+    private Boolean markDelete = false;
 
     public Integer getValue() {
         return value;
@@ -23,7 +23,14 @@ public class AnswerDTO {
         this.text = text;
     }
 
-    public static Collection<AnswerDTO> getAll(Collection<Answer> ans){
+    public Answer toAnswer(){
+        Answer a = new Answer();
+        a.setText(this.text);
+        a.setValue(this.value);
+        return a;
+    }
+
+    public static ArrayList<AnswerDTO> getAll(Collection<Answer> ans){
         ArrayList<AnswerDTO> a = new ArrayList<AnswerDTO>();
         for (Answer answer : ans) {
             a.add(new AnswerDTO(answer));
@@ -49,11 +56,11 @@ public class AnswerDTO {
         }
     }
 
-    public boolean isMarkDelete() {
+    public Boolean getMarkDelete() {
         return markDelete;
     }
 
-    public void setMarkDelete(boolean markDelete) {
+    public void setMarkDelete(Boolean markDelete) {
         this.markDelete = markDelete;
     }
 }

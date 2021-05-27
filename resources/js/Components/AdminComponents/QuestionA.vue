@@ -3,12 +3,12 @@
         <input type="hidden" 
         :value="value" 
         :id="'question'+questioni+'.answers'+index+'.value'" 
-        :name="'question['+questioni+'].answers['+index+'].value'">
+        :name="'questions['+questioni+'].answers['+index+'].value'">
       <div class="input-group mb-2">
 
         <div class="input-group-prepend">
             <p class="input-group-text">
-                <input type="checkbox" :id="'question'+questioni+'.answers'+index+'.markDelete'"  :name="'question['+questioni+'].answers['+index+'].markDelete'" :value="del"><span style="color:red">Delete</span>
+                <input type="checkbox" :id="'question'+questioni+'.answers'+index+'.markDelete'"  :name="'questions['+questioni+'].answers['+index+'].markDelete'" :value="del"><span style="color:red">Delete</span>
             </p>
            
         </div>
@@ -16,7 +16,7 @@
         class="form-control" 
         :value="text" 
         :id="'question'+questioni+'.answers'+index+'.text'" 
-        :name="'question['+questioni+'].answers['+index+'].text'">
+        :name="'questions['+questioni+'].answers['+index+'].text'">
       </div>
   </div>
 </template>

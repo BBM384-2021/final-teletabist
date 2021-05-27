@@ -15,14 +15,14 @@ public class QuestionDTO {
     @NotBlank
     private String question;
 
-    private Collection<AnswerDTO> answers;
+    private ArrayList<AnswerDTO> answers;
 
     @NotBlank
     private Integer weight;
 
     private boolean delete = false;
 
-    public static List<QuestionDTO> generateAll(List<SurveyQuestion> s){
+    public static ArrayList<QuestionDTO> generateAll(Collection<SurveyQuestion> s){
         ArrayList<QuestionDTO> qs = new ArrayList<QuestionDTO>();
         for (SurveyQuestion q : s) {
             qs.add(new QuestionDTO(q));
@@ -65,11 +65,11 @@ public class QuestionDTO {
         this.question = question_message;
     }
 
-    public Collection<AnswerDTO> getAnswers() {
+    public ArrayList<AnswerDTO> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Collection<AnswerDTO> answersCollection) {
+    public void setAnswers(ArrayList<AnswerDTO> answersCollection) {
         this.answers = answersCollection;
     }
 
@@ -81,11 +81,11 @@ public class QuestionDTO {
         this.weight = weight;
     }
 
-    public boolean isDelete() {
+    public Boolean getDelete() {
         return delete;
     }
 
-    public void setDelete(boolean delete) {
+    public void setDelete(Boolean delete) {
         this.delete = delete;
     }
 }
