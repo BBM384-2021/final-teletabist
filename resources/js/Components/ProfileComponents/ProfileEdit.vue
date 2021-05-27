@@ -26,7 +26,7 @@
                         <b-form-input type="date" size="sm" style="height:37px;" placeholder="Birthday" id="birthday" name="birthday" v-bind:value="birthday"></b-form-input>
                         <br>
                         <b-form-textarea size="sm" style="height:60px;" placeholder="Biography" class="mb-2"  id="biography" name="biography" v-bind:value="biography"></b-form-textarea>
-                        <b-button type="submit" class="float-right" style="color: black;font-size: 16px;">SAVE</b-button>
+                        <b-button type="submit" variant="outline-light" class="float-right" style="color: black;font-size: 16px;">SAVE</b-button>
 
                     </b-col>
                     <b-col cols="3">
