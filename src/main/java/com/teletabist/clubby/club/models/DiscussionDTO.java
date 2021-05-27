@@ -10,6 +10,7 @@ public class DiscussionDTO {
     @Size(max = 512)
     private String discussion;
 
+    private String targetusername;
 
     public String getMessage() {
         return discussion;
@@ -18,5 +19,15 @@ public class DiscussionDTO {
     public void setDiscussion(String discussion) {
         this.discussion = discussion;
     }
+
+    public String getTargetusername() {
+        return targetusername;
+    }
+
+    public void setTargetusername(String targetusername) {
+        this.targetusername = targetusername;
+    }
+
+    
 
 }

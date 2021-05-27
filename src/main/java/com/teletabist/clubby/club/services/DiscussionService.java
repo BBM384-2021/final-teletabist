@@ -1,14 +1,17 @@
 package com.teletabist.clubby.club.services;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.teletabist.clubby.club.models.Club;
 //import com.teletabist.clubby.user.models.User;
 import com.teletabist.clubby.club.models.Discussion;
 import com.teletabist.clubby.club.models.DiscussionRepository;
+import com.teletabist.clubby.user.models.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 @Service
 public class DiscussionService {
@@ -22,9 +25,17 @@ public class DiscussionService {
         this.clubService = clubService;
     }
     
-    public Iterable<Discussion> getAllDiscussions(String slug) {
+    public Collection<Discussion> getAllDiscussions(String slug, User user) {
         Club club = this.clubService.getClub(slug);
-        return discussionRepository.findAllByUser_id(club.getId(), Sort.by(Sort.Direction.DESC, "createdAt"));
+        Collection<Discussion> discussions = discussionRepository.findAllByClub_id(club.getId(), Sort.by(Sort.Direction.DESC, "createdAt"));
+        
+        Collection<Discussion> foundDiscussions = new ArrayList<>();
+        for (Discussion discussion : discussions) {
+            if (discussion.getTarget() == null || discussion.getTarget().equals(user)) {
+                foundDiscussions.add(discussion);
+            }
+        }
+        return foundDiscussions;
     }
 
     public Discussion getMessage(String slug, Integer id) {

@@ -1,0 +1,71 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Welcome to Clubby Framework</title>
+    <th:block th:replace="fragments/scripts::styles"></th:block>
+</head>
+<body>
+    <div th:replace="fragments/scripts::splash"></div>
+    <div id="App">
+        <div th:replace="fragments/header::header"></div>
+        <b-container>
+            <b-row>
+                <b-col>
+                    <mainclub
+                    th:clubname = "${club.name}"
+                    th:v-bind:rate = "${club.clubRating} != null ? ${club.clubRating.getRatio()} : 0.0"
+                    th:club-url = "@{/clubs/{slug}(slug = ${club.slug})}"
+                    th:parent-club="${club.parent} != null ? ${club.parent.name} : ''"
+                    th:parent-club-url="${club.parent} != null ? @{/clubs/{slug}(slug = ${club.parent.slug})}  : ''" 
+                    ></mainclub>
+                </b-col>
+            </b-row>
+            
+             <b-row class="mb-3 mt-3">
+                 <b-col cols="9">
+                     <b-row>
+                        <b-col>
+                            
+                            <div class="bg-light rounded p-3" >
+                                <form class="mt-2" th:action="@{/clubs/{slug}/discussions(slug = ${club.slug})}" th:method="POST" enctype="utf8" th:object="${discussion}">
+
+                                    <!--/* Discussion breaking point, target user */-->
+                                    <b-col cols=4>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="targetusername">Target user</label>
+                                            </div>
+                                            <select class="custom-select" th:field="*{targetusername}">
+                                                <option value="-1" selected>No target user</option>
+                                                <option th:value="${member.user_role.user.username}" th:each="member: ${members}" th:text="${member.user_role.user.username}" ></option>
+                                            </select>
+                                        </div>
+                                    </b-col>
+                                    <!--/* Discussion breaking point, target user */-->
+
+                                    <discussionform></discussionform>
+                                </form>
+                            </div>
+                        </b-col>
+                     </b-row>
+                        <discussionsinclub
+                        th:each="discussion : ${discussions}"
+                        th:usersname="${discussion.user.profile.name}"
+                        th:date="${#dates.format(discussion.created_at, 'dd MMMM yyyy')}"
+                        th:message = "${discussion.message}"
+                        ></discussionsinclub>
+                 </b-col>
+             </b-row>
+        </b-container>    
+        <div th:replace="fragments/footer::footer"></div>   
+    </div>
+    <div th:replace="fragments/scripts::scripts"></div>
+    <script src="/public/js/main.js"></script>
+</body>
+</html>

@@ -22,6 +22,8 @@ Vue.component('commendpage', require('./Components/GeneralComponents/CommendPage
 Vue.component('commentsinclub', require('./Components/GeneralComponents/CommentsInClub.vue').default)
 Vue.component('register', require('./Components/GeneralComponents/Register.vue').default)
 Vue.component('login', require('./Components/GeneralComponents/Login.vue').default)
+Vue.component('discussionpage', require('./Components/GeneralComponents/DiscussionPage.vue').default)
+Vue.component('discussionsinclub', require('./Components/GeneralComponents/DiscussionsInClub.vue').default)
 
 Vue.component('mainclub', require('./Components/ClubComponents/MainClub.vue').default)
 Vue.component('membersinclub', require('./Components/ClubComponents/MembersInClub.vue').default)
@@ -39,5 +41,6 @@ Vue.component('profileedit', require('./Components/ProfileComponents/ProfileEdit
 Vue.component('profileshow', require('./Components/ProfileComponents/ProfileShow.vue').default)
 
 Vue.component('comment-form', require('./Components/GeneralComponents/CommentForm.vue').default)
+Vue.component('discussionform', require('./Components/GeneralComponents/DiscussionForm.vue').default)
 
 const App = new Vue({el:'#App'})

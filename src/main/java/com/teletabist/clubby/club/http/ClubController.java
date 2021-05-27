@@ -61,7 +61,7 @@ public class ClubController {
     @GetMapping("{slug}")
     public ModelAndView getClub(@PathVariable String slug, ModelMap map) {
         Club club = clubService.getClub(slug);
-        User currentUser = userService.authUser();
+        //User currentUser = userService.authUser();
         
         //TO-DO : Ban Error must be shown
         /*if (banService.isBanned(currentUser, club) || banService.isBlacklisted(currentUser, club) != null) {
@@ -192,7 +192,7 @@ public class ClubController {
         return new ModelAndView("redirect:/{slug}");
     }
 
-    @PostMapping("{slug}")
+    /*@PostMapping("{slug}")
     public ModelAndView banUser(
         @PathVariable String slug,
         HttpServletRequest request,
@@ -249,5 +249,5 @@ public class ClubController {
         }
 
         return new ModelAndView("redirect:/clubs");
-    }
+    }*/
 }

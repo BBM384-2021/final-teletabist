@@ -16,7 +16,6 @@ import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubFormDTO;
 import com.teletabist.clubby.club.models.ClubRepository;
 
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;

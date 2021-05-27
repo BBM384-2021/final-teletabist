@@ -2,25 +2,36 @@ package com.teletabist.clubby.club.api;
 
 import com.teletabist.clubby.club.models.Discussion;
 import com.teletabist.clubby.club.services.DiscussionService;
+import com.teletabist.clubby.user.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/dev/clubs/{slug}/discussion")
 public class DiscussionAPIController {
     private DiscussionService discussionService;
+    private UserService userService;
 
     @Autowired
-    public DiscussionAPIController(DiscussionService discussionService) {
+    public DiscussionAPIController(DiscussionService discussionService, UserService userService) {
         this.discussionService = discussionService;
+        this.userService = userService;
     }
 
     @GetMapping
     public Iterable<Discussion> getAllDiscussions(@PathVariable String slug) {
-        return discussionService.getAllDiscussions(slug);
+        
+        return discussionService.getAllDiscussions(slug, userService.authUser());
     }
 
     @GetMapping("{id}")
