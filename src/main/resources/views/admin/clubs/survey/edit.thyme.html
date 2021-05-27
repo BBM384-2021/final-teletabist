@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <th:block th:replace="fragments/scripts::styles"></th:block>
+</head>
+<body>
+    <!-- <div class="container">
+        <div class="row align-items-center vh-100">
+            <div class="col col-12 text-center text-secondary">
+                <h2 class="font-weight-lighter" th:text="${welcome}">Welcome to Clubby Framework</h2>
+            </div>
+        </div>
+    </div> -->
+    <div th:replace="fragments/scripts::splash"></div>
+    <div id="App">
+         
+        <div th:replace="fragments/header::header"></div>
+        <b-container class="my-4" style="min-height: 75vh;">
+            <b-row class="mb-3">
+                <b-col cols="12">
+                    <h1 th:text="${club.name}+': Edit survey'">Edit Survey</h1>
+                </b-col>
+            </b-row>
+            <form method="POST" th:action="@{'/admin/clubs/edit/{slug}/survey'(slug=${club.slug})}" th:object="${survey}">
+                <b-row th:each="q, stat:*{questions}" class="mb-3">
+                    <admin-question
+                    th:index="${stat.index}"
+                    th:question="${q.question}"
+                    th:answers="${q.answers}"
+                    ></admin-question>
+                </b-row>
+            </form>
+        </b-container>
+        
+        <div th:replace="fragments/footer::footer"></div>
+    </div>
+    <div th:replace="fragments/scripts::scripts"></div>
+    
+</html>

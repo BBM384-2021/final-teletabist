@@ -1,5 +1,7 @@
 package com.teletabist.clubby.survey.models;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Answer {
     private Integer value;
     private String text;
@@ -17,4 +19,13 @@ public class Answer {
         this.text = text;
     }
 
+    @Override
+    public String toString() {
+        ObjectMapper m = new ObjectMapper();
+        try {
+            return m.writeValueAsString(this);
+        } catch (Exception e) {
+            return "";
+        }
+    }
 }

@@ -11,13 +11,11 @@
 </head>
 <body>
     <div th:fragment="splash" class="page-loader" id="pageLoader">
-        <div class="cube"></div>
-        <div class="cube"></div>
-        <div class="cube"></div>
-        <div class="cube"></div>
+        <div class="splash-logo"></div>
     </div> 
     <th:block th:fragment="scripts">
         <script th:src="@{'/public/js/splash.js'}"></script>
+        <script th:src="@{'/public/js/main.js'}"></script>
     </th:block>
 </body>
 </html>

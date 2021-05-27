@@ -1,6 +1,7 @@
 package com.teletabist.clubby.admin.http;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -8,12 +9,16 @@ import javax.validation.Valid;
 import com.teletabist.clubby.club.models.Club;
 import com.teletabist.clubby.club.models.ClubFormDTO;
 import com.teletabist.clubby.club.services.ClubService;
+import com.teletabist.clubby.survey.models.Survey;
+import com.teletabist.clubby.survey.models.SurveyDTO;
+import com.teletabist.clubby.survey.services.SurveyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdminClubsController {
     
     @Autowired ClubService clubService;
+    @Autowired SurveyService surveyService;
 
     @GetMapping
     public ModelAndView index(
@@ -58,6 +64,7 @@ public class AdminClubsController {
     @GetMapping("create")
     public ModelAndView edit(
         ModelMap map,
+        @RequestParam(defaultValue = "", name="parent") String parent,
         HttpServletRequest request
     ){
         if(request.getHeader("Referer") != null){
@@ -65,13 +72,19 @@ public class AdminClubsController {
                 map.addAttribute("referer", request.getHeader("Referer"));
             }
         }
+        Club pclub = this.clubService.getClub(parent);
+        ClubFormDTO dto = new ClubFormDTO();
+        if(pclub!=null){
+
+            dto.setParent_id(pclub.getId());
+        }
         map.addAttribute("allclubs", this.clubService.listClubs());
-        map.addAttribute("club", new ClubFormDTO());
+        map.addAttribute("club", dto);
         return new ModelAndView("admin/clubs/create");
     }
 
     @PostMapping("create")
-    public ModelAndView update(
+    public ModelAndView store(
         @ModelAttribute @Valid ClubFormDTO data,
         BindingResult bindingResult,
         ModelMap map,
@@ -91,6 +104,99 @@ public class AdminClubsController {
 
         return new ModelAndView("500");
         
+    }
+
+    @GetMapping("edit/{slug}")
+    public ModelAndView edit(
+        @PathVariable String slug,
+        ModelMap map,
+        HttpServletRequest request
+    ){
+        if(request.getHeader("Referer") != null){
+            if(!request.getHeader("Referer").equals("")){
+                map.addAttribute("referer", request.getHeader("Referer"));
+            }
+        }
+
+        Club c = this.clubService.getClub(slug);
+        if(c != null) {
+            ClubFormDTO dto = new ClubFormDTO(c);
+            map.addAttribute("allclubs", this.clubService.listClubs());
+            map.addAttribute("club", dto);
+            return new ModelAndView("admin/clubs/edit");
+        }
+
+
+
+        return new ModelAndView("404");
+        
+    }
+
+    @PostMapping("edit/{slug}")
+    public ModelAndView update(
+        @PathVariable String slug,
+        @ModelAttribute @Valid ClubFormDTO dto,
+        BindingResult bindingResult,
+        ModelMap map,
+        HttpServletRequest request
+    ){
+        Club c = this.clubService.fromDTO(dto);
+        c = this.clubService.updateEntireClub(c, slug);
+        if(c != null) {
+            map.addAttribute("allclubs", this.clubService.listClubs());
+            ClubFormDTO newDto = new ClubFormDTO(c);
+            map.addAttribute("club", newDto);
+            map.addAttribute("slug", slug);
+            map.addAttribute("success", "Successfully updated club");
+            return new ModelAndView("admin/clubs/edit");
+        }
+
+
+
+        return new ModelAndView("500");
+        
+    }
+
+    @GetMapping("edit/{slug}/subclubs")
+    public ModelAndView subclubs(
+        @PathVariable String slug,
+        ModelMap map,
+        HttpServletRequest request
+    ){
+        Club c = this.clubService.getClub(slug);
+        if(c!=null){
+            map.put("club", c);
+            Collection<Survey> s = new ArrayList<Survey>();
+            for ( Club sclub: c.getSubclubs()) {
+                s.add(this.surveyService.getSurvey(sclub));
+            }
+            map.put("surveys", s);
+            return new ModelAndView("admin/clubs/subclubs");
+        }
+        return new ModelAndView("404");
+    }
+
+    @GetMapping("edit/{slug}/survey")
+    public ModelAndView editsurvey(
+        @PathVariable String slug,
+        ModelMap map,
+        HttpServletRequest request
+    ){
+        Club c = this.clubService.getClub(slug);
+        if(c!=null){
+            if(c.getParent() != null){
+                Survey s = this.surveyService.getSurvey(c);
+
+                SurveyDTO dto = new SurveyDTO(s);
+
+
+                map.addAttribute("club", c);
+                map.addAttribute("survey", dto);
+                return new ModelAndView("admin/clubs/survey/edit");
+            }
+            
+        }
+        return new ModelAndView("404");
     }
 
 }

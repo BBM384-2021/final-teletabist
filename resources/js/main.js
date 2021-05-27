@@ -39,5 +39,9 @@ Vue.component('profileedit', require('./Components/ProfileComponents/ProfileEdit
 Vue.component('profileshow', require('./Components/ProfileComponents/ProfileShow.vue').default)
 
 Vue.component('comment-form', require('./Components/GeneralComponents/CommentForm.vue').default)
+Vue.component('club-thumbnail', require('./Components/GeneralComponents/ClubThumbnail.vue').default)
+Vue.component('survey-club', require('./Components/GeneralComponents/SurveyClub.vue').default)
+
+Vue.component('admin-question', require('./Components/AdminComponents/Question.vue').default)
 
 const App = new Vue({el:'#App'})

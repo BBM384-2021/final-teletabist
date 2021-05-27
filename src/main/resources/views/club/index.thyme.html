@@ -16,7 +16,11 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
         <div th:replace="fragments/header::header"></div>
         <b-container>
              <b-row class="mb-3">
-                    <subclubsinclub th:each="club : ${clubs}" th:name="${club.name}" th:url="@{/clubs/{slug}(slug = ${club.slug})}"></subclubsinclub>
+                <subclubsinclub
+                    th:each="club : ${clubs}" 
+                    th:name="${club.name}" 
+                    th:url="@{/clubs/{slug}(slug = ${club.slug})}">
+                </subclubsinclub>
              </b-row>
         </b-container>    
         <div th:replace="fragments/footer::footer"></div> 
