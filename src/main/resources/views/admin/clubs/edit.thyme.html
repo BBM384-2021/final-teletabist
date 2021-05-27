@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Clubby - Admin Panel | Edit ' + ${club.name}"></title>
+    <th:block th:replace="fragments/scripts::styles"></th:block>
+</head>
+<body>
+    <div th:replace="fragments/scripts::splash"></div>
+    <div id="App">
+        <div th:replace="fragments/header::header"></div>
+       
+        
+        <b-container class="mt-3 mb-4">
+            <b-alert variant="success" th:if="${success}" th:text="${success}" show></b-alert>
+            <form method="POST" action="#" th:action="@{'/admin/clubs/edit/'+${club.slug}}" th:object="${club}">
+                <input type="hidden" th:field="*{parent_id}">
+                <b-row>
+                    <b-col cols=12>
+                        <h1>Create A New Club</h1>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col cols=4>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="clubname" ><span class="text-danger">*</span>Name</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Name" aria-label="ClubName" aria-describedby="clubname" th:field="*{name}" th:value="*{name}" required>
+                        </div>
+                    </b-col>
+                    <b-col cols=4>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="clubslug">clubs/</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="slug" aria-label="ClubSlug" aria-describedby="clubslug" th:field="*{slug}" th:value="*{slug}">
+                        </div>
+                    </b-col>
+                    <b-col cols=4>
+ 
+                    </b-col>
+
+                </b-row>
+                <b-row >
+                    <b-col cols="8">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" style="resize: none;" rows="3" th:field="*{description}"></textarea>
+                    </b-col>
+                    <b-col cols="4">
+                        <label >Other Details</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="website" ><i class="fas fa-globe"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Website" aria-label="Website" aria-describedby="website" th:field="*{website}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="location" ><i class="fas fa-map-marker-alt"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Location" aria-label="Location" aria-describedby="location" th:field="*{location}">
+                        </div>
+                    </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                    <b-col cols="4">
+                        <a class="btn btn-secondary" th:href="${referer}" th:if="${referer != null}">Back</a>
+                        <input type="submit" class="btn btn-primary" value="Update Club">
+                    </b-col>
+                </b-row>
+            </form>
+        </b-container>
+        
+        <div th:replace="fragments/footer::footer"></div>
+    </div>
+    <div th:replace="fragments/scripts::scripts"></div>
+    <script src="/public/js/main.js"></script>
+</body>
+</html>

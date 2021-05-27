@@ -82,11 +82,7 @@ public class ClubService {
         Club updatedClub = clubRepository.findDistinctBySlug(slug);
 
         if (updatedClub == null) {
-            try {
-                throw new NotFoundException("There isn't a club with that slug");
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-            }
+            return null;
         }
         
         if (club.getSlug() == null) {
@@ -96,13 +92,8 @@ public class ClubService {
 
             if (updatingClub == null) {
                 updatedClub.setSlug(club.getSlug());
-            } else if (updatingClub.getId() != updatedClub.getId()) {
-                throw new InvalidParameterException("Cannot be updated to this slug. This slug already exists");
-            } else {
-                updatedClub.setSlug(updatedClub.getSlug());
             }
         }
-
         updatedClub.setName((club.getName() != null)?club.getName():updatedClub.getName());
         updatedClub.setDescription((club.getDescription() != null)?club.getDescription():updatedClub.getDescription());
         updatedClub.setProfile_photo_url((club.getProfile_photo_url() != null)?club.getProfile_photo_url():updatedClub.getProfile_photo_url());
@@ -175,6 +166,21 @@ public class ClubService {
         int pageCount = (int) Math.round(Math.ceil(count/(double) paginationLimit));
         return pageCount;
     }
+
+    public Club fromDTO(ClubFormDTO dto){
+        Club tmp = new Club();
+        tmp.setName(dto.getName());
+        Optional<Club> p = this.clubRepository.findById(dto.getParent_id());
+        if(p.isPresent()){
+            tmp.setParent(p.get());
+        }
+        tmp.setDescription(dto.getDescription());
+        tmp.setWebsite(dto.getWebsite());
+        tmp.setLocation(dto.getLocation());
+        tmp.setSlug(dto.getSlug());
+
+        return tmp;
+    }   
 
     /*public Iterable<UserRole> getMembers(Integer club_id) {
         Iterable<ClubRoles> cr;

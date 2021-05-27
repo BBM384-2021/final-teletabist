@@ -38,7 +38,9 @@
           <b-row class="h-50 align-items-center">
             <b-col cols="12" class="text-center"  >
                  <h2 style="color: darkred;">{{clubname}}</h2>
-                 <h4>RATE: {{rate}}%</h4>
+                 <p v-if="description" class="mb-1">{{description}}</p>
+                 <a :href="webisteURL" v-if="webisteURL" >Website</a>
+                 <h4 class="mt-2">RATE: {{rate}}%</h4>
                  <div v-if="parentClubUrl">
                    <span style="font-size:16px;">Sub-club of</span>
                    <br>
@@ -73,6 +75,8 @@ export default {
     clubname : {type : String , default : ""},
     clubUrl : {type : String , default : ""},
     rate : {type : Number , default : 0},
+    description: {type: String, default: ""},
+    website: {type: String, default: ""},
     picurl: {type : String , default : "http://placehold.it/280x170"},
     subcluburl : {type : String , default : "#"},
     membersurl : {type : String , default : "#"},
@@ -82,6 +86,17 @@ export default {
     admin: {type: String, default: null},
     adminprofile: {type: String, default: null},
     adminpp: {type: String, default: null}
+  },
+  computed: {
+    webisteURL: function(){
+      try {
+        let url = new URL(this.website);
+      } catch (error) {
+        return null;
+      }
+      
+      return url;
+    }
   }
 }
 </script>

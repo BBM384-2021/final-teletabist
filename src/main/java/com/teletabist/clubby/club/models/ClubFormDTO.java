@@ -1,6 +1,5 @@
 package com.teletabist.clubby.club.models;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -9,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ClubFormDTO {
     @Size(max = 144)
-    @NotBlank
     private String slug;
 
     @NotNull
@@ -22,6 +20,22 @@ public class ClubFormDTO {
 
     @Size(max = 512)
     private String description;
+
+    public ClubFormDTO(){
+
+    }
+
+    public ClubFormDTO(Club c){
+        this.name = c.getName();
+        if(c.getParent() != null)
+            this.parent_id = c.getParent().getId();
+        else
+            this.parent_id = -1;
+        this.description = c.getDescription();
+        this.location = c.getLocation();
+        this.slug = c.getSlug();
+        this.website = c.getWebsite();
+    }
 
     public String getSlug() {
         if(this.slug != null) 

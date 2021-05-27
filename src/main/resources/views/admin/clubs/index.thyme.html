@@ -36,10 +36,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
                                 <td><a th:href="'/clubs/'+${club.slug}" th:text="'/clubs/'+${club.slug}"></a></td>
                                 <td th:text="${club.subclubs.size()}"></td>
                                 <td>
-                                    <a th:if="${club.subclubs.size()}>0" th:href="'/admin/subclubs/'+${club.slug}">subclubs</a>
+                                    <a th:if="${club.subclubs.size()}>0" th:href="'/admin/clubs/edit/'+${club.slug}+'/subclubs'">subclubs</a>
                                     <span class="text-muted" th:unless="${club.subclubs.size()}>0">subclubs</span>
                                 </td>
-                                <td><a th:href="'admin/clubs/edit/'+${club.slug}">edit</a></td>
+                                <td><a th:href="'/admin/clubs/edit/'+${club.slug}">edit</a></td>
                             </tr>
                         </tbody>
                     </table>

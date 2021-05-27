@@ -23,6 +23,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
                     th:club-url = "@{/clubs/{slug}(slug = ${club.slug})}"
                     th:parent-club="${club.parent} != null ? ${club.parent.name} : ''"
                     th:parent-club-url="${club.parent} != null ? @{/clubs/{slug}(slug = ${club.parent.slug})}  : ''" 
+                    th:description="${club.description}" 
+                    th:website="${club.website}" 
                     ></mainclub>
                 </b-col>
             </b-row>
