@@ -43,5 +43,6 @@ Vue.component('club-thumbnail', require('./Components/GeneralComponents/ClubThum
 Vue.component('survey-club', require('./Components/GeneralComponents/SurveyClub.vue').default)
 
 Vue.component('admin-question', require('./Components/AdminComponents/Question.vue').default)
+Vue.component('admin-question-n', require('./Components/AdminComponents/QuestionN.vue').default)
 
 const App = new Vue({el:'#App'})

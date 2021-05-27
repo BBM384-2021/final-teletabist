@@ -6,11 +6,22 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="questiondesc" ><span class="text-danger">*</span>Question</span>
             </div>
-            
-            <input type="text" class="form-control" placeholder="Name" aria-label="questiondesc" aria-describedby="questiondesc"
-              :id="'question'+index+'.question'" 
-              :name="'question['+index+'].question'" 
+            <input type="hidden" class="form-control" placeholder="Name" aria-label="questiondesc" aria-describedby="questiondesc"
+              :id="'question'+index+'.id'" 
+              :name="'questions['+index+'].id'" 
+              :value="Number.parseInt(qid)" required>
+            <input type="text" class="form-control" placeholder="Question" aria-label="questiondesc" aria-describedby="questiondesc"
+              :id="'questions'+index+'.question'" 
+              :name="'questions['+index+'].question'" 
               :value="question" required>
+            <input type="number" class="form-control small" placeholder="Weight" aria-label="questiondesc" aria-describedby="questiondesc"
+              :id="'question'+index+'.weight'" 
+              :name="'questions['+index+'].weight'" 
+              :value="weight" required>
+            <input type="number" class="form-control small" placeholder="Weight" aria-label="questiondesc" aria-describedby="questiondesc"
+              :id="'question'+index+'.type'" 
+              :name="'questions['+index+'].type'" 
+              :value="type" required>
               
         </div>
     </b-col>
@@ -31,7 +42,7 @@
     <b-col cols="12">
         <input type="checkbox" aria-label="markfordelete" aria-describedby="markfordelete"
               :id="'question'+index+'.delete'" 
-              :name="'question['+index+'].delete'" 
+              :name="'questions['+index+'].delete'" 
               > Mark for delete
     </b-col>
   </div>
@@ -44,13 +55,25 @@ export default {
     qa
   },
   props:{
+    type:{
+      type: String,
+      default: "0"
+    },
     index: {
       type: String,
-      default: null
+      default: "0"
     },
     question: {
       type: String,
       default: ""
+    },
+    weight:{
+      type: String,
+      default: "1"
+    },
+    qid: {
+      type: String,
+      default: "-1"
     },
     answers: {
       type: String,
@@ -58,7 +81,10 @@ export default {
     }
   },
   mounted(){
-    this.answerso = JSON.parse(this.answers);
+    if(this.answers.length>2)
+      this.answerso = JSON.parse(this.answers);
+    else
+      this.answerso = [];
   },
   data: ()=>{
     return {

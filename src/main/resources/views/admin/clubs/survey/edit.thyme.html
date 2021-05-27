@@ -27,11 +27,23 @@
             </b-row>
             <form method="POST" th:action="@{'/admin/clubs/edit/{slug}/survey'(slug=${club.slug})}" th:object="${survey}">
                 <b-row th:each="q, stat:*{questions}" class="mb-3">
+                    
                     <admin-question
+                    th:type="${q.type}"
+                    th:qid="${q.id}"
                     th:index="${stat.index}"
                     th:question="${q.question}"
                     th:answers="${q.answers}"
+                    th:weight="${q.weight}"
                     ></admin-question>
+                </b-row>
+                <admin-question-n
+                th:outi="${#lists.size(survey.questions)}"
+                ></admin-question-n>
+                <b-row>
+                    <b-col cols="12" class="mt-3">
+                        <input type="submit" class="btn btn-primary" value="Update">
+                    </b-col>
                 </b-row>
             </form>
         </b-container>
