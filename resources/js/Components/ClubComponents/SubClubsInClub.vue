@@ -61,7 +61,8 @@ export default {
     margin-top : 35px;
     height: 160px;
     width: 100%;
-    background-color: #C4C4C4;
+    background: rgb(255,179,186);
+    background: linear-gradient(90deg, rgba(255,179,186,1) 0%, rgba(255,223,186,1) 50%, rgba(252,176,69,1) 100%);
     border-radius: 15px;
     position: relative;
 }

@@ -22,7 +22,7 @@
             </b-row>
 
             <b-row>
-                <b-col colS = "12">
+                <b-col cols = "12">
                   <b-form>
                      <b-form-textarea
                       id="textarea"

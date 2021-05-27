@@ -3,14 +3,16 @@
   <b-navbar toggleable="lg" type="light" variant="light">
     <b-navbar-brand href="#" id="logo"> <img src="http://placehold.it/120x40" class="d-inline-block align-top" alt="Logo"></b-navbar-brand>
     <b-nav-form>
-        <b-form-input size="sm" class="mr-sm-2" id = "inputSearch" placeholder="SEARCH"></b-form-input>
+        <b-form-input size="sm" class="mr-sm-2" id = "inputSearch" placeholder="Search"></b-form-input>
     </b-nav-form>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <b-nav-item href="#" class="item">HOME</b-nav-item>
-        <b-nav-item href="#" class="item">EXAMPLE</b-nav-item>
+        <b-nav-item href="#" class="item">CLUBS</b-nav-item>
+        <b-nav-item href="#" class="item">YOUR CLUBS</b-nav-item>
+        <b-nav-item href="#" class="item">YOUR EVENTS</b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
@@ -53,14 +55,14 @@ export default {
   border-left-color: #000000;
   border-right-color: #000000;
   padding-right: 25px;
-  font-family: 'Roboto';
+  /* font-family: 'Roboto'; */
 }
 .item{
-  font-family: Roboto;
+  /* font-family: Roboto; */
   font-size: 12px;
   line-height: 14px;
   text-align: center;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: black;
   padding-left: 8px;

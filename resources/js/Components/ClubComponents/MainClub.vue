@@ -37,10 +37,11 @@
 
           <b-row class="h-50 align-items-center">
             <b-col cols="12" class="text-center"  >
-                 <h2>{{clubname}}</h2>
+                 <h2 style="color: darkred;">{{clubname}}</h2>
                  <h4>RATE: {{rate}}%</h4>
                  <div v-if="parentClubUrl">
-                   <h5>Sub-club of</h5>
+                   <span style="font-size:16px;">Sub-club of</span>
+                   <br>
                    <a :href="parentClubUrl">{{parentClub}}</a>
                  </div>
             </b-col>
@@ -89,8 +90,10 @@ export default {
 .showInfo{
     height: 300px;
     width: 100%;
-    border: 1px inset black;
+    /* border: 1px inset black; */
     position: relative;
+    background: rgb(255,179,186);
+    background: linear-gradient(0deg, rgba(255,179,186,1) 0%, rgba(255,223,186,1) 50%, rgba(166,198,193,1) 100%);
 }
 .club-nav-link .nav-link{
   color: black;

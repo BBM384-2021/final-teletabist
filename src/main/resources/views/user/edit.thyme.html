@@ -14,11 +14,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <body>
     <div th:replace="fragments/scripts::splash"></div>
     <div id="App">
+        <div th:replace="fragments/header::header"></div>
         <b-container>
             <b-row class="vh-100" align-v="center">
                 <b-col cols="12">
 
-                <b-button th:if="${referer_page} != null" th:href="@{${referer_page}}" variant="info">Go back</b-button>   
+                <b-button th:if="${referer_page} != null" th:href="@{${referer_page}}" variant="outline-dark"> <b-icon icon = "arrow-left"></b-icon> Go Back</b-button>   
+               
                 <form class="mt-2" th:action="@{/users/{username}(username = ${user.username})}" th:method="PATCH" enctype="utf8">
                     <profileedit 
                     th:name = "${user.profile.name}"
@@ -36,7 +38,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
         </b-col>
     </b-row>
         </b-container>
-        
+        <div th:replace="fragments/footer::footer"></div>
     </div>
     <div th:replace="fragments/scripts::scripts"></div>
     <script src="/public/js/main.js"></script>
